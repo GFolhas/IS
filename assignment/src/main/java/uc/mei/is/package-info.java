@@ -2,7 +2,7 @@
     namespace = "http://www.dei.uc.pt/a",
     elementFormDefault = XmlNsForm.QUALIFIED,
     xmlns = {
-        @XmlNs(prefix="h", namespaceURI="http://www.dei.uc.pt/a")
+        @XmlNs(prefix="", namespaceURI="http://www.dei.uc.pt/a")
     }
 )  
 

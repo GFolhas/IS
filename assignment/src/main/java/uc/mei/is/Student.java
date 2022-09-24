@@ -1,5 +1,6 @@
 package uc.mei.is;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -17,7 +18,7 @@ public class Student {
 
     public Student(){}
 
-    public Student(int id, String name, long phone, String gender, Date birthDate, Date registrationDate, String address, Teacher professor){
+    public Student(int id, String name, long phone, String gender, LocalDate birthDate, LocalDate registrationDate, String address, String professor){
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -29,15 +30,21 @@ public class Student {
     }
 
     
-    //@XmlElement(name = "name")
-    @XmlValue
+    //@XmlValue
+    @XmlElement(name = "name")
     String name; 
+    @XmlElement(name = "phone")
     long phone;
+    @XmlElement(name = "gender")
     String gender;
-    Date birthDate;
-    Date registrationDate;
+    @XmlElement(name = "birthDate")
+    LocalDate birthDate;
+    @XmlElement(name = "registrationDate")
+    LocalDate registrationDate;
+    @XmlElement(name = "address")
     String address;
-    Teacher professor;
+    @XmlElement(name = "professor")
+    String professor;
 
 
     @XmlAttribute()
@@ -77,19 +84,19 @@ public class Student {
         this.gender = gender;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return this.birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
-    public Date getRegistrationDate() {
+    public LocalDate getRegistrationDate() {
         return this.registrationDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
+    public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
     }
 
@@ -101,11 +108,11 @@ public class Student {
         this.address = address;
     }
 
-    public Teacher getProfessor() {
+    public String getProfessor() {
         return this.professor;
     }
 
-    public void setProfessor(Teacher professor) {
+    public void setProfessor(String professor) {
         this.professor = professor;
     }
 

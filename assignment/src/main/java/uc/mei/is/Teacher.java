@@ -1,5 +1,6 @@
 package uc.mei.is;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -18,7 +19,7 @@ public class Teacher {
 
     public Teacher(){}
 
-    public Teacher(int id, String name, Date birthDate,long phone, String address, ArrayList<Students> students){
+    public Teacher(int id, String name, LocalDate birthDate,long phone, String address, Students students){
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
@@ -29,13 +30,16 @@ public class Teacher {
 
     
     //@XmlElement(name = "name")
-    @XmlValue
+    @XmlElement(name = "name")
     String name;
-    Date birthDate;
+    @XmlElement(name = "birthdate")
+    LocalDate birthDate;
+    @XmlElement(name = "phone")
     long phone;
+    @XmlElement(name = "address")
     String address;
-    ArrayList<Students> students;
-
+    @XmlElement(name = "students")
+    Students students;
     
     @XmlAttribute()
     int id;
@@ -58,11 +62,11 @@ public class Teacher {
         this.id = id;
     }
     
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return this.birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -82,11 +86,15 @@ public class Teacher {
         this.address = address;
     }
 
-    public ArrayList<Students> getStudents() {
+    public Students getStudents() {
         return this.students;
     }
 
-    public void setStudents(ArrayList<Students> students) {
+    /* public void addStudents(Student student){
+        this.students.add(student);
+    } */
+
+    public void setStudents(Students students) {
         this.students = students;
     }
 

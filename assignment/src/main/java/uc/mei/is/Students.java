@@ -8,21 +8,22 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "class")
-// order of the fields in XML
-// @XmlType(propOrder = {"price", "name"})
+@XmlRootElement (name = "class")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Students {
 
     @XmlElement(name = "student")
-    ArrayList<Student> list = new ArrayList<>();
-   
-    public ArrayList<Student> getStudent() {
-      return list;
+    // List<String> students;
+    ArrayList<Student> students;
+
+    public Students() { }
+
+    public void setStudents(ArrayList<Student> students) {
+        this.students = students;
     }
-   
-    public void setStudent(ArrayList<Student> list) {
-      this.list = list;
+
+    public void addStudent(Student student){
+      this.students.add(student);
     }
 
 }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.dei.uc.pt/a">
+   <teacher id="1">
+      <name>Ernesto Costa</name>
+      <birthdate>1958-05-10</birthdate>
+      <phone>910475233</phone>
+      <address>Pinhal de Marrocos</address>
+      <students>
+         <student id="1">
+            <name>Goncalo Folhas</name>
+            <phone>925798577</phone>
+            <gender>M</gender>
+            <birthDate>2001-09-30</birthDate>
+            <registrationDate>2022-09-01</registrationDate>
+            <address>Rua Vale da Estrada</address>
+            <professor>Ernesto Costa</professor>
+         </student>
+         <student id="2">
+            <name>Joao Vaz</name>
+            <phone>910976234</phone>
+            <gender>M</gender>
+            <birthDate>2001-04-12</birthDate>
+            <registrationDate>2022-09-01</registrationDate>
+            <address>Rua de Condeixa</address>
+            <professor>Ernesto Costa</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="2">
+      <name>Bernardette Ribeiro</name>
+      <birthdate>1954-12-25</birthdate>
+      <phone>913478991</phone>
+      <address>Bairro Norton de Matos</address>
+      <students>
+         <student id="3">
+            <name>Leonor Paulo</name>
+            <phone>928765299</phone>
+            <gender>F</gender>
+            <birthDate>2000-12-18</birthDate>
+            <registrationDate>2022-09-04</registrationDate>
+            <address>Vale da Murta</address>
+            <professor>Bernardette Ribeiro</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="3">
+      <name>Paulo de Carvalho</name>
+      <birthdate>1969-11-09</birthdate>
+      <phone>936212683</phone>
+      <address>Rua Fonte da Talha</address>
+      <students>
+         <student id="4">
+            <name>Bianca Ramalho</name>
+            <phone>934208007</phone>
+            <gender>F</gender>
+            <birthDate>2002-06-02</birthDate>
+            <registrationDate>2021-07-24</registrationDate>
+            <address>Rua Marco da Silva</address>
+            <professor>Paulo de Carvalho</professor>
+         </student>
+         <student id="5">
+            <name>Francisco Carreira</name>
+            <phone>910772194</phone>
+            <gender>M</gender>
+            <birthDate>2001-02-28</birthDate>
+            <registrationDate>2022-07-21</registrationDate>
+            <address>Rua do Brazil</address>
+            <professor>Paulo de Carvalho</professor>
+         </student>
+         <student id="6">
+            <name>David Leitao</name>
+            <phone>910976234</phone>
+            <gender>M</gender>
+            <birthDate>2000-01-16</birthDate>
+            <registrationDate>2021-07-20</registrationDate>
+            <address>Rua Aguas Livres</address>
+            <professor>Paulo de Carvalho</professor>
+         </student>
+      </students>
+   </teacher>
+</class>
