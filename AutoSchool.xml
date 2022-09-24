@@ -1,0 +1,2949 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.dei.uc.pt/a">
+   <teacher id="0">
+      <name>Crystal Branch</name>
+      <birthdate>1972-07-24</birthdate>
+      <phone>961953092</phone>
+      <address>Ramsdale Square, 621</address>
+      <students>
+         <student id="0">
+            <name>Emily Watts</name>
+            <phone>915079611</phone>
+            <gender>M</gender>
+            <birthDate>1998-11-06</birthDate>
+            <registrationDate>2021-05-08</registrationDate>
+            <address>Mayweather Boulevard, 276</address>
+            <professor>Crystal Branch</professor>
+         </student>
+         <student id="1">
+            <name>Charles Song</name>
+            <phone>927463318</phone>
+            <gender>M</gender>
+            <birthDate>1996-03-07</birthDate>
+            <registrationDate>2017-10-23</registrationDate>
+            <address>Vinland Street, 443</address>
+            <professor>Crystal Branch</professor>
+         </student>
+         <student id="2">
+            <name>Melissa Proctor</name>
+            <phone>965305184</phone>
+            <gender>F</gender>
+            <birthDate>1995-08-06</birthDate>
+            <registrationDate>2017-07-12</registrationDate>
+            <address>West Street, 207</address>
+            <professor>Crystal Branch</professor>
+         </student>
+         <student id="3">
+            <name>Amber Rose</name>
+            <phone>936550886</phone>
+            <gender>F</gender>
+            <birthDate>1997-04-12</birthDate>
+            <registrationDate>2016-05-07</registrationDate>
+            <address>Trafalgar Street, 60</address>
+            <professor>Crystal Branch</professor>
+         </student>
+         <student id="4">
+            <name>Justin Case</name>
+            <phone>953229645</phone>
+            <gender>F</gender>
+            <birthDate>2001-11-14</birthDate>
+            <registrationDate>2017-01-04</registrationDate>
+            <address>Mayweather Square, 149</address>
+            <professor>Crystal Branch</professor>
+         </student>
+         <student id="5">
+            <name>William Hall</name>
+            <phone>918277018</phone>
+            <gender>F</gender>
+            <birthDate>1999-08-25</birthDate>
+            <registrationDate>2019-09-17</registrationDate>
+            <address>Rock-a-feller Boulevard, 242</address>
+            <professor>Crystal Branch</professor>
+         </student>
+         <student id="6">
+            <name>Stephanie Watkins</name>
+            <phone>905413547</phone>
+            <gender>M</gender>
+            <birthDate>1995-06-21</birthDate>
+            <registrationDate>2015-11-08</registrationDate>
+            <address>Hightower Square, 403</address>
+            <professor>Crystal Branch</professor>
+         </student>
+         <student id="7">
+            <name>Aaron Wallace</name>
+            <phone>947799620</phone>
+            <gender>M</gender>
+            <birthDate>1997-02-12</birthDate>
+            <registrationDate>2021-07-06</registrationDate>
+            <address>Ramsdale Square, 160</address>
+            <professor>Crystal Branch</professor>
+         </student>
+         <student id="8">
+            <name>Brian Rose</name>
+            <phone>950559493</phone>
+            <gender>M</gender>
+            <birthDate>1996-05-04</birthDate>
+            <registrationDate>2017-11-13</registrationDate>
+            <address>BraveBird Boulevard, 145</address>
+            <professor>Crystal Branch</professor>
+         </student>
+         <student id="9">
+            <name>Jonathan Gallagher</name>
+            <phone>953448739</phone>
+            <gender>M</gender>
+            <birthDate>1996-12-05</birthDate>
+            <registrationDate>2020-10-23</registrationDate>
+            <address>Liverpool Street, 173</address>
+            <professor>Crystal Branch</professor>
+         </student>
+         <student id="10">
+            <name>Robert Cross</name>
+            <phone>960702133</phone>
+            <gender>M</gender>
+            <birthDate>1999-05-05</birthDate>
+            <registrationDate>2017-08-23</registrationDate>
+            <address>Vinland Street, 113</address>
+            <professor>Crystal Branch</professor>
+         </student>
+         <student id="11">
+            <name>Melissa Allen</name>
+            <phone>963596732</phone>
+            <gender>M</gender>
+            <birthDate>1997-09-27</birthDate>
+            <registrationDate>2019-05-11</registrationDate>
+            <address>Pickadilly Boulevard, 432</address>
+            <professor>Crystal Branch</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="1">
+      <name>Ashley Whitehead</name>
+      <birthdate>1967-10-19</birthdate>
+      <phone>902441439</phone>
+      <address>Ramsdale Square, 359</address>
+      <students>
+         <student id="0">
+            <name>Nicole May</name>
+            <phone>967401711</phone>
+            <gender>F</gender>
+            <birthDate>1999-12-20</birthDate>
+            <registrationDate>2019-02-06</registrationDate>
+            <address>BraveBird Street, 470</address>
+            <professor>Ashley Whitehead</professor>
+         </student>
+         <student id="1">
+            <name>Charles Rose</name>
+            <phone>928531952</phone>
+            <gender>M</gender>
+            <birthDate>1997-04-03</birthDate>
+            <registrationDate>2016-08-24</registrationDate>
+            <address>Pickadilly Square, 682</address>
+            <professor>Ashley Whitehead</professor>
+         </student>
+         <student id="2">
+            <name>Sarah Hoyle</name>
+            <phone>929837677</phone>
+            <gender>F</gender>
+            <birthDate>1996-08-26</birthDate>
+            <registrationDate>2021-01-20</registrationDate>
+            <address>Love Avenue, 202</address>
+            <professor>Ashley Whitehead</professor>
+         </student>
+         <student id="3">
+            <name>Emily Song</name>
+            <phone>907241743</phone>
+            <gender>F</gender>
+            <birthDate>1995-01-09</birthDate>
+            <registrationDate>2015-10-03</registrationDate>
+            <address>BraveBird Boulevard, 566</address>
+            <professor>Ashley Whitehead</professor>
+         </student>
+         <student id="4">
+            <name>Mark Goldstein</name>
+            <phone>917112936</phone>
+            <gender>M</gender>
+            <birthDate>2000-04-13</birthDate>
+            <registrationDate>2016-05-21</registrationDate>
+            <address>Hightower Boulevard, 413</address>
+            <professor>Ashley Whitehead</professor>
+         </student>
+         <student id="5">
+            <name>Kevin Goldstein</name>
+            <phone>923595851</phone>
+            <gender>M</gender>
+            <birthDate>2000-07-10</birthDate>
+            <registrationDate>2017-11-22</registrationDate>
+            <address>Love Avenue, 390</address>
+            <professor>Ashley Whitehead</professor>
+         </student>
+         <student id="6">
+            <name>Elizabeth Johnston</name>
+            <phone>904868482</phone>
+            <gender>F</gender>
+            <birthDate>1999-05-13</birthDate>
+            <registrationDate>2019-10-21</registrationDate>
+            <address>Pickadilly Avenue, 316</address>
+            <professor>Ashley Whitehead</professor>
+         </student>
+         <student id="7">
+            <name>Michael Hall</name>
+            <phone>930804511</phone>
+            <gender>F</gender>
+            <birthDate>1996-04-11</birthDate>
+            <registrationDate>2017-12-07</registrationDate>
+            <address>O'Dylan Square, 71</address>
+            <professor>Ashley Whitehead</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="2">
+      <name>Jason Bender</name>
+      <birthdate>1951-03-16</birthdate>
+      <phone>908934277</phone>
+      <address>Pickadilly Street, 482</address>
+      <students>
+         <student id="0">
+            <name>Megan Joseph</name>
+            <phone>924557643</phone>
+            <gender>F</gender>
+            <birthDate>1995-04-13</birthDate>
+            <registrationDate>2017-11-22</registrationDate>
+            <address>O'Dylan Avenue, 593</address>
+            <professor>Jason Bender</professor>
+         </student>
+         <student id="1">
+            <name>Brian Bowden</name>
+            <phone>968931079</phone>
+            <gender>F</gender>
+            <birthDate>2001-01-17</birthDate>
+            <registrationDate>2017-01-06</registrationDate>
+            <address>Mayweather Boulevard, 50</address>
+            <professor>Jason Bender</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="3">
+      <name>Stephanie O'Brien</name>
+      <birthdate>1971-04-17</birthdate>
+      <phone>910978384</phone>
+      <address>Ramsdale Boulevard, 624</address>
+      <students>
+         <student id="0">
+            <name>Thomas Cross</name>
+            <phone>906994754</phone>
+            <gender>M</gender>
+            <birthDate>1997-11-27</birthDate>
+            <registrationDate>2018-06-02</registrationDate>
+            <address>Love Boulevard, 16</address>
+            <professor>Stephanie O'Brien</professor>
+         </student>
+         <student id="1">
+            <name>Heather O'Brien</name>
+            <phone>944277400</phone>
+            <gender>F</gender>
+            <birthDate>1995-07-20</birthDate>
+            <registrationDate>2018-03-28</registrationDate>
+            <address>Liverpool Boulevard, 264</address>
+            <professor>Stephanie O'Brien</professor>
+         </student>
+         <student id="2">
+            <name>Jason Steele</name>
+            <phone>926587046</phone>
+            <gender>M</gender>
+            <birthDate>1995-04-25</birthDate>
+            <registrationDate>2017-02-13</registrationDate>
+            <address>Vinland Street, 456</address>
+            <professor>Stephanie O'Brien</professor>
+         </student>
+         <student id="3">
+            <name>Adam Rich</name>
+            <phone>923047264</phone>
+            <gender>F</gender>
+            <birthDate>1997-04-21</birthDate>
+            <registrationDate>2017-03-23</registrationDate>
+            <address>Winston Avenue, 1</address>
+            <professor>Stephanie O'Brien</professor>
+         </student>
+         <student id="4">
+            <name>Elizabeth Hill</name>
+            <phone>929019217</phone>
+            <gender>F</gender>
+            <birthDate>1999-12-24</birthDate>
+            <registrationDate>2016-05-19</registrationDate>
+            <address>BraveBird Street, 571</address>
+            <professor>Stephanie O'Brien</professor>
+         </student>
+         <student id="5">
+            <name>Rachel Morgan</name>
+            <phone>969753874</phone>
+            <gender>F</gender>
+            <birthDate>1998-06-04</birthDate>
+            <registrationDate>2017-02-13</registrationDate>
+            <address>Queen's Square, 331</address>
+            <professor>Stephanie O'Brien</professor>
+         </student>
+         <student id="6">
+            <name>Steven Barton</name>
+            <phone>916945371</phone>
+            <gender>M</gender>
+            <birthDate>1998-10-18</birthDate>
+            <registrationDate>2016-05-17</registrationDate>
+            <address>Pickadilly Street, 496</address>
+            <professor>Stephanie O'Brien</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="4">
+      <name>Daniel Hawkins</name>
+      <birthdate>1977-04-25</birthdate>
+      <phone>926588869</phone>
+      <address>Winston Avenue, 172</address>
+      <students>
+         <student id="0">
+            <name>Patrick Song</name>
+            <phone>911465669</phone>
+            <gender>F</gender>
+            <birthDate>1999-12-08</birthDate>
+            <registrationDate>2015-06-08</registrationDate>
+            <address>Hightower Boulevard, 461</address>
+            <professor>Daniel Hawkins</professor>
+         </student>
+         <student id="1">
+            <name>James Graham</name>
+            <phone>947312586</phone>
+            <gender>M</gender>
+            <birthDate>1998-12-27</birthDate>
+            <registrationDate>2021-08-23</registrationDate>
+            <address>Rock-a-feller Boulevard, 389</address>
+            <professor>Daniel Hawkins</professor>
+         </student>
+         <student id="2">
+            <name>Aaron Barton</name>
+            <phone>964098151</phone>
+            <gender>F</gender>
+            <birthDate>1995-11-16</birthDate>
+            <registrationDate>2016-05-01</registrationDate>
+            <address>O'Dylan Boulevard, 376</address>
+            <professor>Daniel Hawkins</professor>
+         </student>
+         <student id="3">
+            <name>Sarah Teague</name>
+            <phone>934797638</phone>
+            <gender>M</gender>
+            <birthDate>1996-10-14</birthDate>
+            <registrationDate>2015-03-08</registrationDate>
+            <address>West Boulevard, 582</address>
+            <professor>Daniel Hawkins</professor>
+         </student>
+         <student id="4">
+            <name>Melissa Hardin</name>
+            <phone>960543178</phone>
+            <gender>F</gender>
+            <birthDate>1999-05-05</birthDate>
+            <registrationDate>2015-10-09</registrationDate>
+            <address>Liverpool Avenue, 526</address>
+            <professor>Daniel Hawkins</professor>
+         </student>
+         <student id="5">
+            <name>Jacob Teague</name>
+            <phone>934489889</phone>
+            <gender>M</gender>
+            <birthDate>1996-07-27</birthDate>
+            <registrationDate>2017-12-06</registrationDate>
+            <address>Trafalgar Square, 668</address>
+            <professor>Daniel Hawkins</professor>
+         </student>
+         <student id="6">
+            <name>Patrick Johnston</name>
+            <phone>965959166</phone>
+            <gender>M</gender>
+            <birthDate>1999-09-20</birthDate>
+            <registrationDate>2017-07-05</registrationDate>
+            <address>Liverpool Street, 230</address>
+            <professor>Daniel Hawkins</professor>
+         </student>
+         <student id="7">
+            <name>Joseph O'Brien</name>
+            <phone>918616463</phone>
+            <gender>M</gender>
+            <birthDate>2001-03-19</birthDate>
+            <registrationDate>2020-12-24</registrationDate>
+            <address>St.Moon Avenue, 151</address>
+            <professor>Daniel Hawkins</professor>
+         </student>
+         <student id="8">
+            <name>Timothy Hall</name>
+            <phone>948376750</phone>
+            <gender>F</gender>
+            <birthDate>1995-06-07</birthDate>
+            <registrationDate>2020-02-19</registrationDate>
+            <address>Rock-a-feller Avenue, 171</address>
+            <professor>Daniel Hawkins</professor>
+         </student>
+         <student id="9">
+            <name>Michael Puckett</name>
+            <phone>946007353</phone>
+            <gender>M</gender>
+            <birthDate>1996-10-11</birthDate>
+            <registrationDate>2015-05-07</registrationDate>
+            <address>O'Dylan Street, 667</address>
+            <professor>Daniel Hawkins</professor>
+         </student>
+         <student id="10">
+            <name>Michelle Rich</name>
+            <phone>938151384</phone>
+            <gender>F</gender>
+            <birthDate>1996-01-18</birthDate>
+            <registrationDate>2016-07-01</registrationDate>
+            <address>Queen's Avenue, 502</address>
+            <professor>Daniel Hawkins</professor>
+         </student>
+         <student id="11">
+            <name>Nicholas Cross</name>
+            <phone>910488450</phone>
+            <gender>M</gender>
+            <birthDate>1998-03-27</birthDate>
+            <registrationDate>2020-05-19</registrationDate>
+            <address>Rock-a-feller Street, 542</address>
+            <professor>Daniel Hawkins</professor>
+         </student>
+         <student id="12">
+            <name>Stephanie Bowden</name>
+            <phone>961787721</phone>
+            <gender>M</gender>
+            <birthDate>2000-02-15</birthDate>
+            <registrationDate>2018-05-15</registrationDate>
+            <address>BraveBird Square, 490</address>
+            <professor>Daniel Hawkins</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="5">
+      <name>Lauren Joseph</name>
+      <birthdate>1972-05-02</birthdate>
+      <phone>918545076</phone>
+      <address>Mayweather Square, 12</address>
+      <students/>
+   </teacher>
+   <teacher id="6">
+      <name>Amber Monroe</name>
+      <birthdate>1945-04-03</birthdate>
+      <phone>968247410</phone>
+      <address>Liverpool Street, 123</address>
+      <students>
+         <student id="0">
+            <name>Sarah Hardin</name>
+            <phone>926531001</phone>
+            <gender>F</gender>
+            <birthDate>1998-09-25</birthDate>
+            <registrationDate>2019-05-12</registrationDate>
+            <address>Winston Street, 303</address>
+            <professor>Amber Monroe</professor>
+         </student>
+         <student id="1">
+            <name>Brandon Hoyle</name>
+            <phone>955510685</phone>
+            <gender>F</gender>
+            <birthDate>2000-07-16</birthDate>
+            <registrationDate>2018-06-03</registrationDate>
+            <address>Trafalgar Boulevard, 322</address>
+            <professor>Amber Monroe</professor>
+         </student>
+         <student id="2">
+            <name>Amber Monroe</name>
+            <phone>919258994</phone>
+            <gender>M</gender>
+            <birthDate>1998-10-06</birthDate>
+            <registrationDate>2016-05-28</registrationDate>
+            <address>St.Moon Boulevard, 20</address>
+            <professor>Amber Monroe</professor>
+         </student>
+         <student id="3">
+            <name>Christopher Hawkins</name>
+            <phone>944287172</phone>
+            <gender>F</gender>
+            <birthDate>1996-04-12</birthDate>
+            <registrationDate>2021-07-04</registrationDate>
+            <address>South Gate Square, 568</address>
+            <professor>Amber Monroe</professor>
+         </student>
+         <student id="4">
+            <name>Emily Lucas</name>
+            <phone>901689030</phone>
+            <gender>F</gender>
+            <birthDate>1996-12-28</birthDate>
+            <registrationDate>2019-03-01</registrationDate>
+            <address>O'Dylan Avenue, 438</address>
+            <professor>Amber Monroe</professor>
+         </student>
+         <student id="5">
+            <name>Richard Parks</name>
+            <phone>922692221</phone>
+            <gender>F</gender>
+            <birthDate>2001-02-24</birthDate>
+            <registrationDate>2018-05-11</registrationDate>
+            <address>Hightower Square, 48</address>
+            <professor>Amber Monroe</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="7">
+      <name>Ryan Baker</name>
+      <birthdate>1972-05-13</birthdate>
+      <phone>937703789</phone>
+      <address>O'Dylan Avenue, 697</address>
+      <students>
+         <student id="0">
+            <name>Laura Rich</name>
+            <phone>918963799</phone>
+            <gender>M</gender>
+            <birthDate>1997-09-01</birthDate>
+            <registrationDate>2017-11-01</registrationDate>
+            <address>St.Moon Avenue, 563</address>
+            <professor>Ryan Baker</professor>
+         </student>
+         <student id="1">
+            <name>Jacob Watts</name>
+            <phone>925290898</phone>
+            <gender>M</gender>
+            <birthDate>2000-08-17</birthDate>
+            <registrationDate>2020-08-04</registrationDate>
+            <address>Ramsdale Avenue, 675</address>
+            <professor>Ryan Baker</professor>
+         </student>
+         <student id="2">
+            <name>Elizabeth Hardin</name>
+            <phone>935189914</phone>
+            <gender>F</gender>
+            <birthDate>1998-10-03</birthDate>
+            <registrationDate>2017-09-01</registrationDate>
+            <address>O'Dylan Street, 605</address>
+            <professor>Ryan Baker</professor>
+         </student>
+         <student id="3">
+            <name>Joshua Lucas</name>
+            <phone>938499182</phone>
+            <gender>F</gender>
+            <birthDate>1996-08-22</birthDate>
+            <registrationDate>2015-03-05</registrationDate>
+            <address>BraveBird Avenue, 332</address>
+            <professor>Ryan Baker</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="8">
+      <name>Jacob Wilkerson</name>
+      <birthdate>1959-06-13</birthdate>
+      <phone>967809686</phone>
+      <address>BraveBird Square, 428</address>
+      <students>
+         <student id="0">
+            <name>Brittany Rosenthal</name>
+            <phone>941845368</phone>
+            <gender>M</gender>
+            <birthDate>2001-11-27</birthDate>
+            <registrationDate>2020-04-10</registrationDate>
+            <address>Hightower Street, 527</address>
+            <professor>Jacob Wilkerson</professor>
+         </student>
+         <student id="1">
+            <name>Heather Steele</name>
+            <phone>901964767</phone>
+            <gender>M</gender>
+            <birthDate>2001-05-21</birthDate>
+            <registrationDate>2017-10-03</registrationDate>
+            <address>Trafalgar Avenue, 348</address>
+            <professor>Jacob Wilkerson</professor>
+         </student>
+         <student id="2">
+            <name>Ashley Christensen</name>
+            <phone>908936949</phone>
+            <gender>F</gender>
+            <birthDate>1996-05-08</birthDate>
+            <registrationDate>2021-09-04</registrationDate>
+            <address>Rock-a-feller Square, 612</address>
+            <professor>Jacob Wilkerson</professor>
+         </student>
+         <student id="3">
+            <name>Ryan Hardin</name>
+            <phone>928510899</phone>
+            <gender>F</gender>
+            <birthDate>1998-08-04</birthDate>
+            <registrationDate>2020-11-03</registrationDate>
+            <address>West Boulevard, 693</address>
+            <professor>Jacob Wilkerson</professor>
+         </student>
+         <student id="4">
+            <name>William Cooper</name>
+            <phone>948796522</phone>
+            <gender>M</gender>
+            <birthDate>1996-05-03</birthDate>
+            <registrationDate>2020-02-27</registrationDate>
+            <address>Hightower Street, 417</address>
+            <professor>Jacob Wilkerson</professor>
+         </student>
+         <student id="5">
+            <name>Jonathan Rosenthal</name>
+            <phone>953285912</phone>
+            <gender>F</gender>
+            <birthDate>1999-05-12</birthDate>
+            <registrationDate>2021-09-05</registrationDate>
+            <address>Queen's Avenue, 353</address>
+            <professor>Jacob Wilkerson</professor>
+         </student>
+         <student id="6">
+            <name>Mark Hewitt</name>
+            <phone>965002988</phone>
+            <gender>M</gender>
+            <birthDate>1995-02-09</birthDate>
+            <registrationDate>2021-08-22</registrationDate>
+            <address>Vinland Square, 681</address>
+            <professor>Jacob Wilkerson</professor>
+         </student>
+         <student id="7">
+            <name>Rebecca Holmes</name>
+            <phone>962014186</phone>
+            <gender>M</gender>
+            <birthDate>1999-11-26</birthDate>
+            <registrationDate>2017-06-26</registrationDate>
+            <address>Winston Street, 345</address>
+            <professor>Jacob Wilkerson</professor>
+         </student>
+         <student id="8">
+            <name>Danielle Whitehead</name>
+            <phone>945484313</phone>
+            <gender>F</gender>
+            <birthDate>1997-07-17</birthDate>
+            <registrationDate>2015-11-09</registrationDate>
+            <address>O'Dylan Street, 575</address>
+            <professor>Jacob Wilkerson</professor>
+         </student>
+         <student id="9">
+            <name>Nicole Hill</name>
+            <phone>926808327</phone>
+            <gender>F</gender>
+            <birthDate>2001-12-08</birthDate>
+            <registrationDate>2016-06-02</registrationDate>
+            <address>Liverpool Street, 301</address>
+            <professor>Jacob Wilkerson</professor>
+         </student>
+         <student id="10">
+            <name>Steven Puckett</name>
+            <phone>962504582</phone>
+            <gender>F</gender>
+            <birthDate>1997-08-17</birthDate>
+            <registrationDate>2016-02-17</registrationDate>
+            <address>South Gate Avenue, 274</address>
+            <professor>Jacob Wilkerson</professor>
+         </student>
+         <student id="11">
+            <name>Jeffrey Desai</name>
+            <phone>903945437</phone>
+            <gender>F</gender>
+            <birthDate>2001-10-05</birthDate>
+            <registrationDate>2015-04-24</registrationDate>
+            <address>West Boulevard, 287</address>
+            <professor>Jacob Wilkerson</professor>
+         </student>
+         <student id="12">
+            <name>Lauren Grant</name>
+            <phone>961104858</phone>
+            <gender>F</gender>
+            <birthDate>1996-03-01</birthDate>
+            <registrationDate>2019-10-22</registrationDate>
+            <address>St.Moon Street, 686</address>
+            <professor>Jacob Wilkerson</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="9">
+      <name>Jessica Raynor</name>
+      <birthdate>1946-10-05</birthdate>
+      <phone>966217009</phone>
+      <address>Trafalgar Square, 321</address>
+      <students>
+         <student id="0">
+            <name>Elizabeth Griffin</name>
+            <phone>916676826</phone>
+            <gender>M</gender>
+            <birthDate>1997-04-12</birthDate>
+            <registrationDate>2015-01-06</registrationDate>
+            <address>O'Dylan Square, 598</address>
+            <professor>Jessica Raynor</professor>
+         </student>
+         <student id="1">
+            <name>Amy Moon</name>
+            <phone>901592391</phone>
+            <gender>F</gender>
+            <birthDate>1998-02-10</birthDate>
+            <registrationDate>2016-02-04</registrationDate>
+            <address>West Boulevard, 50</address>
+            <professor>Jessica Raynor</professor>
+         </student>
+         <student id="2">
+            <name>Steven Underwood</name>
+            <phone>960219990</phone>
+            <gender>F</gender>
+            <birthDate>2001-07-10</birthDate>
+            <registrationDate>2015-09-11</registrationDate>
+            <address>Hightower Square, 303</address>
+            <professor>Jessica Raynor</professor>
+         </student>
+         <student id="3">
+            <name>Jacob Moon</name>
+            <phone>957006991</phone>
+            <gender>F</gender>
+            <birthDate>2000-06-04</birthDate>
+            <registrationDate>2016-09-24</registrationDate>
+            <address>Mayweather Avenue, 696</address>
+            <professor>Jessica Raynor</professor>
+         </student>
+         <student id="4">
+            <name>Emily Bender</name>
+            <phone>962134756</phone>
+            <gender>M</gender>
+            <birthDate>2000-03-10</birthDate>
+            <registrationDate>2016-08-27</registrationDate>
+            <address>Mayweather Square, 576</address>
+            <professor>Jessica Raynor</professor>
+         </student>
+         <student id="5">
+            <name>Mark Eason</name>
+            <phone>903480243</phone>
+            <gender>F</gender>
+            <birthDate>1997-02-09</birthDate>
+            <registrationDate>2017-05-09</registrationDate>
+            <address>Winston Street, 628</address>
+            <professor>Jessica Raynor</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="10">
+      <name>Steven Gallagher</name>
+      <birthdate>1958-04-24</birthdate>
+      <phone>944153093</phone>
+      <address>Ramsdale Boulevard, 696</address>
+      <students>
+         <student id="0">
+            <name>Brian Steele</name>
+            <phone>927110120</phone>
+            <gender>F</gender>
+            <birthDate>1996-09-18</birthDate>
+            <registrationDate>2015-07-12</registrationDate>
+            <address>Trafalgar Avenue, 67</address>
+            <professor>Steven Gallagher</professor>
+         </student>
+         <student id="1">
+            <name>Jessica Hawkins</name>
+            <phone>961655713</phone>
+            <gender>F</gender>
+            <birthDate>2001-10-15</birthDate>
+            <registrationDate>2019-12-14</registrationDate>
+            <address>Ramsdale Square, 265</address>
+            <professor>Steven Gallagher</professor>
+         </student>
+         <student id="2">
+            <name>William Sharpe</name>
+            <phone>954882491</phone>
+            <gender>M</gender>
+            <birthDate>1997-05-27</birthDate>
+            <registrationDate>2021-10-11</registrationDate>
+            <address>Liverpool Street, 555</address>
+            <professor>Steven Gallagher</professor>
+         </student>
+         <student id="3">
+            <name>Timothy Song</name>
+            <phone>961790390</phone>
+            <gender>M</gender>
+            <birthDate>2000-06-01</birthDate>
+            <registrationDate>2017-12-14</registrationDate>
+            <address>West Boulevard, 578</address>
+            <professor>Steven Gallagher</professor>
+         </student>
+         <student id="4">
+            <name>Crystal Hall</name>
+            <phone>944966110</phone>
+            <gender>M</gender>
+            <birthDate>1996-03-25</birthDate>
+            <registrationDate>2021-09-21</registrationDate>
+            <address>Pickadilly Boulevard, 521</address>
+            <professor>Steven Gallagher</professor>
+         </student>
+         <student id="5">
+            <name>Thomas Monroe</name>
+            <phone>966872319</phone>
+            <gender>M</gender>
+            <birthDate>2000-07-26</birthDate>
+            <registrationDate>2021-02-01</registrationDate>
+            <address>Love Avenue, 53</address>
+            <professor>Steven Gallagher</professor>
+         </student>
+         <student id="6">
+            <name>Rebecca Rich</name>
+            <phone>948573575</phone>
+            <gender>F</gender>
+            <birthDate>2001-01-19</birthDate>
+            <registrationDate>2015-02-25</registrationDate>
+            <address>St.Moon Street, 291</address>
+            <professor>Steven Gallagher</professor>
+         </student>
+         <student id="7">
+            <name>Brian Underwood</name>
+            <phone>900952590</phone>
+            <gender>F</gender>
+            <birthDate>1996-12-11</birthDate>
+            <registrationDate>2018-10-23</registrationDate>
+            <address>Rock-a-feller Boulevard, 369</address>
+            <professor>Steven Gallagher</professor>
+         </student>
+         <student id="8">
+            <name>Amy Teague</name>
+            <phone>952889164</phone>
+            <gender>F</gender>
+            <birthDate>1999-10-02</birthDate>
+            <registrationDate>2016-04-11</registrationDate>
+            <address>Rock-a-feller Street, 439</address>
+            <professor>Steven Gallagher</professor>
+         </student>
+         <student id="9">
+            <name>Danielle Morgan</name>
+            <phone>907392988</phone>
+            <gender>M</gender>
+            <birthDate>1996-01-09</birthDate>
+            <registrationDate>2021-07-13</registrationDate>
+            <address>O'Dylan Boulevard, 309</address>
+            <professor>Steven Gallagher</professor>
+         </student>
+         <student id="10">
+            <name>Christopher Wallace</name>
+            <phone>907375234</phone>
+            <gender>F</gender>
+            <birthDate>1999-04-11</birthDate>
+            <registrationDate>2018-08-28</registrationDate>
+            <address>Rock-a-feller Square, 595</address>
+            <professor>Steven Gallagher</professor>
+         </student>
+         <student id="11">
+            <name>Daniel Bender</name>
+            <phone>961882143</phone>
+            <gender>F</gender>
+            <birthDate>1999-06-20</birthDate>
+            <registrationDate>2016-07-24</registrationDate>
+            <address>O'Dylan Boulevard, 418</address>
+            <professor>Steven Gallagher</professor>
+         </student>
+         <student id="12">
+            <name>Laura Wagner</name>
+            <phone>912452287</phone>
+            <gender>F</gender>
+            <birthDate>1996-09-28</birthDate>
+            <registrationDate>2015-03-24</registrationDate>
+            <address>West Square, 401</address>
+            <professor>Steven Gallagher</professor>
+         </student>
+         <student id="13">
+            <name>Lauren Marsh</name>
+            <phone>911120501</phone>
+            <gender>M</gender>
+            <birthDate>1996-10-25</birthDate>
+            <registrationDate>2017-11-22</registrationDate>
+            <address>Hightower Avenue, 591</address>
+            <professor>Steven Gallagher</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="11">
+      <name>Brittany Walsh</name>
+      <birthdate>1963-03-26</birthdate>
+      <phone>939851029</phone>
+      <address>Liverpool Boulevard, 637</address>
+      <students>
+         <student id="0">
+            <name>Michael Case</name>
+            <phone>967015888</phone>
+            <gender>M</gender>
+            <birthDate>1999-05-06</birthDate>
+            <registrationDate>2017-11-26</registrationDate>
+            <address>South Gate Avenue, 327</address>
+            <professor>Brittany Walsh</professor>
+         </student>
+         <student id="1">
+            <name>Anthony Hewitt</name>
+            <phone>950298900</phone>
+            <gender>M</gender>
+            <birthDate>1997-10-22</birthDate>
+            <registrationDate>2020-08-08</registrationDate>
+            <address>Pickadilly Boulevard, 653</address>
+            <professor>Brittany Walsh</professor>
+         </student>
+         <student id="2">
+            <name>Jennifer Hardin</name>
+            <phone>905784973</phone>
+            <gender>M</gender>
+            <birthDate>2001-07-08</birthDate>
+            <registrationDate>2015-10-19</registrationDate>
+            <address>Mayweather Street, 323</address>
+            <professor>Brittany Walsh</professor>
+         </student>
+         <student id="3">
+            <name>Lauren Graham</name>
+            <phone>905331911</phone>
+            <gender>F</gender>
+            <birthDate>1996-11-16</birthDate>
+            <registrationDate>2021-02-19</registrationDate>
+            <address>Liverpool Square, 104</address>
+            <professor>Brittany Walsh</professor>
+         </student>
+         <student id="4">
+            <name>Elizabeth Branch</name>
+            <phone>918542812</phone>
+            <gender>F</gender>
+            <birthDate>2001-08-10</birthDate>
+            <registrationDate>2021-03-10</registrationDate>
+            <address>Hightower Boulevard, 372</address>
+            <professor>Brittany Walsh</professor>
+         </student>
+         <student id="5">
+            <name>Jacob Monroe</name>
+            <phone>949090118</phone>
+            <gender>M</gender>
+            <birthDate>1996-05-16</birthDate>
+            <registrationDate>2018-07-24</registrationDate>
+            <address>Queen's Street, 405</address>
+            <professor>Brittany Walsh</professor>
+         </student>
+         <student id="6">
+            <name>Crystal Moon</name>
+            <phone>962349889</phone>
+            <gender>F</gender>
+            <birthDate>1999-10-10</birthDate>
+            <registrationDate>2018-10-25</registrationDate>
+            <address>Mayweather Avenue, 204</address>
+            <professor>Brittany Walsh</professor>
+         </student>
+         <student id="7">
+            <name>Matthew Hinton</name>
+            <phone>904552829</phone>
+            <gender>M</gender>
+            <birthDate>1998-11-08</birthDate>
+            <registrationDate>2020-12-05</registrationDate>
+            <address>O'Dylan Square, 135</address>
+            <professor>Brittany Walsh</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="12">
+      <name>Kyle Hinton</name>
+      <birthdate>1956-09-24</birthdate>
+      <phone>917568100</phone>
+      <address>Pickadilly Avenue, 390</address>
+      <students>
+         <student id="0">
+            <name>Jessica Whitehead</name>
+            <phone>905255485</phone>
+            <gender>F</gender>
+            <birthDate>1997-02-26</birthDate>
+            <registrationDate>2018-01-20</registrationDate>
+            <address>Mayweather Avenue, 615</address>
+            <professor>Kyle Hinton</professor>
+         </student>
+         <student id="1">
+            <name>Emily Solomon</name>
+            <phone>930003814</phone>
+            <gender>M</gender>
+            <birthDate>1998-04-24</birthDate>
+            <registrationDate>2020-10-28</registrationDate>
+            <address>Pickadilly Avenue, 154</address>
+            <professor>Kyle Hinton</professor>
+         </student>
+         <student id="2">
+            <name>Rebecca Davidson</name>
+            <phone>962144904</phone>
+            <gender>F</gender>
+            <birthDate>1996-10-01</birthDate>
+            <registrationDate>2017-08-05</registrationDate>
+            <address>West Avenue, 419</address>
+            <professor>Kyle Hinton</professor>
+         </student>
+         <student id="3">
+            <name>Adam Connolly</name>
+            <phone>906028128</phone>
+            <gender>M</gender>
+            <birthDate>1996-08-13</birthDate>
+            <registrationDate>2016-01-01</registrationDate>
+            <address>Vinland Square, 252</address>
+            <professor>Kyle Hinton</professor>
+         </student>
+         <student id="4">
+            <name>Justin Woodard</name>
+            <phone>930795106</phone>
+            <gender>M</gender>
+            <birthDate>1997-04-24</birthDate>
+            <registrationDate>2016-05-06</registrationDate>
+            <address>Queen's Street, 61</address>
+            <professor>Kyle Hinton</professor>
+         </student>
+         <student id="5">
+            <name>Stephanie O'Brien</name>
+            <phone>907277567</phone>
+            <gender>M</gender>
+            <birthDate>2001-07-09</birthDate>
+            <registrationDate>2018-06-04</registrationDate>
+            <address>St.Moon Street, 250</address>
+            <professor>Kyle Hinton</professor>
+         </student>
+         <student id="6">
+            <name>Heather Parks</name>
+            <phone>959700328</phone>
+            <gender>M</gender>
+            <birthDate>1998-02-28</birthDate>
+            <registrationDate>2018-02-02</registrationDate>
+            <address>BraveBird Square, 632</address>
+            <professor>Kyle Hinton</professor>
+         </student>
+         <student id="7">
+            <name>Jeffrey Solomon</name>
+            <phone>943044692</phone>
+            <gender>F</gender>
+            <birthDate>1999-03-20</birthDate>
+            <registrationDate>2015-10-22</registrationDate>
+            <address>BraveBird Street, 573</address>
+            <professor>Kyle Hinton</professor>
+         </student>
+         <student id="8">
+            <name>Brian Walsh</name>
+            <phone>902170084</phone>
+            <gender>F</gender>
+            <birthDate>1999-09-18</birthDate>
+            <registrationDate>2020-12-26</registrationDate>
+            <address>Pickadilly Street, 680</address>
+            <professor>Kyle Hinton</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="13">
+      <name>Christopher Griffin</name>
+      <birthdate>1967-08-21</birthdate>
+      <phone>911190558</phone>
+      <address>South Gate Square, 571</address>
+      <students/>
+   </teacher>
+   <teacher id="14">
+      <name>Brian Dougherty</name>
+      <birthdate>1949-07-03</birthdate>
+      <phone>926662740</phone>
+      <address>O'Dylan Square, 213</address>
+      <students>
+         <student id="0">
+            <name>Michael Monroe</name>
+            <phone>924960937</phone>
+            <gender>M</gender>
+            <birthDate>1996-07-17</birthDate>
+            <registrationDate>2018-01-13</registrationDate>
+            <address>South Gate Square, 265</address>
+            <professor>Brian Dougherty</professor>
+         </student>
+         <student id="1">
+            <name>Ryan Marsh</name>
+            <phone>900906675</phone>
+            <gender>F</gender>
+            <birthDate>1996-06-20</birthDate>
+            <registrationDate>2017-06-01</registrationDate>
+            <address>BraveBird Boulevard, 582</address>
+            <professor>Brian Dougherty</professor>
+         </student>
+         <student id="2">
+            <name>David Cooper</name>
+            <phone>926419044</phone>
+            <gender>M</gender>
+            <birthDate>1999-08-11</birthDate>
+            <registrationDate>2020-05-27</registrationDate>
+            <address>Love Square, 582</address>
+            <professor>Brian Dougherty</professor>
+         </student>
+         <student id="3">
+            <name>James Graham</name>
+            <phone>904533426</phone>
+            <gender>F</gender>
+            <birthDate>2001-03-01</birthDate>
+            <registrationDate>2019-08-07</registrationDate>
+            <address>Hightower Boulevard, 608</address>
+            <professor>Brian Dougherty</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="15">
+      <name>David Jones</name>
+      <birthdate>1952-03-09</birthdate>
+      <phone>947454213</phone>
+      <address>Winston Street, 260</address>
+      <students>
+         <student id="0">
+            <name>Brian Merritt</name>
+            <phone>949235295</phone>
+            <gender>M</gender>
+            <birthDate>1995-11-14</birthDate>
+            <registrationDate>2015-06-27</registrationDate>
+            <address>Hightower Street, 567</address>
+            <professor>David Jones</professor>
+         </student>
+         <student id="1">
+            <name>Kimberly Walsh</name>
+            <phone>921262782</phone>
+            <gender>F</gender>
+            <birthDate>1998-04-19</birthDate>
+            <registrationDate>2018-04-18</registrationDate>
+            <address>BraveBird Boulevard, 206</address>
+            <professor>David Jones</professor>
+         </student>
+         <student id="2">
+            <name>Jason Parks</name>
+            <phone>935004143</phone>
+            <gender>F</gender>
+            <birthDate>2000-06-08</birthDate>
+            <registrationDate>2019-10-25</registrationDate>
+            <address>South Gate Square, 636</address>
+            <professor>David Jones</professor>
+         </student>
+         <student id="3">
+            <name>Michelle Song</name>
+            <phone>946645233</phone>
+            <gender>F</gender>
+            <birthDate>1995-01-13</birthDate>
+            <registrationDate>2015-03-23</registrationDate>
+            <address>Hightower Avenue, 121</address>
+            <professor>David Jones</professor>
+         </student>
+         <student id="4">
+            <name>Eric Case</name>
+            <phone>931710839</phone>
+            <gender>F</gender>
+            <birthDate>1999-09-08</birthDate>
+            <registrationDate>2021-05-09</registrationDate>
+            <address>St.Moon Boulevard, 578</address>
+            <professor>David Jones</professor>
+         </student>
+         <student id="5">
+            <name>Amber Teague</name>
+            <phone>963583701</phone>
+            <gender>M</gender>
+            <birthDate>1996-01-24</birthDate>
+            <registrationDate>2019-01-19</registrationDate>
+            <address>Hightower Avenue, 528</address>
+            <professor>David Jones</professor>
+         </student>
+         <student id="6">
+            <name>Adam Merritt</name>
+            <phone>940494407</phone>
+            <gender>M</gender>
+            <birthDate>1996-10-12</birthDate>
+            <registrationDate>2018-04-28</registrationDate>
+            <address>Rock-a-feller Boulevard, 302</address>
+            <professor>David Jones</professor>
+         </student>
+         <student id="7">
+            <name>Brandon Puckett</name>
+            <phone>909366050</phone>
+            <gender>M</gender>
+            <birthDate>2000-04-13</birthDate>
+            <registrationDate>2018-09-19</registrationDate>
+            <address>Trafalgar Boulevard, 24</address>
+            <professor>David Jones</professor>
+         </student>
+         <student id="8">
+            <name>Heather Wilkerson</name>
+            <phone>928419635</phone>
+            <gender>F</gender>
+            <birthDate>2000-06-01</birthDate>
+            <registrationDate>2017-06-13</registrationDate>
+            <address>Love Square, 239</address>
+            <professor>David Jones</professor>
+         </student>
+         <student id="9">
+            <name>Brittany Case</name>
+            <phone>939261921</phone>
+            <gender>F</gender>
+            <birthDate>1995-05-28</birthDate>
+            <registrationDate>2015-04-06</registrationDate>
+            <address>BraveBird Street, 143</address>
+            <professor>David Jones</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="16">
+      <name>Laura Bender</name>
+      <birthdate>1972-11-11</birthdate>
+      <phone>947568311</phone>
+      <address>Rock-a-feller Avenue, 438</address>
+      <students>
+         <student id="0">
+            <name>Michael Hall</name>
+            <phone>950556020</phone>
+            <gender>M</gender>
+            <birthDate>1999-03-01</birthDate>
+            <registrationDate>2015-10-07</registrationDate>
+            <address>Love Street, 568</address>
+            <professor>Laura Bender</professor>
+         </student>
+         <student id="1">
+            <name>Brian Hill</name>
+            <phone>969352663</phone>
+            <gender>M</gender>
+            <birthDate>1996-06-24</birthDate>
+            <registrationDate>2017-05-18</registrationDate>
+            <address>Hightower Street, 310</address>
+            <professor>Laura Bender</professor>
+         </student>
+         <student id="2">
+            <name>Jessica O'Brien</name>
+            <phone>917232742</phone>
+            <gender>M</gender>
+            <birthDate>1996-04-01</birthDate>
+            <registrationDate>2019-01-09</registrationDate>
+            <address>Winston Square, 27</address>
+            <professor>Laura Bender</professor>
+         </student>
+         <student id="3">
+            <name>Christina Hall</name>
+            <phone>922239843</phone>
+            <gender>F</gender>
+            <birthDate>2001-01-21</birthDate>
+            <registrationDate>2017-12-06</registrationDate>
+            <address>Queen's Square, 418</address>
+            <professor>Laura Bender</professor>
+         </student>
+         <student id="4">
+            <name>David Vick</name>
+            <phone>906182629</phone>
+            <gender>M</gender>
+            <birthDate>2000-11-10</birthDate>
+            <registrationDate>2021-03-09</registrationDate>
+            <address>West Street, 51</address>
+            <professor>Laura Bender</professor>
+         </student>
+         <student id="5">
+            <name>Brittany Branch</name>
+            <phone>925259923</phone>
+            <gender>M</gender>
+            <birthDate>2001-04-15</birthDate>
+            <registrationDate>2021-02-21</registrationDate>
+            <address>West Boulevard, 448</address>
+            <professor>Laura Bender</professor>
+         </student>
+         <student id="6">
+            <name>William Lucas</name>
+            <phone>906368219</phone>
+            <gender>F</gender>
+            <birthDate>1996-12-06</birthDate>
+            <registrationDate>2017-05-24</registrationDate>
+            <address>BraveBird Avenue, 187</address>
+            <professor>Laura Bender</professor>
+         </student>
+         <student id="7">
+            <name>Andrew Rich</name>
+            <phone>953820740</phone>
+            <gender>M</gender>
+            <birthDate>1998-02-19</birthDate>
+            <registrationDate>2018-05-09</registrationDate>
+            <address>Rock-a-feller Boulevard, 210</address>
+            <professor>Laura Bender</professor>
+         </student>
+         <student id="8">
+            <name>Kyle Hill</name>
+            <phone>923763670</phone>
+            <gender>M</gender>
+            <birthDate>1998-03-08</birthDate>
+            <registrationDate>2018-07-07</registrationDate>
+            <address>Vinland Boulevard, 185</address>
+            <professor>Laura Bender</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="17">
+      <name>Eric Solomon</name>
+      <birthdate>1963-10-16</birthdate>
+      <phone>920344189</phone>
+      <address>Trafalgar Square, 176</address>
+      <students>
+         <student id="0">
+            <name>Kimberly Merritt</name>
+            <phone>936349532</phone>
+            <gender>F</gender>
+            <birthDate>2001-09-25</birthDate>
+            <registrationDate>2018-09-10</registrationDate>
+            <address>Love Square, 594</address>
+            <professor>Eric Solomon</professor>
+         </student>
+         <student id="1">
+            <name>Thomas Weeks</name>
+            <phone>932398781</phone>
+            <gender>F</gender>
+            <birthDate>1998-06-25</birthDate>
+            <registrationDate>2019-12-09</registrationDate>
+            <address>BraveBird Square, 228</address>
+            <professor>Eric Solomon</professor>
+         </student>
+         <student id="2">
+            <name>Heather Woodard</name>
+            <phone>944816124</phone>
+            <gender>F</gender>
+            <birthDate>1997-06-23</birthDate>
+            <registrationDate>2019-07-28</registrationDate>
+            <address>Ramsdale Boulevard, 675</address>
+            <professor>Eric Solomon</professor>
+         </student>
+         <student id="3">
+            <name>Brandon O'Brien</name>
+            <phone>940935601</phone>
+            <gender>F</gender>
+            <birthDate>1999-06-13</birthDate>
+            <registrationDate>2015-10-27</registrationDate>
+            <address>Hightower Avenue, 630</address>
+            <professor>Eric Solomon</professor>
+         </student>
+         <student id="4">
+            <name>Charles Woodard</name>
+            <phone>933512097</phone>
+            <gender>M</gender>
+            <birthDate>1997-06-06</birthDate>
+            <registrationDate>2017-10-05</registrationDate>
+            <address>Ramsdale Square, 324</address>
+            <professor>Eric Solomon</professor>
+         </student>
+         <student id="5">
+            <name>Amy Hawkins</name>
+            <phone>953826771</phone>
+            <gender>M</gender>
+            <birthDate>1995-03-22</birthDate>
+            <registrationDate>2019-04-23</registrationDate>
+            <address>Trafalgar Avenue, 272</address>
+            <professor>Eric Solomon</professor>
+         </student>
+         <student id="6">
+            <name>Christopher Watts</name>
+            <phone>951730920</phone>
+            <gender>M</gender>
+            <birthDate>1997-12-01</birthDate>
+            <registrationDate>2021-06-20</registrationDate>
+            <address>BraveBird Avenue, 451</address>
+            <professor>Eric Solomon</professor>
+         </student>
+         <student id="7">
+            <name>Jessica Connolly</name>
+            <phone>917005883</phone>
+            <gender>F</gender>
+            <birthDate>1996-10-10</birthDate>
+            <registrationDate>2021-07-21</registrationDate>
+            <address>Rock-a-feller Square, 463</address>
+            <professor>Eric Solomon</professor>
+         </student>
+         <student id="8">
+            <name>Joshua Merritt</name>
+            <phone>921247273</phone>
+            <gender>M</gender>
+            <birthDate>2001-01-16</birthDate>
+            <registrationDate>2021-02-14</registrationDate>
+            <address>Ramsdale Street, 263</address>
+            <professor>Eric Solomon</professor>
+         </student>
+         <student id="9">
+            <name>Kimberly Graham</name>
+            <phone>950496555</phone>
+            <gender>F</gender>
+            <birthDate>1995-03-17</birthDate>
+            <registrationDate>2017-01-16</registrationDate>
+            <address>O'Dylan Boulevard, 493</address>
+            <professor>Eric Solomon</professor>
+         </student>
+         <student id="10">
+            <name>Melissa Steele</name>
+            <phone>914618969</phone>
+            <gender>M</gender>
+            <birthDate>1998-05-16</birthDate>
+            <registrationDate>2021-04-28</registrationDate>
+            <address>South Gate Street, 339</address>
+            <professor>Eric Solomon</professor>
+         </student>
+         <student id="11">
+            <name>Jessica Underwood</name>
+            <phone>948282955</phone>
+            <gender>F</gender>
+            <birthDate>2000-01-14</birthDate>
+            <registrationDate>2017-06-27</registrationDate>
+            <address>Trafalgar Street, 431</address>
+            <professor>Eric Solomon</professor>
+         </student>
+         <student id="12">
+            <name>Eric Bowden</name>
+            <phone>913457743</phone>
+            <gender>F</gender>
+            <birthDate>1995-02-19</birthDate>
+            <registrationDate>2018-08-25</registrationDate>
+            <address>West Boulevard, 170</address>
+            <professor>Eric Solomon</professor>
+         </student>
+         <student id="13">
+            <name>Rebecca Middleton</name>
+            <phone>913788147</phone>
+            <gender>F</gender>
+            <birthDate>1999-12-19</birthDate>
+            <registrationDate>2015-03-24</registrationDate>
+            <address>South Gate Boulevard, 252</address>
+            <professor>Eric Solomon</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="18">
+      <name>Nicole Rose</name>
+      <birthdate>1946-07-27</birthdate>
+      <phone>926031310</phone>
+      <address>St.Moon Avenue, 666</address>
+      <students/>
+   </teacher>
+   <teacher id="19">
+      <name>Eric Goldstein</name>
+      <birthdate>1977-04-20</birthdate>
+      <phone>945403342</phone>
+      <address>Queen's Avenue, 437</address>
+      <students>
+         <student id="0">
+            <name>Christina Gallagher</name>
+            <phone>935488679</phone>
+            <gender>F</gender>
+            <birthDate>1996-03-18</birthDate>
+            <registrationDate>2019-01-27</registrationDate>
+            <address>Rock-a-feller Street, 56</address>
+            <professor>Eric Goldstein</professor>
+         </student>
+         <student id="1">
+            <name>Andrew Lawrence</name>
+            <phone>904233800</phone>
+            <gender>M</gender>
+            <birthDate>1995-11-14</birthDate>
+            <registrationDate>2021-04-17</registrationDate>
+            <address>O'Dylan Boulevard, 169</address>
+            <professor>Eric Goldstein</professor>
+         </student>
+         <student id="2">
+            <name>Brittany Barton</name>
+            <phone>909254583</phone>
+            <gender>F</gender>
+            <birthDate>1999-02-02</birthDate>
+            <registrationDate>2019-07-17</registrationDate>
+            <address>Rock-a-feller Square, 194</address>
+            <professor>Eric Goldstein</professor>
+         </student>
+         <student id="3">
+            <name>Michael Puckett</name>
+            <phone>903680047</phone>
+            <gender>F</gender>
+            <birthDate>1995-08-02</birthDate>
+            <registrationDate>2021-09-24</registrationDate>
+            <address>Liverpool Avenue, 119</address>
+            <professor>Eric Goldstein</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="20">
+      <name>John Ross</name>
+      <birthdate>1979-08-22</birthdate>
+      <phone>946762462</phone>
+      <address>St.Moon Boulevard, 697</address>
+      <students>
+         <student id="0">
+            <name>Justin Puckett</name>
+            <phone>961674765</phone>
+            <gender>F</gender>
+            <birthDate>2000-06-11</birthDate>
+            <registrationDate>2021-11-16</registrationDate>
+            <address>O'Dylan Boulevard, 630</address>
+            <professor>John Ross</professor>
+         </student>
+         <student id="1">
+            <name>Christina McLaughlin</name>
+            <phone>963842677</phone>
+            <gender>F</gender>
+            <birthDate>2001-11-27</birthDate>
+            <registrationDate>2019-04-25</registrationDate>
+            <address>Trafalgar Square, 626</address>
+            <professor>John Ross</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="21">
+      <name>Thomas Dougherty</name>
+      <birthdate>1972-02-19</birthdate>
+      <phone>961953333</phone>
+      <address>Rock-a-feller Street, 85</address>
+      <students>
+         <student id="0">
+            <name>James Bowden</name>
+            <phone>915484914</phone>
+            <gender>M</gender>
+            <birthDate>1997-12-15</birthDate>
+            <registrationDate>2016-04-20</registrationDate>
+            <address>O'Dylan Square, 166</address>
+            <professor>Thomas Dougherty</professor>
+         </student>
+         <student id="1">
+            <name>Mark Parks</name>
+            <phone>952710392</phone>
+            <gender>F</gender>
+            <birthDate>1997-02-04</birthDate>
+            <registrationDate>2020-05-12</registrationDate>
+            <address>Hightower Boulevard, 324</address>
+            <professor>Thomas Dougherty</professor>
+         </student>
+         <student id="2">
+            <name>Timothy Case</name>
+            <phone>933368546</phone>
+            <gender>F</gender>
+            <birthDate>1998-11-15</birthDate>
+            <registrationDate>2016-01-02</registrationDate>
+            <address>St.Moon Boulevard, 434</address>
+            <professor>Thomas Dougherty</professor>
+         </student>
+         <student id="3">
+            <name>Brandon Allen</name>
+            <phone>929384613</phone>
+            <gender>M</gender>
+            <birthDate>1999-12-20</birthDate>
+            <registrationDate>2016-05-12</registrationDate>
+            <address>West Boulevard, 54</address>
+            <professor>Thomas Dougherty</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="22">
+      <name>Joshua Middleton</name>
+      <birthdate>1966-10-13</birthdate>
+      <phone>914226565</phone>
+      <address>West Avenue, 283</address>
+      <students>
+         <student id="0">
+            <name>Kimberly O'Brien</name>
+            <phone>961077071</phone>
+            <gender>M</gender>
+            <birthDate>1999-03-07</birthDate>
+            <registrationDate>2020-10-08</registrationDate>
+            <address>Liverpool Avenue, 107</address>
+            <professor>Joshua Middleton</professor>
+         </student>
+         <student id="1">
+            <name>Ryan Watkins</name>
+            <phone>943908439</phone>
+            <gender>M</gender>
+            <birthDate>2000-09-26</birthDate>
+            <registrationDate>2020-12-01</registrationDate>
+            <address>Vinland Avenue, 372</address>
+            <professor>Joshua Middleton</professor>
+         </student>
+         <student id="2">
+            <name>Christopher Cross</name>
+            <phone>927009906</phone>
+            <gender>M</gender>
+            <birthDate>1995-06-25</birthDate>
+            <registrationDate>2019-10-09</registrationDate>
+            <address>Mayweather Street, 260</address>
+            <professor>Joshua Middleton</professor>
+         </student>
+         <student id="3">
+            <name>Kimberly Lucas</name>
+            <phone>966472658</phone>
+            <gender>M</gender>
+            <birthDate>2000-02-20</birthDate>
+            <registrationDate>2021-10-12</registrationDate>
+            <address>Love Boulevard, 687</address>
+            <professor>Joshua Middleton</professor>
+         </student>
+         <student id="4">
+            <name>Rebecca Proctor</name>
+            <phone>928213330</phone>
+            <gender>M</gender>
+            <birthDate>1999-07-20</birthDate>
+            <registrationDate>2021-08-19</registrationDate>
+            <address>Ramsdale Avenue, 399</address>
+            <professor>Joshua Middleton</professor>
+         </student>
+         <student id="5">
+            <name>Lauren Solomon</name>
+            <phone>917128560</phone>
+            <gender>M</gender>
+            <birthDate>1997-05-09</birthDate>
+            <registrationDate>2021-05-27</registrationDate>
+            <address>Pickadilly Avenue, 523</address>
+            <professor>Joshua Middleton</professor>
+         </student>
+         <student id="6">
+            <name>Jonathan Desai</name>
+            <phone>953789195</phone>
+            <gender>M</gender>
+            <birthDate>1995-07-07</birthDate>
+            <registrationDate>2021-01-21</registrationDate>
+            <address>Rock-a-feller Avenue, 678</address>
+            <professor>Joshua Middleton</professor>
+         </student>
+         <student id="7">
+            <name>Steven Parks</name>
+            <phone>933183151</phone>
+            <gender>M</gender>
+            <birthDate>1996-02-06</birthDate>
+            <registrationDate>2015-09-28</registrationDate>
+            <address>Pickadilly Boulevard, 146</address>
+            <professor>Joshua Middleton</professor>
+         </student>
+         <student id="8">
+            <name>Melissa Bowden</name>
+            <phone>947224219</phone>
+            <gender>M</gender>
+            <birthDate>1998-12-23</birthDate>
+            <registrationDate>2020-02-17</registrationDate>
+            <address>Trafalgar Street, 191</address>
+            <professor>Joshua Middleton</professor>
+         </student>
+         <student id="9">
+            <name>Lauren Dougherty</name>
+            <phone>921033283</phone>
+            <gender>M</gender>
+            <birthDate>1997-03-20</birthDate>
+            <registrationDate>2021-05-01</registrationDate>
+            <address>O'Dylan Street, 493</address>
+            <professor>Joshua Middleton</professor>
+         </student>
+         <student id="10">
+            <name>Heather May</name>
+            <phone>928832868</phone>
+            <gender>F</gender>
+            <birthDate>1998-11-03</birthDate>
+            <registrationDate>2017-12-06</registrationDate>
+            <address>Hightower Street, 519</address>
+            <professor>Joshua Middleton</professor>
+         </student>
+         <student id="11">
+            <name>Sarah Vick</name>
+            <phone>934019702</phone>
+            <gender>F</gender>
+            <birthDate>1996-10-27</birthDate>
+            <registrationDate>2021-04-09</registrationDate>
+            <address>Pickadilly Street, 490</address>
+            <professor>Joshua Middleton</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="23">
+      <name>Tiffany McNamara</name>
+      <birthdate>1981-01-27</birthdate>
+      <phone>917322773</phone>
+      <address>St.Moon Boulevard, 357</address>
+      <students>
+         <student id="0">
+            <name>Matthew Lucas</name>
+            <phone>949240413</phone>
+            <gender>F</gender>
+            <birthDate>2001-08-02</birthDate>
+            <registrationDate>2021-09-07</registrationDate>
+            <address>Mayweather Street, 59</address>
+            <professor>Tiffany McNamara</professor>
+         </student>
+         <student id="1">
+            <name>Sarah Woods</name>
+            <phone>915920835</phone>
+            <gender>M</gender>
+            <birthDate>2000-10-17</birthDate>
+            <registrationDate>2015-08-06</registrationDate>
+            <address>Pickadilly Square, 73</address>
+            <professor>Tiffany McNamara</professor>
+         </student>
+         <student id="2">
+            <name>Brandon Walton</name>
+            <phone>958132748</phone>
+            <gender>F</gender>
+            <birthDate>1997-07-16</birthDate>
+            <registrationDate>2016-08-19</registrationDate>
+            <address>Ramsdale Street, 660</address>
+            <professor>Tiffany McNamara</professor>
+         </student>
+         <student id="3">
+            <name>Robert Hoyle</name>
+            <phone>943168459</phone>
+            <gender>M</gender>
+            <birthDate>2000-04-09</birthDate>
+            <registrationDate>2015-07-05</registrationDate>
+            <address>Vinland Street, 649</address>
+            <professor>Tiffany McNamara</professor>
+         </student>
+         <student id="4">
+            <name>Benjamin Whitehead</name>
+            <phone>916339165</phone>
+            <gender>F</gender>
+            <birthDate>2000-05-12</birthDate>
+            <registrationDate>2018-05-16</registrationDate>
+            <address>South Gate Square, 449</address>
+            <professor>Tiffany McNamara</professor>
+         </student>
+         <student id="5">
+            <name>Amanda Proctor</name>
+            <phone>904395223</phone>
+            <gender>F</gender>
+            <birthDate>1997-02-04</birthDate>
+            <registrationDate>2019-10-06</registrationDate>
+            <address>St.Moon Street, 669</address>
+            <professor>Tiffany McNamara</professor>
+         </student>
+         <student id="6">
+            <name>Christina Sharpe</name>
+            <phone>947670116</phone>
+            <gender>F</gender>
+            <birthDate>1999-11-01</birthDate>
+            <registrationDate>2015-05-13</registrationDate>
+            <address>West Square, 464</address>
+            <professor>Tiffany McNamara</professor>
+         </student>
+         <student id="7">
+            <name>Christina Sharpe</name>
+            <phone>934572822</phone>
+            <gender>F</gender>
+            <birthDate>1998-12-10</birthDate>
+            <registrationDate>2020-04-25</registrationDate>
+            <address>Rock-a-feller Street, 528</address>
+            <professor>Tiffany McNamara</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="24">
+      <name>Amy Teague</name>
+      <birthdate>1963-03-03</birthdate>
+      <phone>915515093</phone>
+      <address>Love Street, 524</address>
+      <students>
+         <student id="0">
+            <name>Rachel Wallace</name>
+            <phone>952111953</phone>
+            <gender>M</gender>
+            <birthDate>1998-10-28</birthDate>
+            <registrationDate>2021-10-22</registrationDate>
+            <address>Liverpool Street, 637</address>
+            <professor>Amy Teague</professor>
+         </student>
+         <student id="1">
+            <name>Rachel Walsh</name>
+            <phone>916335802</phone>
+            <gender>M</gender>
+            <birthDate>1999-08-15</birthDate>
+            <registrationDate>2019-04-27</registrationDate>
+            <address>Liverpool Street, 449</address>
+            <professor>Amy Teague</professor>
+         </student>
+         <student id="2">
+            <name>Joshua Eason</name>
+            <phone>961313942</phone>
+            <gender>M</gender>
+            <birthDate>2000-07-24</birthDate>
+            <registrationDate>2016-11-27</registrationDate>
+            <address>BraveBird Avenue, 418</address>
+            <professor>Amy Teague</professor>
+         </student>
+         <student id="3">
+            <name>Brittany O'Brien</name>
+            <phone>946469403</phone>
+            <gender>F</gender>
+            <birthDate>1995-07-08</birthDate>
+            <registrationDate>2019-11-15</registrationDate>
+            <address>Pickadilly Street, 19</address>
+            <professor>Amy Teague</professor>
+         </student>
+         <student id="4">
+            <name>Brandon Moon</name>
+            <phone>907879477</phone>
+            <gender>F</gender>
+            <birthDate>2000-12-19</birthDate>
+            <registrationDate>2021-04-14</registrationDate>
+            <address>BraveBird Boulevard, 348</address>
+            <professor>Amy Teague</professor>
+         </student>
+         <student id="5">
+            <name>Jason Rich</name>
+            <phone>957838556</phone>
+            <gender>M</gender>
+            <birthDate>1995-08-03</birthDate>
+            <registrationDate>2015-06-19</registrationDate>
+            <address>Winston Boulevard, 219</address>
+            <professor>Amy Teague</professor>
+         </student>
+         <student id="6">
+            <name>Steven Wagner</name>
+            <phone>946967222</phone>
+            <gender>M</gender>
+            <birthDate>1996-12-25</birthDate>
+            <registrationDate>2016-06-19</registrationDate>
+            <address>Pickadilly Avenue, 93</address>
+            <professor>Amy Teague</professor>
+         </student>
+         <student id="7">
+            <name>Amanda Middleton</name>
+            <phone>918839660</phone>
+            <gender>F</gender>
+            <birthDate>2001-03-27</birthDate>
+            <registrationDate>2019-02-27</registrationDate>
+            <address>Mayweather Avenue, 615</address>
+            <professor>Amy Teague</professor>
+         </student>
+         <student id="8">
+            <name>Crystal Hoyle</name>
+            <phone>922175502</phone>
+            <gender>F</gender>
+            <birthDate>1995-11-07</birthDate>
+            <registrationDate>2020-08-17</registrationDate>
+            <address>Ramsdale Avenue, 643</address>
+            <professor>Amy Teague</professor>
+         </student>
+         <student id="9">
+            <name>James Hoyle</name>
+            <phone>906751580</phone>
+            <gender>M</gender>
+            <birthDate>1998-11-16</birthDate>
+            <registrationDate>2018-03-03</registrationDate>
+            <address>Rock-a-feller Street, 532</address>
+            <professor>Amy Teague</professor>
+         </student>
+         <student id="10">
+            <name>Daniel Graham</name>
+            <phone>919706611</phone>
+            <gender>F</gender>
+            <birthDate>1995-02-27</birthDate>
+            <registrationDate>2019-09-13</registrationDate>
+            <address>Liverpool Avenue, 289</address>
+            <professor>Amy Teague</professor>
+         </student>
+         <student id="11">
+            <name>Michael Bender</name>
+            <phone>969377493</phone>
+            <gender>F</gender>
+            <birthDate>2001-08-23</birthDate>
+            <registrationDate>2020-05-18</registrationDate>
+            <address>Love Square, 246</address>
+            <professor>Amy Teague</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="25">
+      <name>Crystal Weeks</name>
+      <birthdate>1976-01-12</birthdate>
+      <phone>936779965</phone>
+      <address>Hightower Street, 447</address>
+      <students>
+         <student id="0">
+            <name>John May</name>
+            <phone>950021510</phone>
+            <gender>F</gender>
+            <birthDate>2001-10-26</birthDate>
+            <registrationDate>2020-12-27</registrationDate>
+            <address>South Gate Boulevard, 377</address>
+            <professor>Crystal Weeks</professor>
+         </student>
+         <student id="1">
+            <name>Christopher Solomon</name>
+            <phone>958545474</phone>
+            <gender>F</gender>
+            <birthDate>1996-03-22</birthDate>
+            <registrationDate>2016-08-12</registrationDate>
+            <address>BraveBird Boulevard, 321</address>
+            <professor>Crystal Weeks</professor>
+         </student>
+         <student id="2">
+            <name>Melissa Wagner</name>
+            <phone>933975650</phone>
+            <gender>F</gender>
+            <birthDate>1997-11-10</birthDate>
+            <registrationDate>2016-02-23</registrationDate>
+            <address>Love Avenue, 401</address>
+            <professor>Crystal Weeks</professor>
+         </student>
+         <student id="3">
+            <name>Tiffany Song</name>
+            <phone>967494783</phone>
+            <gender>M</gender>
+            <birthDate>1998-09-15</birthDate>
+            <registrationDate>2017-05-24</registrationDate>
+            <address>St.Moon Avenue, 87</address>
+            <professor>Crystal Weeks</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="26">
+      <name>Emily Eason</name>
+      <birthdate>1965-09-09</birthdate>
+      <phone>915104477</phone>
+      <address>Love Avenue, 198</address>
+      <students>
+         <student id="0">
+            <name>James Wagner</name>
+            <phone>958138784</phone>
+            <gender>F</gender>
+            <birthDate>1998-12-17</birthDate>
+            <registrationDate>2021-05-01</registrationDate>
+            <address>Winston Avenue, 549</address>
+            <professor>Emily Eason</professor>
+         </student>
+         <student id="1">
+            <name>Kevin Walsh</name>
+            <phone>959604690</phone>
+            <gender>M</gender>
+            <birthDate>2000-02-14</birthDate>
+            <registrationDate>2015-01-19</registrationDate>
+            <address>West Boulevard, 420</address>
+            <professor>Emily Eason</professor>
+         </student>
+         <student id="2">
+            <name>Elizabeth Walsh</name>
+            <phone>963154441</phone>
+            <gender>F</gender>
+            <birthDate>2001-04-11</birthDate>
+            <registrationDate>2017-12-14</registrationDate>
+            <address>O'Dylan Street, 258</address>
+            <professor>Emily Eason</professor>
+         </student>
+         <student id="3">
+            <name>Ryan Cross</name>
+            <phone>964708217</phone>
+            <gender>F</gender>
+            <birthDate>1996-02-01</birthDate>
+            <registrationDate>2021-04-28</registrationDate>
+            <address>Rock-a-feller Boulevard, 538</address>
+            <professor>Emily Eason</professor>
+         </student>
+         <student id="4">
+            <name>Megan Weeks</name>
+            <phone>957465113</phone>
+            <gender>F</gender>
+            <birthDate>1995-10-05</birthDate>
+            <registrationDate>2021-09-06</registrationDate>
+            <address>Liverpool Street, 640</address>
+            <professor>Emily Eason</professor>
+         </student>
+         <student id="5">
+            <name>Joshua Middleton</name>
+            <phone>908148529</phone>
+            <gender>F</gender>
+            <birthDate>1998-03-16</birthDate>
+            <registrationDate>2018-12-28</registrationDate>
+            <address>Vinland Avenue, 609</address>
+            <professor>Emily Eason</professor>
+         </student>
+         <student id="6">
+            <name>Benjamin Case</name>
+            <phone>934660499</phone>
+            <gender>F</gender>
+            <birthDate>1997-02-13</birthDate>
+            <registrationDate>2019-04-13</registrationDate>
+            <address>Winston Boulevard, 464</address>
+            <professor>Emily Eason</professor>
+         </student>
+         <student id="7">
+            <name>Anthony Watts</name>
+            <phone>930248228</phone>
+            <gender>M</gender>
+            <birthDate>2000-08-25</birthDate>
+            <registrationDate>2016-04-18</registrationDate>
+            <address>BraveBird Square, 141</address>
+            <professor>Emily Eason</professor>
+         </student>
+         <student id="8">
+            <name>Michael Wallace</name>
+            <phone>933529564</phone>
+            <gender>F</gender>
+            <birthDate>1997-06-24</birthDate>
+            <registrationDate>2017-04-25</registrationDate>
+            <address>Winston Avenue, 305</address>
+            <professor>Emily Eason</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="27">
+      <name>Crystal Rosenthal</name>
+      <birthdate>1960-06-19</birthdate>
+      <phone>961191943</phone>
+      <address>Mayweather Avenue, 697</address>
+      <students>
+         <student id="0">
+            <name>Nicholas Sharpe</name>
+            <phone>900362146</phone>
+            <gender>M</gender>
+            <birthDate>1996-04-07</birthDate>
+            <registrationDate>2015-10-16</registrationDate>
+            <address>South Gate Square, 417</address>
+            <professor>Crystal Rosenthal</professor>
+         </student>
+         <student id="1">
+            <name>Rebecca Johnston</name>
+            <phone>925986018</phone>
+            <gender>F</gender>
+            <birthDate>1997-09-25</birthDate>
+            <registrationDate>2021-02-14</registrationDate>
+            <address>Queen's Avenue, 564</address>
+            <professor>Crystal Rosenthal</professor>
+         </student>
+         <student id="2">
+            <name>Brandon Dougherty</name>
+            <phone>947924152</phone>
+            <gender>F</gender>
+            <birthDate>2000-07-28</birthDate>
+            <registrationDate>2015-09-27</registrationDate>
+            <address>Hightower Street, 520</address>
+            <professor>Crystal Rosenthal</professor>
+         </student>
+         <student id="3">
+            <name>Steven Dougherty</name>
+            <phone>910880839</phone>
+            <gender>F</gender>
+            <birthDate>2001-11-18</birthDate>
+            <registrationDate>2016-10-12</registrationDate>
+            <address>South Gate Avenue, 250</address>
+            <professor>Crystal Rosenthal</professor>
+         </student>
+         <student id="4">
+            <name>Jennifer Wagner</name>
+            <phone>905520356</phone>
+            <gender>F</gender>
+            <birthDate>1998-05-26</birthDate>
+            <registrationDate>2020-10-06</registrationDate>
+            <address>Winston Street, 77</address>
+            <professor>Crystal Rosenthal</professor>
+         </student>
+         <student id="5">
+            <name>Charles Wilkerson</name>
+            <phone>961070790</phone>
+            <gender>M</gender>
+            <birthDate>1997-05-10</birthDate>
+            <registrationDate>2015-04-08</registrationDate>
+            <address>Trafalgar Square, 354</address>
+            <professor>Crystal Rosenthal</professor>
+         </student>
+         <student id="6">
+            <name>Eric Powers</name>
+            <phone>925640187</phone>
+            <gender>F</gender>
+            <birthDate>1996-08-28</birthDate>
+            <registrationDate>2016-01-07</registrationDate>
+            <address>Love Street, 207</address>
+            <professor>Crystal Rosenthal</professor>
+         </student>
+         <student id="7">
+            <name>Jeremy Hinton</name>
+            <phone>916878651</phone>
+            <gender>F</gender>
+            <birthDate>1999-11-28</birthDate>
+            <registrationDate>2015-06-25</registrationDate>
+            <address>O'Dylan Boulevard, 698</address>
+            <professor>Crystal Rosenthal</professor>
+         </student>
+         <student id="8">
+            <name>Crystal Middleton</name>
+            <phone>914562063</phone>
+            <gender>F</gender>
+            <birthDate>2001-12-26</birthDate>
+            <registrationDate>2021-03-14</registrationDate>
+            <address>Ramsdale Avenue, 386</address>
+            <professor>Crystal Rosenthal</professor>
+         </student>
+         <student id="9">
+            <name>Joseph Cross</name>
+            <phone>923183877</phone>
+            <gender>M</gender>
+            <birthDate>1997-05-17</birthDate>
+            <registrationDate>2020-01-15</registrationDate>
+            <address>Rock-a-feller Avenue, 98</address>
+            <professor>Crystal Rosenthal</professor>
+         </student>
+         <student id="10">
+            <name>Matthew Walsh</name>
+            <phone>943428111</phone>
+            <gender>F</gender>
+            <birthDate>1996-09-03</birthDate>
+            <registrationDate>2021-08-17</registrationDate>
+            <address>Trafalgar Square, 32</address>
+            <professor>Crystal Rosenthal</professor>
+         </student>
+         <student id="11">
+            <name>Michael Desai</name>
+            <phone>915935656</phone>
+            <gender>M</gender>
+            <birthDate>1995-10-28</birthDate>
+            <registrationDate>2016-04-13</registrationDate>
+            <address>St.Moon Square, 112</address>
+            <professor>Crystal Rosenthal</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="28">
+      <name>Lauren Branch</name>
+      <birthdate>1982-03-14</birthdate>
+      <phone>914086959</phone>
+      <address>Vinland Boulevard, 444</address>
+      <students>
+         <student id="0">
+            <name>Justin Christensen</name>
+            <phone>916113253</phone>
+            <gender>M</gender>
+            <birthDate>2001-07-02</birthDate>
+            <registrationDate>2015-08-22</registrationDate>
+            <address>Ramsdale Street, 576</address>
+            <professor>Lauren Branch</professor>
+         </student>
+         <student id="1">
+            <name>John May</name>
+            <phone>949627002</phone>
+            <gender>M</gender>
+            <birthDate>1997-08-04</birthDate>
+            <registrationDate>2017-05-05</registrationDate>
+            <address>Love Boulevard, 695</address>
+            <professor>Lauren Branch</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="29">
+      <name>Patrick Barton</name>
+      <birthdate>1958-08-11</birthdate>
+      <phone>928941726</phone>
+      <address>BraveBird Boulevard, 94</address>
+      <students>
+         <student id="0">
+            <name>Kevin Connolly</name>
+            <phone>919345043</phone>
+            <gender>M</gender>
+            <birthDate>2001-07-10</birthDate>
+            <registrationDate>2018-12-03</registrationDate>
+            <address>South Gate Square, 554</address>
+            <professor>Patrick Barton</professor>
+         </student>
+         <student id="1">
+            <name>Nicholas Gallagher</name>
+            <phone>939597305</phone>
+            <gender>M</gender>
+            <birthDate>1995-04-14</birthDate>
+            <registrationDate>2017-07-13</registrationDate>
+            <address>South Gate Square, 679</address>
+            <professor>Patrick Barton</professor>
+         </student>
+         <student id="2">
+            <name>James Case</name>
+            <phone>964146769</phone>
+            <gender>F</gender>
+            <birthDate>2000-06-04</birthDate>
+            <registrationDate>2015-01-22</registrationDate>
+            <address>Ramsdale Street, 19</address>
+            <professor>Patrick Barton</professor>
+         </student>
+         <student id="3">
+            <name>Daniel Hinton</name>
+            <phone>930889788</phone>
+            <gender>M</gender>
+            <birthDate>1995-11-16</birthDate>
+            <registrationDate>2016-06-08</registrationDate>
+            <address>Pickadilly Square, 478</address>
+            <professor>Patrick Barton</professor>
+         </student>
+         <student id="4">
+            <name>Jessica Ross</name>
+            <phone>921362125</phone>
+            <gender>M</gender>
+            <birthDate>2000-04-01</birthDate>
+            <registrationDate>2017-09-24</registrationDate>
+            <address>Queen's Street, 558</address>
+            <professor>Patrick Barton</professor>
+         </student>
+         <student id="5">
+            <name>Amanda Goldstein</name>
+            <phone>912656250</phone>
+            <gender>F</gender>
+            <birthDate>2001-08-05</birthDate>
+            <registrationDate>2019-03-20</registrationDate>
+            <address>Queen's Boulevard, 228</address>
+            <professor>Patrick Barton</professor>
+         </student>
+         <student id="6">
+            <name>Melissa Woodard</name>
+            <phone>906110149</phone>
+            <gender>M</gender>
+            <birthDate>1997-12-14</birthDate>
+            <registrationDate>2021-04-14</registrationDate>
+            <address>St.Moon Boulevard, 642</address>
+            <professor>Patrick Barton</professor>
+         </student>
+         <student id="7">
+            <name>Eric Steele</name>
+            <phone>940985438</phone>
+            <gender>M</gender>
+            <birthDate>1998-07-23</birthDate>
+            <registrationDate>2021-05-25</registrationDate>
+            <address>Rock-a-feller Avenue, 286</address>
+            <professor>Patrick Barton</professor>
+         </student>
+         <student id="8">
+            <name>Jason Cooper</name>
+            <phone>960606234</phone>
+            <gender>F</gender>
+            <birthDate>1995-10-19</birthDate>
+            <registrationDate>2016-05-27</registrationDate>
+            <address>Vinland Street, 153</address>
+            <professor>Patrick Barton</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="30">
+      <name>Nicole May</name>
+      <birthdate>1948-07-14</birthdate>
+      <phone>936608483</phone>
+      <address>Pickadilly Square, 325</address>
+      <students>
+         <student id="0">
+            <name>James Marsh</name>
+            <phone>964448231</phone>
+            <gender>M</gender>
+            <birthDate>1995-08-14</birthDate>
+            <registrationDate>2015-07-07</registrationDate>
+            <address>Winston Boulevard, 15</address>
+            <professor>Nicole May</professor>
+         </student>
+         <student id="1">
+            <name>Lauren Christensen</name>
+            <phone>909149066</phone>
+            <gender>M</gender>
+            <birthDate>2000-11-04</birthDate>
+            <registrationDate>2015-02-12</registrationDate>
+            <address>St.Moon Square, 615</address>
+            <professor>Nicole May</professor>
+         </student>
+         <student id="2">
+            <name>Justin Christensen</name>
+            <phone>934804122</phone>
+            <gender>M</gender>
+            <birthDate>1996-07-19</birthDate>
+            <registrationDate>2015-07-21</registrationDate>
+            <address>Ramsdale Street, 216</address>
+            <professor>Nicole May</professor>
+         </student>
+         <student id="3">
+            <name>Sarah Allen</name>
+            <phone>928865501</phone>
+            <gender>M</gender>
+            <birthDate>1995-07-16</birthDate>
+            <registrationDate>2018-03-22</registrationDate>
+            <address>Pickadilly Avenue, 698</address>
+            <professor>Nicole May</professor>
+         </student>
+         <student id="4">
+            <name>Christina Wilkerson</name>
+            <phone>910710524</phone>
+            <gender>F</gender>
+            <birthDate>2001-03-25</birthDate>
+            <registrationDate>2017-08-08</registrationDate>
+            <address>Liverpool Boulevard, 337</address>
+            <professor>Nicole May</professor>
+         </student>
+         <student id="5">
+            <name>Amber Merritt</name>
+            <phone>925457357</phone>
+            <gender>F</gender>
+            <birthDate>2001-04-11</birthDate>
+            <registrationDate>2015-09-19</registrationDate>
+            <address>O'Dylan Square, 138</address>
+            <professor>Nicole May</professor>
+         </student>
+         <student id="6">
+            <name>Steven Hamilton</name>
+            <phone>918001922</phone>
+            <gender>F</gender>
+            <birthDate>1995-09-28</birthDate>
+            <registrationDate>2015-08-23</registrationDate>
+            <address>Liverpool Street, 9</address>
+            <professor>Nicole May</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="31">
+      <name>Joseph Cross</name>
+      <birthdate>1958-02-27</birthdate>
+      <phone>933584131</phone>
+      <address>Mayweather Square, 48</address>
+      <students>
+         <student id="0">
+            <name>Elizabeth Diaz</name>
+            <phone>932269684</phone>
+            <gender>F</gender>
+            <birthDate>1999-11-08</birthDate>
+            <registrationDate>2020-11-03</registrationDate>
+            <address>Rock-a-feller Boulevard, 264</address>
+            <professor>Joseph Cross</professor>
+         </student>
+         <student id="1">
+            <name>Matthew Grant</name>
+            <phone>945296586</phone>
+            <gender>M</gender>
+            <birthDate>1997-11-24</birthDate>
+            <registrationDate>2021-01-21</registrationDate>
+            <address>West Street, 525</address>
+            <professor>Joseph Cross</professor>
+         </student>
+         <student id="2">
+            <name>Benjamin Morgan</name>
+            <phone>920254435</phone>
+            <gender>F</gender>
+            <birthDate>2000-03-17</birthDate>
+            <registrationDate>2021-06-04</registrationDate>
+            <address>Ramsdale Square, 249</address>
+            <professor>Joseph Cross</professor>
+         </student>
+         <student id="3">
+            <name>Kyle Cross</name>
+            <phone>947771478</phone>
+            <gender>F</gender>
+            <birthDate>1999-08-27</birthDate>
+            <registrationDate>2019-11-22</registrationDate>
+            <address>St.Moon Avenue, 287</address>
+            <professor>Joseph Cross</professor>
+         </student>
+         <student id="4">
+            <name>Danielle Ross</name>
+            <phone>938901680</phone>
+            <gender>M</gender>
+            <birthDate>1999-10-23</birthDate>
+            <registrationDate>2020-08-02</registrationDate>
+            <address>Trafalgar Boulevard, 691</address>
+            <professor>Joseph Cross</professor>
+         </student>
+         <student id="5">
+            <name>Brittany Holmes</name>
+            <phone>945981661</phone>
+            <gender>F</gender>
+            <birthDate>2001-12-11</birthDate>
+            <registrationDate>2016-07-17</registrationDate>
+            <address>Liverpool Square, 270</address>
+            <professor>Joseph Cross</professor>
+         </student>
+         <student id="6">
+            <name>Eric Graham</name>
+            <phone>939060539</phone>
+            <gender>M</gender>
+            <birthDate>1995-11-26</birthDate>
+            <registrationDate>2021-03-05</registrationDate>
+            <address>West Boulevard, 608</address>
+            <professor>Joseph Cross</professor>
+         </student>
+         <student id="7">
+            <name>Laura Lucas</name>
+            <phone>914607522</phone>
+            <gender>F</gender>
+            <birthDate>1999-01-06</birthDate>
+            <registrationDate>2016-11-08</registrationDate>
+            <address>Queen's Avenue, 624</address>
+            <professor>Joseph Cross</professor>
+         </student>
+         <student id="8">
+            <name>Eric Branch</name>
+            <phone>910612108</phone>
+            <gender>M</gender>
+            <birthDate>2000-04-11</birthDate>
+            <registrationDate>2021-02-08</registrationDate>
+            <address>St.Moon Square, 206</address>
+            <professor>Joseph Cross</professor>
+         </student>
+         <student id="9">
+            <name>James Dougherty</name>
+            <phone>956586394</phone>
+            <gender>F</gender>
+            <birthDate>1995-05-23</birthDate>
+            <registrationDate>2017-08-03</registrationDate>
+            <address>West Avenue, 307</address>
+            <professor>Joseph Cross</professor>
+         </student>
+         <student id="10">
+            <name>Aaron Song</name>
+            <phone>918903030</phone>
+            <gender>M</gender>
+            <birthDate>1997-11-21</birthDate>
+            <registrationDate>2017-08-02</registrationDate>
+            <address>Ramsdale Avenue, 539</address>
+            <professor>Joseph Cross</professor>
+         </student>
+         <student id="11">
+            <name>Thomas Parks</name>
+            <phone>945139135</phone>
+            <gender>M</gender>
+            <birthDate>1995-01-27</birthDate>
+            <registrationDate>2017-04-26</registrationDate>
+            <address>Rock-a-feller Boulevard, 562</address>
+            <professor>Joseph Cross</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="32">
+      <name>Michael Graham</name>
+      <birthdate>1984-10-21</birthdate>
+      <phone>943355450</phone>
+      <address>BraveBird Avenue, 58</address>
+      <students>
+         <student id="0">
+            <name>John Johnston</name>
+            <phone>962042344</phone>
+            <gender>M</gender>
+            <birthDate>1997-05-12</birthDate>
+            <registrationDate>2017-05-16</registrationDate>
+            <address>Rock-a-feller Boulevard, 162</address>
+            <professor>Michael Graham</professor>
+         </student>
+         <student id="1">
+            <name>Charles Branch</name>
+            <phone>910511481</phone>
+            <gender>M</gender>
+            <birthDate>1997-07-19</birthDate>
+            <registrationDate>2017-11-25</registrationDate>
+            <address>Ramsdale Street, 498</address>
+            <professor>Michael Graham</professor>
+         </student>
+         <student id="2">
+            <name>Megan Hinton</name>
+            <phone>955452608</phone>
+            <gender>M</gender>
+            <birthDate>1999-05-17</birthDate>
+            <registrationDate>2021-01-27</registrationDate>
+            <address>St.Moon Avenue, 192</address>
+            <professor>Michael Graham</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="33">
+      <name>Eric Walsh</name>
+      <birthdate>1970-05-17</birthdate>
+      <phone>961728666</phone>
+      <address>Trafalgar Square, 413</address>
+      <students>
+         <student id="0">
+            <name>Brandon Marsh</name>
+            <phone>925321321</phone>
+            <gender>F</gender>
+            <birthDate>1995-04-13</birthDate>
+            <registrationDate>2020-11-02</registrationDate>
+            <address>Rock-a-feller Square, 619</address>
+            <professor>Eric Walsh</professor>
+         </student>
+         <student id="1">
+            <name>Kevin Marsh</name>
+            <phone>907894487</phone>
+            <gender>F</gender>
+            <birthDate>1998-10-15</birthDate>
+            <registrationDate>2020-11-13</registrationDate>
+            <address>Queen's Square, 364</address>
+            <professor>Eric Walsh</professor>
+         </student>
+         <student id="2">
+            <name>Ryan Lawrence</name>
+            <phone>948241052</phone>
+            <gender>M</gender>
+            <birthDate>1997-07-09</birthDate>
+            <registrationDate>2020-11-23</registrationDate>
+            <address>Vinland Street, 265</address>
+            <professor>Eric Walsh</professor>
+         </student>
+         <student id="3">
+            <name>Megan Walsh</name>
+            <phone>914243014</phone>
+            <gender>F</gender>
+            <birthDate>1996-10-03</birthDate>
+            <registrationDate>2021-08-23</registrationDate>
+            <address>Trafalgar Avenue, 594</address>
+            <professor>Eric Walsh</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="34">
+      <name>Michelle Cross</name>
+      <birthdate>1954-03-19</birthdate>
+      <phone>962580775</phone>
+      <address>Vinland Square, 96</address>
+      <students>
+         <student id="0">
+            <name>Emily Raynor</name>
+            <phone>958163498</phone>
+            <gender>F</gender>
+            <birthDate>1998-08-16</birthDate>
+            <registrationDate>2015-08-10</registrationDate>
+            <address>Liverpool Avenue, 423</address>
+            <professor>Michelle Cross</professor>
+         </student>
+         <student id="1">
+            <name>Timothy Goldstein</name>
+            <phone>912625852</phone>
+            <gender>F</gender>
+            <birthDate>1998-07-11</birthDate>
+            <registrationDate>2016-01-02</registrationDate>
+            <address>Winston Avenue, 92</address>
+            <professor>Michelle Cross</professor>
+         </student>
+         <student id="2">
+            <name>Timothy Bowden</name>
+            <phone>957901177</phone>
+            <gender>M</gender>
+            <birthDate>1996-01-13</birthDate>
+            <registrationDate>2016-06-28</registrationDate>
+            <address>Queen's Square, 342</address>
+            <professor>Michelle Cross</professor>
+         </student>
+         <student id="3">
+            <name>Kyle Raynor</name>
+            <phone>940968969</phone>
+            <gender>M</gender>
+            <birthDate>1995-06-24</birthDate>
+            <registrationDate>2016-12-27</registrationDate>
+            <address>Liverpool Avenue, 325</address>
+            <professor>Michelle Cross</professor>
+         </student>
+         <student id="4">
+            <name>Daniel O'Brien</name>
+            <phone>958719666</phone>
+            <gender>M</gender>
+            <birthDate>1999-07-13</birthDate>
+            <registrationDate>2020-11-19</registrationDate>
+            <address>O'Dylan Avenue, 603</address>
+            <professor>Michelle Cross</professor>
+         </student>
+         <student id="5">
+            <name>Brandon Weeks</name>
+            <phone>961908035</phone>
+            <gender>F</gender>
+            <birthDate>1998-03-03</birthDate>
+            <registrationDate>2020-10-03</registrationDate>
+            <address>Rock-a-feller Boulevard, 36</address>
+            <professor>Michelle Cross</professor>
+         </student>
+         <student id="6">
+            <name>Daniel Walton</name>
+            <phone>901825356</phone>
+            <gender>M</gender>
+            <birthDate>1995-04-10</birthDate>
+            <registrationDate>2021-06-22</registrationDate>
+            <address>West Avenue, 347</address>
+            <professor>Michelle Cross</professor>
+         </student>
+         <student id="7">
+            <name>Jonathan Cooper</name>
+            <phone>901251358</phone>
+            <gender>F</gender>
+            <birthDate>1999-01-12</birthDate>
+            <registrationDate>2015-12-13</registrationDate>
+            <address>Pickadilly Boulevard, 484</address>
+            <professor>Michelle Cross</professor>
+         </student>
+         <student id="8">
+            <name>Michelle Hamilton</name>
+            <phone>911952159</phone>
+            <gender>F</gender>
+            <birthDate>1999-01-08</birthDate>
+            <registrationDate>2017-07-06</registrationDate>
+            <address>Trafalgar Boulevard, 23</address>
+            <professor>Michelle Cross</professor>
+         </student>
+         <student id="9">
+            <name>Lauren McLaughlin</name>
+            <phone>943112047</phone>
+            <gender>M</gender>
+            <birthDate>1995-02-11</birthDate>
+            <registrationDate>2021-08-04</registrationDate>
+            <address>Queen's Square, 670</address>
+            <professor>Michelle Cross</professor>
+         </student>
+         <student id="10">
+            <name>Jennifer Hawkins</name>
+            <phone>945701906</phone>
+            <gender>F</gender>
+            <birthDate>1996-03-09</birthDate>
+            <registrationDate>2017-05-06</registrationDate>
+            <address>Ramsdale Avenue, 165</address>
+            <professor>Michelle Cross</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="35">
+      <name>Heather Johnston</name>
+      <birthdate>1983-02-25</birthdate>
+      <phone>959432132</phone>
+      <address>O'Dylan Boulevard, 573</address>
+      <students>
+         <student id="0">
+            <name>Christina Case</name>
+            <phone>912256902</phone>
+            <gender>M</gender>
+            <birthDate>1998-09-08</birthDate>
+            <registrationDate>2016-05-11</registrationDate>
+            <address>Liverpool Boulevard, 275</address>
+            <professor>Heather Johnston</professor>
+         </student>
+         <student id="1">
+            <name>Melissa Morgan</name>
+            <phone>950320391</phone>
+            <gender>M</gender>
+            <birthDate>1995-03-08</birthDate>
+            <registrationDate>2016-12-27</registrationDate>
+            <address>Rock-a-feller Avenue, 529</address>
+            <professor>Heather Johnston</professor>
+         </student>
+         <student id="2">
+            <name>Jennifer Proctor</name>
+            <phone>927494568</phone>
+            <gender>M</gender>
+            <birthDate>2000-02-27</birthDate>
+            <registrationDate>2015-01-21</registrationDate>
+            <address>Liverpool Square, 402</address>
+            <professor>Heather Johnston</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="36">
+      <name>Megan Hoyle</name>
+      <birthdate>1975-08-11</birthdate>
+      <phone>919846410</phone>
+      <address>Love Square, 682</address>
+      <students>
+         <student id="0">
+            <name>Amber McLaughlin</name>
+            <phone>941731985</phone>
+            <gender>F</gender>
+            <birthDate>1995-02-10</birthDate>
+            <registrationDate>2021-07-18</registrationDate>
+            <address>Pickadilly Square, 292</address>
+            <professor>Megan Hoyle</professor>
+         </student>
+         <student id="1">
+            <name>James Mangum</name>
+            <phone>927726914</phone>
+            <gender>M</gender>
+            <birthDate>1999-11-15</birthDate>
+            <registrationDate>2019-06-17</registrationDate>
+            <address>Vinland Street, 63</address>
+            <professor>Megan Hoyle</professor>
+         </student>
+         <student id="2">
+            <name>Stephen Song</name>
+            <phone>968817061</phone>
+            <gender>M</gender>
+            <birthDate>1997-06-02</birthDate>
+            <registrationDate>2015-05-07</registrationDate>
+            <address>Hightower Street, 104</address>
+            <professor>Megan Hoyle</professor>
+         </student>
+         <student id="3">
+            <name>Ashley Holmes</name>
+            <phone>959697823</phone>
+            <gender>F</gender>
+            <birthDate>1996-11-04</birthDate>
+            <registrationDate>2016-05-03</registrationDate>
+            <address>Love Street, 621</address>
+            <professor>Megan Hoyle</professor>
+         </student>
+         <student id="4">
+            <name>Megan Jones</name>
+            <phone>964011518</phone>
+            <gender>M</gender>
+            <birthDate>1998-05-18</birthDate>
+            <registrationDate>2017-04-06</registrationDate>
+            <address>Hightower Square, 82</address>
+            <professor>Megan Hoyle</professor>
+         </student>
+         <student id="5">
+            <name>Lauren Christensen</name>
+            <phone>933100245</phone>
+            <gender>F</gender>
+            <birthDate>2000-12-03</birthDate>
+            <registrationDate>2019-03-08</registrationDate>
+            <address>West Square, 47</address>
+            <professor>Megan Hoyle</professor>
+         </student>
+         <student id="6">
+            <name>Joshua May</name>
+            <phone>944113934</phone>
+            <gender>F</gender>
+            <birthDate>2001-10-04</birthDate>
+            <registrationDate>2019-12-01</registrationDate>
+            <address>Winston Street, 401</address>
+            <professor>Megan Hoyle</professor>
+         </student>
+         <student id="7">
+            <name>Steven Branch</name>
+            <phone>947404401</phone>
+            <gender>M</gender>
+            <birthDate>2000-02-06</birthDate>
+            <registrationDate>2015-12-18</registrationDate>
+            <address>Vinland Street, 344</address>
+            <professor>Megan Hoyle</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="37">
+      <name>Charles Connolly</name>
+      <birthdate>1969-10-16</birthdate>
+      <phone>904935903</phone>
+      <address>Mayweather Street, 380</address>
+      <students>
+         <student id="0">
+            <name>Rebecca Monroe</name>
+            <phone>947621124</phone>
+            <gender>F</gender>
+            <birthDate>2000-07-24</birthDate>
+            <registrationDate>2017-02-13</registrationDate>
+            <address>Rock-a-feller Square, 17</address>
+            <professor>Charles Connolly</professor>
+         </student>
+         <student id="1">
+            <name>Brittany Dougherty</name>
+            <phone>928310330</phone>
+            <gender>M</gender>
+            <birthDate>2001-04-24</birthDate>
+            <registrationDate>2020-01-15</registrationDate>
+            <address>Pickadilly Street, 475</address>
+            <professor>Charles Connolly</professor>
+         </student>
+         <student id="2">
+            <name>Kevin Rich</name>
+            <phone>904799473</phone>
+            <gender>F</gender>
+            <birthDate>2001-02-21</birthDate>
+            <registrationDate>2017-02-07</registrationDate>
+            <address>BraveBird Avenue, 562</address>
+            <professor>Charles Connolly</professor>
+         </student>
+         <student id="3">
+            <name>Andrew Proctor</name>
+            <phone>951798677</phone>
+            <gender>M</gender>
+            <birthDate>1995-10-22</birthDate>
+            <registrationDate>2015-03-02</registrationDate>
+            <address>Queen's Street, 220</address>
+            <professor>Charles Connolly</professor>
+         </student>
+         <student id="4">
+            <name>Daniel Goldstein</name>
+            <phone>965554835</phone>
+            <gender>M</gender>
+            <birthDate>1996-04-04</birthDate>
+            <registrationDate>2019-12-26</registrationDate>
+            <address>Ramsdale Avenue, 622</address>
+            <professor>Charles Connolly</professor>
+         </student>
+         <student id="5">
+            <name>William Hamilton</name>
+            <phone>938358456</phone>
+            <gender>M</gender>
+            <birthDate>1995-09-20</birthDate>
+            <registrationDate>2016-11-23</registrationDate>
+            <address>BraveBird Square, 639</address>
+            <professor>Charles Connolly</professor>
+         </student>
+         <student id="6">
+            <name>Charles Merritt</name>
+            <phone>929326828</phone>
+            <gender>M</gender>
+            <birthDate>1995-11-01</birthDate>
+            <registrationDate>2020-10-07</registrationDate>
+            <address>West Street, 539</address>
+            <professor>Charles Connolly</professor>
+         </student>
+         <student id="7">
+            <name>Anthony Barton</name>
+            <phone>910951701</phone>
+            <gender>F</gender>
+            <birthDate>2000-06-27</birthDate>
+            <registrationDate>2017-12-21</registrationDate>
+            <address>Winston Avenue, 330</address>
+            <professor>Charles Connolly</professor>
+         </student>
+         <student id="8">
+            <name>Matthew Puckett</name>
+            <phone>900805503</phone>
+            <gender>M</gender>
+            <birthDate>2001-09-27</birthDate>
+            <registrationDate>2015-03-11</registrationDate>
+            <address>Trafalgar Boulevard, 195</address>
+            <professor>Charles Connolly</professor>
+         </student>
+         <student id="9">
+            <name>Robert Hardin</name>
+            <phone>924116978</phone>
+            <gender>M</gender>
+            <birthDate>1999-12-25</birthDate>
+            <registrationDate>2015-06-24</registrationDate>
+            <address>Liverpool Street, 361</address>
+            <professor>Charles Connolly</professor>
+         </student>
+         <student id="10">
+            <name>Stephanie May</name>
+            <phone>925084494</phone>
+            <gender>F</gender>
+            <birthDate>1996-09-26</birthDate>
+            <registrationDate>2018-05-16</registrationDate>
+            <address>Winston Boulevard, 260</address>
+            <professor>Charles Connolly</professor>
+         </student>
+         <student id="11">
+            <name>Jessica Moon</name>
+            <phone>920409039</phone>
+            <gender>M</gender>
+            <birthDate>1995-07-04</birthDate>
+            <registrationDate>2021-08-06</registrationDate>
+            <address>Winston Street, 271</address>
+            <professor>Charles Connolly</professor>
+         </student>
+         <student id="12">
+            <name>Amy O'Brien</name>
+            <phone>960847795</phone>
+            <gender>M</gender>
+            <birthDate>1999-07-26</birthDate>
+            <registrationDate>2016-10-09</registrationDate>
+            <address>West Street, 489</address>
+            <professor>Charles Connolly</professor>
+         </student>
+         <student id="13">
+            <name>Amber Hewitt</name>
+            <phone>952460095</phone>
+            <gender>F</gender>
+            <birthDate>2001-09-13</birthDate>
+            <registrationDate>2021-11-20</registrationDate>
+            <address>Pickadilly Avenue, 31</address>
+            <professor>Charles Connolly</professor>
+         </student>
+      </students>
+   </teacher>
+   <teacher id="38">
+      <name>Jacob Parks</name>
+      <birthdate>1968-05-12</birthdate>
+      <phone>940508723</phone>
+      <address>St.Moon Avenue, 460</address>
+      <students>
+         <student id="0">
+            <name>Brittany Hewitt</name>
+            <phone>909419275</phone>
+            <gender>M</gender>
+            <birthDate>2000-01-12</birthDate>
+            <registrationDate>2018-03-02</registrationDate>
+            <address>South Gate Boulevard, 460</address>
+            <professor>Jacob Parks</professor>
+         </student>
+         <student id="1">
+            <name>Kevin Ross</name>
+            <phone>969606984</phone>
+            <gender>F</gender>
+            <birthDate>1999-09-10</birthDate>
+            <registrationDate>2016-08-07</registrationDate>
+            <address>Pickadilly Square, 53</address>
+            <professor>Jacob Parks</professor>
+         </student>
+         <student id="2">
+            <name>John Woods</name>
+            <phone>941715223</phone>
+            <gender>M</gender>
+            <birthDate>1998-11-17</birthDate>
+            <registrationDate>2017-04-05</registrationDate>
+            <address>Pickadilly Boulevard, 638</address>
+            <professor>Jacob Parks</professor>
+         </student>
+         <student id="3">
+            <name>Richard Joseph</name>
+            <phone>937347074</phone>
+            <gender>F</gender>
+            <birthDate>2000-06-27</birthDate>
+            <registrationDate>2020-12-07</registrationDate>
+            <address>Ramsdale Avenue, 18</address>
+            <professor>Jacob Parks</professor>
+         </student>
+         <student id="4">
+            <name>Jeffrey Parks</name>
+            <phone>907146973</phone>
+            <gender>F</gender>
+            <birthDate>2001-04-01</birthDate>
+            <registrationDate>2019-11-14</registrationDate>
+            <address>West Street, 336</address>
+            <professor>Jacob Parks</professor>
+         </student>
+         <student id="5">
+            <name>Eric Graham</name>
+            <phone>960105948</phone>
+            <gender>M</gender>
+            <birthDate>1997-05-25</birthDate>
+            <registrationDate>2015-11-12</registrationDate>
+            <address>Winston Square, 159</address>
+            <professor>Jacob Parks</professor>
+         </student>
+         <student id="6">
+            <name>Jason Branch</name>
+            <phone>966878243</phone>
+            <gender>M</gender>
+            <birthDate>2000-06-13</birthDate>
+            <registrationDate>2021-04-28</registrationDate>
+            <address>Love Square, 310</address>
+            <professor>Jacob Parks</professor>
+         </student>
+         <student id="7">
+            <name>Brandon Wallace</name>
+            <phone>912645315</phone>
+            <gender>F</gender>
+            <birthDate>1999-05-09</birthDate>
+            <registrationDate>2015-03-13</registrationDate>
+            <address>Liverpool Street, 572</address>
+            <professor>Jacob Parks</professor>
+         </student>
+         <student id="8">
+            <name>Richard Morgan</name>
+            <phone>944632376</phone>
+            <gender>M</gender>
+            <birthDate>1999-09-20</birthDate>
+            <registrationDate>2017-11-21</registrationDate>
+            <address>Pickadilly Avenue, 235</address>
+            <professor>Jacob Parks</professor>
+         </student>
+         <student id="9">
+            <name>Andrew Hall</name>
+            <phone>939847378</phone>
+            <gender>M</gender>
+            <birthDate>1996-11-01</birthDate>
+            <registrationDate>2019-08-07</registrationDate>
+            <address>Liverpool Avenue, 579</address>
+            <professor>Jacob Parks</professor>
+         </student>
+         <student id="10">
+            <name>Sarah Hinton</name>
+            <phone>953001983</phone>
+            <gender>M</gender>
+            <birthDate>1995-12-01</birthDate>
+            <registrationDate>2018-01-12</registrationDate>
+            <address>South Gate Boulevard, 139</address>
+            <professor>Jacob Parks</professor>
+         </student>
+         <student id="11">
+            <name>Ryan Wagner</name>
+            <phone>926061289</phone>
+            <gender>F</gender>
+            <birthDate>1999-04-09</birthDate>
+            <registrationDate>2015-11-27</registrationDate>
+            <address>Love Square, 411</address>
+            <professor>Jacob Parks</professor>
+         </student>
+         <student id="12">
+            <name>Sarah Weeks</name>
+            <phone>902555607</phone>
+            <gender>M</gender>
+            <birthDate>2000-09-15</birthDate>
+            <registrationDate>2019-02-11</registrationDate>
+            <address>South Gate Street, 256</address>
+            <professor>Jacob Parks</professor>
+         </student>
+         <student id="13">
+            <name>Amber Barton</name>
+            <phone>931626333</phone>
+            <gender>F</gender>
+            <birthDate>1997-06-27</birthDate>
+            <registrationDate>2016-11-14</registrationDate>
+            <address>Ramsdale Square, 261</address>
+            <professor>Jacob Parks</professor>
+         </student>
+      </students>
+   </teacher>
+</class>
