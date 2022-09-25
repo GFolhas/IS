@@ -4,6 +4,12 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.io.File;
@@ -26,7 +32,7 @@ public class App {
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
             Random nt = new Random();
-            int numberOfTeachers = nt.nextInt(40-1) + 1;
+            int numberOfTeachers = nt.nextInt(80-30) + 30;
             Teachers teacherList = new Teachers();
             teacherList.setTeacher(new ArrayList<Teacher>());
 
@@ -39,6 +45,7 @@ public class App {
                 "Case","Christensen","Parks","Hardin","Lucas","Eason","Davidson","Whitehead","Rose"};
 
 
+            int totalStudents = 0;
 
             for(int i = 0; i < numberOfTeachers; i++){
                 Students sl = new Students();
@@ -47,7 +54,8 @@ public class App {
                 teacherList.getTeacher().add(t);
 
                 Random stud = new Random();
-                int numberOfStudents = stud.nextInt(15-0) + 0;
+                int numberOfStudents = stud.nextInt(25-0) + 0;
+                totalStudents += numberOfStudents;
                 
                 for(int j = 0; j < numberOfStudents; j++){
                     Student s = createStudent(fnames, lnames, j, t.getName());
@@ -56,58 +64,33 @@ public class App {
             }
 
 
-            /* Students sl2 = new Students();
-            Students sl3 = new Students(); */
+            String path = System.getProperty("user.dir") + "\\SchoolXML.xml";
 
-           /*  sl2.setStudents(new ArrayList<Student>());
-            sl3.setStudents(new ArrayList<Student>()); */
-
-            
-            /* Teacher t1 = new Teacher(1, "Ernesto Costa", LocalDate.parse("1958-05-10"), 910475233, "Pinhal de Marrocos", sl1);
-            Teacher t2 = new Teacher(2, "Bernardette Ribeiro", LocalDate.parse("1954-12-25"), 913478991, "Bairro Norton de Matos", sl2);
-            Teacher t3 = new Teacher(3, "Paulo de Carvalho", LocalDate.parse("1969-11-09"), 936212683, "Rua Fonte da Talha", sl3);
-            
-            Student s1 = new Student(1, "Goncalo Folhas", 925798577, "M", LocalDate.parse("2001-09-30"), LocalDate.parse("2022-09-01"), "Rua Vale da Estrada", t1.getName());
-            Student s2 = new Student(2, "Joao Vaz", 910976234, "M", LocalDate.parse("2001-04-12"), LocalDate.parse("2022-09-01"), "Rua de Condeixa", t1.getName());
-            
-            Student s3 = new Student(3, "Leonor Paulo", 928765299, "F", LocalDate.parse("2000-12-18"), LocalDate.parse("2022-09-04"), "Vale da Murta", t2.getName());
-            
-            Student s4 = new Student(4, "Bianca Ramalho", 934208007, "F", LocalDate.parse("2002-06-02"), LocalDate.parse("2021-07-24"), "Rua Marco da Silva", t3.getName());
-            Student s5 = new Student(5, "Francisco Carreira", 910772194, "M", LocalDate.parse("2001-02-28"), LocalDate.parse("2022-07-21"), "Rua do Brazil", t3.getName());
-            Student s6 = new Student(6, "David Leitao", 910976234, "M", LocalDate.parse("2000-01-16"), LocalDate.parse("2021-07-20"), "Rua Aguas Livres", t3.getName());
-             */
-
-
-
-
-            // Adding Students to their respective classes
-            /* sl1.addStudent(s1);
-            sl1.addStudent(s2);
-
-            sl2.addStudent(s3);
-
-            sl3.addStudent(s4);
-            sl3.addStudent(s5);
-            sl3.addStudent(s6);
-
-            t1.setStudents(sl1);
-            t2.setStudents(sl2);
-            t3.setStudents(sl3); */
-
-
-            // Setting teachers classes
-            /* teacherList.getTeacher().add(t1);
-            teacherList.getTeacher().add(t2);
-            teacherList.getTeacher().add(t3); */
-
-            String path = System.getProperty("user.dir") + "\\AutoSchool.xml";
+            // set start timer
+            long start = System.nanoTime();
 
             // output to a xml file
-            System.out.println("File created at \\" + path);
             jaxbMarshaller.marshal(teacherList, new File(path));
+            long finish = System.nanoTime();
+            long timeElapsed = finish - start;
+            double ets = (double) timeElapsed / 1_000_000_000;
+            double xmlTime = ets;
+            System.out.println("File created at \\" + path);
+            System.out.println(String.valueOf(numberOfTeachers) + " Teachers and " + String.valueOf(totalStudents) + " Students created");
+            System.out.println("XML Elapsed Time: " + String.valueOf(ets) + " seconds");
+
+            // output to a xml compressed with gzip file
+            start = System.nanoTime();
+            gzip(path);
+            finish = System.nanoTime();
+            timeElapsed = finish - start;
+            ets = (double) timeElapsed / 1_000_000_000;
+            System.out.println("XML + GZIP Elapsed Time: " + String.valueOf(ets + xmlTime) + " seconds");
+            System.out.println("GZIP Encoding Time: " + String.valueOf(ets) + " seconds");
+            //System.out.println("File created at \\" + path);
             
             // output to console
-            jaxbMarshaller.marshal(teacherList, System.out);
+            //jaxbMarshaller.marshal(teacherList, System.out);
 
         } catch (JAXBException e) {
             e.printStackTrace();
@@ -218,6 +201,28 @@ public class App {
         
 
         return f[p1] + " " + l[p2] + ", " + door;
+    }
+
+
+    public static void gzip(String xml) {
+        try {
+            String outputFile = System.getProperty("user.dir") + "\\SchoolGZIP.xml.gz";
+            FileInputStream fis = new FileInputStream(xml);
+            FileOutputStream fos = new FileOutputStream(outputFile);
+            GZIPOutputStream gzipOS = new GZIPOutputStream(fos);
+            byte[] buffer = new byte[1024];
+            int len;
+            while((len=fis.read(buffer)) != -1){
+                gzipOS.write(buffer, 0, len);
+            }
+            //close resources
+            gzipOS.close();
+            fos.close();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
 
 
