@@ -7,6 +7,10 @@ import jakarta.xml.bind.Marshaller;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -17,7 +21,7 @@ import java.time.LocalDate;
 
 public class App {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         JAXBContext jaxbContext = null;
 
@@ -65,6 +69,9 @@ public class App {
 
 
             String path = System.getProperty("user.dir") + "\\SchoolXML.xml";
+            System.out.println("\n\tGENERAL INFO\n");
+            System.out.println(String.valueOf(numberOfTeachers) + " Teachers and " + String.valueOf(totalStudents) + " Students created");
+            System.out.println("\n\tXML INFO\n");
 
             // set start timer
             long start = System.nanoTime();
@@ -75,19 +82,29 @@ public class App {
             long timeElapsed = finish - start;
             double ets = (double) timeElapsed / 1_000_000_000;
             double xmlTime = ets;
+            DecimalFormat df = new DecimalFormat("0.0000");
+            
             System.out.println("File created at \\" + path);
-            System.out.println(String.valueOf(numberOfTeachers) + " Teachers and " + String.valueOf(totalStudents) + " Students created");
-            System.out.println("XML Elapsed Time: " + String.valueOf(ets) + " seconds");
+            System.out.println("XML Elapsed Time: " + String.valueOf(df.format(ets)) + " seconds");
+            
+            long fileSize = Files.size(Paths.get(path));
+            System.out.println("XML File Size: " + String.valueOf(fileSize) + " bytes\n\n");
+
+            System.out.println("\n\tXML + GZIP INFO\n");
 
             // output to a xml compressed with gzip file
             start = System.nanoTime();
-            gzip(path);
+            String gzPath = gzip(path);
             finish = System.nanoTime();
             timeElapsed = finish - start;
             ets = (double) timeElapsed / 1_000_000_000;
-            System.out.println("XML + GZIP Elapsed Time: " + String.valueOf(ets + xmlTime) + " seconds");
-            System.out.println("GZIP Encoding Time: " + String.valueOf(ets) + " seconds");
-            //System.out.println("File created at \\" + path);
+
+            System.out.println("File created at \\" + gzPath);
+            System.out.println("XML + GZIP Elapsed Time: " + String.valueOf(df.format(ets + xmlTime)) + " seconds");
+            System.out.println("GZIP Encoding Time: " + String.valueOf(df.format(ets)) + " seconds");
+            
+            fileSize = Files.size(Paths.get(gzPath));
+            System.out.println("GZIP File Size: " + String.valueOf(fileSize) + " bytes\n");
             
             // output to console
             //jaxbMarshaller.marshal(teacherList, System.out);
@@ -204,7 +221,7 @@ public class App {
     }
 
 
-    public static void gzip(String xml) {
+    public static String gzip(String xml) {
         try {
             String outputFile = System.getProperty("user.dir") + "\\SchoolGZIP.xml.gz";
             FileInputStream fis = new FileInputStream(xml);
@@ -219,9 +236,12 @@ public class App {
             gzipOS.close();
             fos.close();
             fis.close();
+            return outputFile;
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return "error";
         
     }
 
