@@ -34,7 +34,7 @@ public class App {
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
             Random nt = new Random();
-            int numberOfTeachers = nt.nextInt(80-30) + 30;
+            int numberOfTeachers = nt.nextInt(800-799) + 799;
             Teachers teacherList = new Teachers();
             teacherList.setTeacher(new ArrayList<Teacher>());
 

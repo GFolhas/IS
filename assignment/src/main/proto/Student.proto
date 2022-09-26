@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_package = "com.uc.mei.is";
+
+message StudentGen {
+   int32 id = 1;
+   string name = 2;
+   int64 phone = 3;
+   string gender = 4;
+   string birthDate = 5;
+   string registrationDate = 6;
+   string address = 7;
+   string professor = 8;
+}
