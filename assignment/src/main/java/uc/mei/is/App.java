@@ -110,7 +110,7 @@ public class App {
 
             // messing with protocol buffers
 
-            /* School.Student student = School.Student.newBuilder()
+            School.Student student = School.Student.newBuilder()
             .setId(1)
             .setName("Gonçalo Folhas")
             .setPhone(925798577)
@@ -118,12 +118,24 @@ public class App {
             .setBirthDate("data")
             .setRegistrationDate("data2")
             .setAddress("rua")
-            .setProfessor("rpp");
+            .setProfessor("rpp")
+            .build();
 
-            School.Students students = School.Students.newBuilder().addStudent(student).build();
+            School.Student student2 = School.Student.newBuilder()
+            .setId(2)
+            .setName("FDS")
+            .setPhone(123456789)
+            .setGender("M")
+            .setBirthDate("data")
+            .setRegistrationDate("data2")
+            .setAddress("rua")
+            .setProfessor("crlh")
+            .build();
 
-            FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir"));
-            students.writeTo(fos); */
+            School.Students students = School.Students.newBuilder().addStudents(student).addStudents(student2).build();
+
+            FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir") + "/s.txt");
+            students.writeTo(fos);
 
 
             
