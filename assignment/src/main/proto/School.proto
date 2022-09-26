@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+message Student {
+   int32 id = 1;
+   string name = 2;
+   int64 phone = 3;
+   string gender = 4;
+   string birthDate = 5;
+   string registrationDate = 6;
+   string address = 7;
+   string professor = 8;
+}
+
+message Students {
+   repeated Student students = 1;
+}
+
+message Teacher {
+   int32 id = 1;
+   string name = 2;
+   string birthDate = 3;
+   int64 phone = 4;
+   string address = 5;
+   Students students = 6;
+}
+
+message Teachers {
+   repeated Teacher teachers = 1;
+}

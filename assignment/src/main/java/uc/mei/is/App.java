@@ -103,6 +103,29 @@ public class App {
             
             fileSize = Files.size(Paths.get(gzPath));
             System.out.println("GZIP File Size: " + String.valueOf(fileSize) + " bytes\n");
+
+
+            System.out.println("\n\nHERE COMES THE SHIT\n\n");
+            
+
+            // messing with protocol buffers
+
+            /* School.Student student = School.Student.newBuilder()
+            .setId(1)
+            .setName("Gonçalo Folhas")
+            .setPhone(925798577)
+            .setGender("M")
+            .setBirthDate("data")
+            .setRegistrationDate("data2")
+            .setAddress("rua")
+            .setProfessor("rpp");
+
+            School.Students students = School.Students.newBuilder().addStudent(student).build();
+
+            FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir"));
+            students.writeTo(fos); */
+
+
             
             // output to console
             //jaxbMarshaller.marshal(teacherList, System.out);
