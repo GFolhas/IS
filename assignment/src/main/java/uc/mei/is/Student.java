@@ -1,14 +1,12 @@
 package uc.mei.is;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlValue;
 
 @XmlRootElement
 // order of the fields in XML
