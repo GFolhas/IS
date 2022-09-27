@@ -61,6 +61,7 @@ public class App {
                 
                 for(int j = 0; j < numberOfStudents; j++){
                     Student s = createStudent(fnames, lnames, j, t.getName());
+                    School.Student s1 = createStudentPB(s.getId(), s.getName(), s.getPhone(), s.getGender(), s.getBirthDate(), s.getRegistrationDate(), s.getAddress(), s.getProfessor());
                     sl.addStudent(s);
                 }
             }
@@ -104,8 +105,6 @@ public class App {
             fileSize = Files.size(Paths.get(gzPath));
             System.out.println("GZIP File Size: " + String.valueOf(fileSize) + " bytes\n");
 
-
-            System.out.println("\n\nHERE COMES THE SHIT\n\n");
             
 
             // messing with protocol buffers
@@ -121,6 +120,11 @@ public class App {
             .setProfessor("rpp")
             .build();
 
+            //School.Students students = School.Students.newBuilder().addStudents(value)
+
+            //TODO: descobrir como adicionar students a uma lista de students dentro de um ciclo
+            
+
             School.Student student2 = School.Student.newBuilder()
             .setId(2)
             .setName("FDS")
@@ -132,10 +136,21 @@ public class App {
             .setProfessor("crlh")
             .build();
 
-            School.Students students = School.Students.newBuilder().addStudents(student).addStudents(student2).build();
+            
+            School.Students studentsList = School.Students.newBuilder().addStudents(student).addStudents(student2).build();
+            
+            School.Teacher teacher = School.Teacher.newBuilder()
+            .setId(2)
+            .setName("prof")
+            .setBirthDate("data")
+            .setPhone(123456789)
+            .setAddress("rua")
+            .setStudents(studentsList)
+            .build();
+
 
             FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir") + "/s.txt");
-            students.writeTo(fos);
+            teacher.writeTo(fos);
 
 
             
@@ -173,6 +188,26 @@ public class App {
         return s;
 
     }
+
+    public static School.Student createStudentPB(int id, String name, long phone, String gender, LocalDate bd, LocalDate rd, String addr, String professor){
+        
+        School.Student s1 = School.Student.newBuilder()
+        .setId(id)
+        .setName(name)
+        .setPhone(phone)
+        .setGender(gender)
+        .setBirthDate(String.valueOf(bd))
+        .setRegistrationDate(String.valueOf(rd))
+        .setAddress(addr)
+        .setProfessor(professor)
+        .build();
+
+        return s1;
+
+    }
+
+
+
 
     public static String randomName(String[] firstName, String[] lastName){
         int n1 = firstName.length;
