@@ -3,6 +3,7 @@ package uc.mei.is;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -121,8 +122,39 @@ public class App {
             System.out.println("GZIP File Size: " + String.valueOf(fileSize) + " bytes\n");
 
             
-            FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir") + "/protoOut.txt");
+            String binFilePath = System.getProperty("user.dir") + "/protoOut.txt";
+            FileOutputStream fos = new FileOutputStream(binFilePath);
+            
+            start = System.nanoTime();
             allTeachers.writeTo(fos);
+            finish = System.nanoTime();
+            timeElapsed = finish - start;
+            ets = (double) timeElapsed / 1_000_000_000;
+
+            System.out.println("\n\tGOOGLE PROTOCOL BUFFERS INFO\n");
+
+            System.out.println("File created at \\" + binFilePath);
+            System.out.println("Binary File Elapsed Time: " + String.valueOf(df.format(ets)) + " seconds");
+            fileSize = Files.size(Paths.get(binFilePath));
+            System.out.println("Binary File Size: " + String.valueOf(fileSize) + " bytes\n");
+            
+            
+            // unmarshalling
+
+            File file = new File(System.getProperty("user.dir") + "\\SchoolXML.xml");    
+            JAXBContext jaxbContext2 = JAXBContext.newInstance(Students.class);    
+         
+            Unmarshaller jaxbUnmarshaller = jaxbContext2.createUnmarshaller();    
+            start = System.nanoTime();
+            Students unmarshalledTeacher=(Students) jaxbUnmarshaller.unmarshal(file);
+            finish = System.nanoTime();
+            timeElapsed = finish - start;
+            ets = (double) timeElapsed / 1_000_000_000;
+            System.out.println("\n\tXML UNMARSHALL INFO\n");
+            System.out.println("XML Unmarshalling Elapsed Time: " + String.valueOf(df.format(ets)) + " seconds");
+            
+
+           
 
 
             
