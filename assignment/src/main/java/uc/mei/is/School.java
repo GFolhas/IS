@@ -1514,7 +1514,7 @@ public final class School {
     private Students(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private Students() {
+    Students() {
       students_ = java.util.Collections.emptyList();
     }
 
@@ -3523,7 +3523,7 @@ public final class School {
     private Teachers(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private Teachers() {
+    Teachers() {
       teachers_ = java.util.Collections.emptyList();
     }
 

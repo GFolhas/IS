@@ -49,22 +49,37 @@ public class App {
 
             int totalStudents = 0;
 
+            School.Teachers.Builder tbuild = new School.Teachers().newBuilder();
+
             for(int i = 0; i < numberOfTeachers; i++){
                 Students sl = new Students();
                 sl.setStudents(new ArrayList<Student>());
                 Teacher t = createTeacher(fnames, lnames, i, sl);
                 teacherList.getTeacher().add(t);
-
+                        
+                
                 Random stud = new Random();
                 int numberOfStudents = stud.nextInt(25-0) + 0;
                 totalStudents += numberOfStudents;
+                
+                // create a school.students.builder obj
+                School.Students.Builder schoolStudents = new School.Students().newBuilder();
                 
                 for(int j = 0; j < numberOfStudents; j++){
                     Student s = createStudent(fnames, lnames, j, t.getName());
                     School.Student s1 = createStudentPB(s.getId(), s.getName(), s.getPhone(), s.getGender(), s.getBirthDate(), s.getRegistrationDate(), s.getAddress(), s.getProfessor());
                     sl.addStudent(s);
+                    
+                    // add school.student obj to school.students obj
+                    schoolStudents.addStudents(s1);
                 }
+                School.Students sll = schoolStudents.build(); 
+                School.Teacher t1 = createTeacherPB(t.getId(), t.getName(), t.getPhone(), t.getBirthDate(), t.getAddress(), sll);
+            
+                tbuild.addTeachers(t1);
             }
+
+            School.Teachers allTeachers = tbuild.build();
 
 
             String path = System.getProperty("user.dir") + "\\SchoolXML.xml";
@@ -106,51 +121,8 @@ public class App {
             System.out.println("GZIP File Size: " + String.valueOf(fileSize) + " bytes\n");
 
             
-
-            // messing with protocol buffers
-
-            School.Student student = School.Student.newBuilder()
-            .setId(1)
-            .setName("Gonçalo Folhas")
-            .setPhone(925798577)
-            .setGender("M")
-            .setBirthDate("data")
-            .setRegistrationDate("data2")
-            .setAddress("rua")
-            .setProfessor("rpp")
-            .build();
-
-            //School.Students students = School.Students.newBuilder().addStudents(value)
-
-            //TODO: descobrir como adicionar students a uma lista de students dentro de um ciclo
-            
-
-            School.Student student2 = School.Student.newBuilder()
-            .setId(2)
-            .setName("FDS")
-            .setPhone(123456789)
-            .setGender("M")
-            .setBirthDate("data")
-            .setRegistrationDate("data2")
-            .setAddress("rua")
-            .setProfessor("crlh")
-            .build();
-
-            
-            School.Students studentsList = School.Students.newBuilder().addStudents(student).addStudents(student2).build();
-            
-            School.Teacher teacher = School.Teacher.newBuilder()
-            .setId(2)
-            .setName("prof")
-            .setBirthDate("data")
-            .setPhone(123456789)
-            .setAddress("rua")
-            .setStudents(studentsList)
-            .build();
-
-
-            FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir") + "/s.txt");
-            teacher.writeTo(fos);
+            FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir") + "/protoOut.txt");
+            allTeachers.writeTo(fos);
 
 
             
@@ -171,6 +143,22 @@ public class App {
         Teacher t = new Teacher(id, name, bd, phone, addr, s);
         return t;
     }
+
+    public static School.Teacher createTeacherPB(int id, String name, long phone, LocalDate bd, String addr, School.Students sl){
+        
+        School.Teacher t1 = School.Teacher.newBuilder()
+        .setId(id)
+        .setName(name)
+        .setPhone(phone)
+        .setBirthDate(String.valueOf(bd))
+        .setAddress(addr)
+        .setStudents(sl)
+        .build();
+
+        return t1;
+
+    }
+
 
     public static Student createStudent(String[] firstName, String[] lastName, int id, String professor){
         
