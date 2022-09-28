@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
+import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 import java.util.ArrayList;
@@ -35,7 +36,8 @@ public class App {
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
             Random nt = new Random();
-            int numberOfTeachers = nt.nextInt(800-799) + 799;
+            int numberOfTeachers = 100;
+            //int numberOfTeachers = nt.nextInt(800-799) + 799;
             Teachers teacherList = new Teachers();
             teacherList.setTeacher(new ArrayList<Teacher>());
 
@@ -60,7 +62,8 @@ public class App {
                         
                 
                 Random stud = new Random();
-                int numberOfStudents = stud.nextInt(25-0) + 0;
+                int numberOfStudents = 15;
+                //int numberOfStudents = stud.nextInt(25-0) + 0;
                 totalStudents += numberOfStudents;
                 
                 // create a school.students.builder obj
@@ -83,7 +86,7 @@ public class App {
             School.Teachers allTeachers = tbuild.build();
 
 
-            String path = System.getProperty("user.dir") + "\\SchoolXML.xml";
+            String path = System.getProperty("user.dir") + "\\files\\SchoolXML_" + String.valueOf(numberOfTeachers) + "_" + String.valueOf(totalStudents) + ".xml";
             System.out.println("\n\tGENERAL INFO\n");
             System.out.println(String.valueOf(numberOfTeachers) + " Teachers and " + String.valueOf(totalStudents) + " Students created");
             System.out.println("\n\tXML INFO\n");
@@ -109,7 +112,7 @@ public class App {
 
             // output to a xml compressed with gzip file
             start = System.nanoTime();
-            String gzPath = gzip(path);
+            String gzPath = gzip(path, numberOfTeachers, totalStudents);
             finish = System.nanoTime();
             timeElapsed = finish - start;
             ets = (double) timeElapsed / 1_000_000_000;
@@ -122,7 +125,8 @@ public class App {
             System.out.println("GZIP File Size: " + String.valueOf(fileSize) + " bytes\n");
 
             
-            String binFilePath = System.getProperty("user.dir") + "/protoOut.txt";
+            
+            String binFilePath = System.getProperty("user.dir") + "\\files\\protoOutput_" + String.valueOf(numberOfTeachers) + "_" + String.valueOf(totalStudents) + ".bin";
             FileOutputStream fos = new FileOutputStream(binFilePath);
             
             start = System.nanoTime();
@@ -141,7 +145,7 @@ public class App {
             
             // unmarshalling
 
-            File file = new File(System.getProperty("user.dir") + "\\SchoolXML.xml");    
+            File file = new File(System.getProperty("user.dir") + "\\files\\SchoolXML_" + String.valueOf(numberOfTeachers) + "_" + String.valueOf(totalStudents) + ".xml");    
             JAXBContext jaxbContext2 = JAXBContext.newInstance(Students.class);    
          
             Unmarshaller jaxbUnmarshaller = jaxbContext2.createUnmarshaller();    
@@ -150,13 +154,33 @@ public class App {
             finish = System.nanoTime();
             timeElapsed = finish - start;
             ets = (double) timeElapsed / 1_000_000_000;
+            double xmlUnmarshall = ets;
             System.out.println("\n\tXML UNMARSHALL INFO\n");
             System.out.println("XML Unmarshalling Elapsed Time: " + String.valueOf(df.format(ets)) + " seconds");
             
 
            
+            start = System.nanoTime();
+            String ungzp = ungzip(System.getProperty("user.dir") + "\\files\\SchoolGZIP_" + String.valueOf(numberOfTeachers) + "_" + String.valueOf(totalStudents) + ".xml.gz", numberOfTeachers, totalStudents);
+            finish = System.nanoTime();
+            timeElapsed = finish - start;
+            ets = (double) timeElapsed / 1_000_000_000;
+            System.out.println("\n\tXML + GZIP UNMARSHALL INFO\n");
+            System.out.println("XML + GZIP Elapsed Time: " + String.valueOf(df.format(xmlUnmarshall + ets)) + " seconds");
+            System.out.println("GZIP Decoding Elapsed Time: " + String.valueOf(df.format(ets)) + " seconds");
 
 
+            // decode the proto bitch
+            FileInputStream fis = new FileInputStream(binFilePath);
+            start = System.nanoTime();
+            allTeachers.parseFrom(fis);
+            finish = System.nanoTime();
+            timeElapsed = finish - start;
+            ets = (double) timeElapsed / 1_000_000_000;
+
+            System.out.println("\n\tGOOGLE PROTOCOL BUFFERS DESERIALIZE INFO\n");
+
+            System.out.println("ProtoBuff Deserialization Elapsed Time: " + String.valueOf(df.format(ets)) + " seconds");
             
             // output to console
             //jaxbMarshaller.marshal(teacherList, System.out);
@@ -309,9 +333,9 @@ public class App {
     }
 
 
-    public static String gzip(String xml) {
+    public static String gzip(String xml, int nt, int ns) {
         try {
-            String outputFile = System.getProperty("user.dir") + "\\SchoolGZIP.xml.gz";
+            String outputFile = System.getProperty("user.dir") + "\\files\\SchoolGZIP_" + String.valueOf(nt) + "_" + String.valueOf(ns) + ".xml.gz";
             FileInputStream fis = new FileInputStream(xml);
             FileOutputStream fos = new FileOutputStream(outputFile);
             GZIPOutputStream gzipOS = new GZIPOutputStream(fos);
@@ -329,8 +353,37 @@ public class App {
             e.printStackTrace();
         }
 
-        return "error";
-        
+        return "error";   
+    }
+
+    public static String ungzip(String gzipFile, int nt, int ns) {
+        try {
+
+            byte[] buffer = new byte[1024];
+
+            FileInputStream fileIn = new FileInputStream(gzipFile);
+            GZIPInputStream gZIPInputStream = new GZIPInputStream(fileIn);
+
+            String outputFile = System.getProperty("user.dir") + "\\files\\SchoolUNGZIP_" + String.valueOf(nt) + "_" + String.valueOf(ns) + ".xml";
+            
+            FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
+ 
+            int bytes_read;
+            while ((bytes_read = gZIPInputStream.read(buffer)) > 0) {
+ 
+                fileOutputStream.write(buffer, 0, bytes_read);
+            }
+ 
+            gZIPInputStream.close();
+            fileOutputStream.close();
+
+            return outputFile;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "error";   
     }
 
 

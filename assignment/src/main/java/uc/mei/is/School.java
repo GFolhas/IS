@@ -3743,7 +3743,7 @@ public final class School {
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static School.Teachers parseFrom(java.io.InputStream input)
+    public School.Teachers parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
