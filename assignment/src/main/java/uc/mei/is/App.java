@@ -35,7 +35,9 @@ public class App {
             // output pretty printed
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-            Random nt = new Random();
+            //Random nt = new Random();
+
+            //TODO: CHANGE NUMBER OF TEACHERS PER EXECUTION
             int numberOfTeachers = 100;
             //int numberOfTeachers = nt.nextInt(800-799) + 799;
             Teachers teacherList = new Teachers();
@@ -52,7 +54,10 @@ public class App {
 
             int totalStudents = 0;
 
+            long start = System.nanoTime();
             School.Teachers.Builder tbuild = new School.Teachers().newBuilder();
+            long finish =   System.nanoTime();
+            long structTime = finish - start;
 
             for(int i = 0; i < numberOfTeachers; i++){
                 Students sl = new Students();
@@ -61,7 +66,9 @@ public class App {
                 teacherList.getTeacher().add(t);
                         
                 
-                Random stud = new Random();
+                //Random stud = new Random();
+                
+                //TODO: CHANGE NUMBER OF STUDENTS PER EXECUTION
                 int numberOfStudents = 15;
                 //int numberOfStudents = stud.nextInt(25-0) + 0;
                 totalStudents += numberOfStudents;
@@ -71,36 +78,47 @@ public class App {
                 
                 for(int j = 0; j < numberOfStudents; j++){
                     Student s = createStudent(fnames, lnames, j, t.getName());
+                    start = System.nanoTime();
                     School.Student s1 = createStudentPB(s.getId(), s.getName(), s.getPhone(), s.getGender(), s.getBirthDate(), s.getRegistrationDate(), s.getAddress(), s.getProfessor());
+                    finish = System.nanoTime();
+                    structTime = structTime + (finish - start);
                     sl.addStudent(s);
                     
                     // add school.student obj to school.students obj
                     schoolStudents.addStudents(s1);
                 }
+                start = System.nanoTime();
                 School.Students sll = schoolStudents.build(); 
                 School.Teacher t1 = createTeacherPB(t.getId(), t.getName(), t.getPhone(), t.getBirthDate(), t.getAddress(), sll);
+                finish = System.nanoTime();
+                structTime = structTime + (finish - start);
             
                 tbuild.addTeachers(t1);
             }
 
+            start = System.nanoTime();
             School.Teachers allTeachers = tbuild.build();
+            finish = System.nanoTime();
+            structTime = structTime + (finish - start);
+            double st = (double) structTime / 1_000_000_000;
+            DecimalFormat df = new DecimalFormat("0.0000");
 
 
             String path = System.getProperty("user.dir") + "\\files\\SchoolXML_" + String.valueOf(numberOfTeachers) + "_" + String.valueOf(totalStudents) + ".xml";
             System.out.println("\n\tGENERAL INFO\n");
             System.out.println(String.valueOf(numberOfTeachers) + " Teachers and " + String.valueOf(totalStudents) + " Students created");
+            System.out.println("Time Elapsed Creating PB Structures: " + String.valueOf(df.format(st)) + " seconds");
             System.out.println("\n\tXML INFO\n");
 
             // set start timer
-            long start = System.nanoTime();
+            start = System.nanoTime();
 
             // output to a xml file
             jaxbMarshaller.marshal(teacherList, new File(path));
-            long finish = System.nanoTime();
+            finish = System.nanoTime();
             long timeElapsed = finish - start;
             double ets = (double) timeElapsed / 1_000_000_000;
             double xmlTime = ets;
-            DecimalFormat df = new DecimalFormat("0.0000");
             
             System.out.println("File created at \\" + path);
             System.out.println("XML Elapsed Time: " + String.valueOf(df.format(ets)) + " seconds");
