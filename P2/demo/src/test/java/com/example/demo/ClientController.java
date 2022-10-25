@@ -50,10 +50,10 @@ public class ClientController {
     ConnectionFactory connectionFactory = ConnectionFactories.get(dbUrl);
     R2dbcEntityTemplate template = new R2dbcEntityTemplate(connectionFactory);
     String queryT = "CREATE TABLE IF NOT EXISTS teacher (id SERIAL PRIMARY KEY, name TEXT NOT NULL);";
-    String queryS = "CREATE TABLE IF NOT EXISTS student (id SERIAL PRIMARY KEY, name TEXT NOT NULL);"; // change this
+    String queryS = "CREATE TABLE IF NOT EXISTS student (id SERIAL PRIMARY KEY, name TEXT NOT NULL, birthdate TEXT NOT NULL, credits INTEGER NOT NULL, grade FLOAT NOT NULL);"; // change this
     
     template.getDatabaseClient().sql(queryT).fetch().rowsUpdated().block();
-    //template.getDatabaseClient().sql(queryS).fetch().rowsUpdated().block();
+    template.getDatabaseClient().sql(queryS).fetch().rowsUpdated().block();
   }
 
   private void insertTeacherData() {
@@ -89,10 +89,6 @@ public class ClientController {
         .blockLast();
 
   }
-
-
-
-  //TODO: change both @test because it still isnt done
 
 
   @Test

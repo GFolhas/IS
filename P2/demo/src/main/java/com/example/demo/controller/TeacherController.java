@@ -34,17 +34,12 @@ public class TeacherController {
         return repo.findById(id);
     }
 
-    @PutMapping("/create_teacher/{id}/{name}")
-    public Mono<Teacher> createTeacher2(@PathVariable Integer id, @PathVariable String name){
-        Teacher teacher = new Teacher(id, name);
-        return repo.save(teacher);
-    }
-
     
     @PostMapping
     public Mono<Teacher> createTeacher(@RequestBody Teacher teacher){
         return repo.save(teacher);
     }
+    
 
     @PutMapping("/{id}")
     public Mono<Teacher> updateTeacher(@RequestBody Teacher teacher, @PathVariable Integer id){
