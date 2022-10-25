@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,7 +17,7 @@ public class App
 
         // ex.1
 
-        WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
+        /* WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
         .map(s -> {
 
             File log = new File("names_and_birthdates.txt");
@@ -138,6 +139,96 @@ public class App
                 System.out.println("COULD NOT LOG!!");
             }
         });
+
+
+
+        // ex.6
+         ArrayList<Float> grades = new ArrayList<>();
+
+        WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
+        .subscribe(s -> {  
+
+          File log = new File("avg_std.txt");
+      
+          try{
+          if(log.exists()==false){
+                  System.out.println("We had to make a new file.");
+                  log.createNewFile();
+          }
+
+          grades.add(s.getGrade());
+
+          float std = 0;
+          float allSum = 0;
+          for(float el : grades){
+            allSum += el;
+          }
+ 
+          float avg = allSum / grades.size();
+
+         for(float temp: grades) {
+            std += Math.pow(temp - avg, 2);
+         }
+         double standardDev = Math.sqrt(std/grades.size());
+
+
+          PrintWriter out = new PrintWriter(log);
+          String toWrite = "Average: " + avg + "\nStandard Deviation: " + standardDev;
+          out.append(toWrite);
+          out.close();    
+
+          }catch(IOException e){
+              System.out.println("COULD NOT LOG!!");
+          }
+      });
+
+
+
+      // ex 7
+
+      //grades.clear();
+      
+      WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
+      .filter(s -> s.getCredits() == 180)
+      .subscribe(s -> {  
+
+        File log = new File("finalist_avg_std.txt");
+    
+        try{
+        if(log.exists()==false){
+                System.out.println("We had to make a new file.");
+                log.createNewFile();
+        }
+
+        grades.add(s.getGrade());
+
+        
+        float std = 0;
+        float allSum = 0;
+        for(float el : grades){
+            allSum += el;
+        }
+                
+        float avg = allSum / grades.size();
+
+       for(float temp: grades) {
+          std += Math.pow(temp - avg, 2);
+       }
+       double standardDev = Math.sqrt(std/grades.size());
+
+
+        PrintWriter out = new PrintWriter(log);
+        String toWrite = "Average: " + avg + "\nStandard Deviation: " + standardDev;
+        out.append(toWrite);
+        out.close();    
+
+        }catch(IOException e){
+            System.out.println("COULD NOT LOG!!");
+        }
+    });
+ */
+
+ 
 
 
 
