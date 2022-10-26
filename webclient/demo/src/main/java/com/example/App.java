@@ -5,7 +5,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.SocketTimeoutException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -17,7 +22,7 @@ public class App
 
         // ex.1
 
-        /* WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
+/*         WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
         .map(s -> {
 
             File log = new File("names_and_birthdates.txt");
@@ -225,11 +230,53 @@ public class App
         }catch(IOException e){
             System.out.println("COULD NOT LOG!!");
         }
+    }); */
+
+
+          // ex 8
+
+      ArrayList<Date> bd = new ArrayList<>();
+      ArrayList<String> bd2 = new ArrayList<>();
+      ArrayList<String> names = new ArrayList<>();
+      
+      WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
+      .subscribe(s -> {  
+
+        File log = new File("eldest.txt");
+    
+        try{
+        if(log.exists()==false){
+                System.out.println("We had to make a new file.");
+                log.createNewFile();
+        }
+
+        bd2.add(s.getBirthdate());
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date birth;
+        birth = formatter.parse(s.getBirthdate());
+        names.add(s.getName());
+        bd.add(birth);
+
+        Date minDate = Collections.min(bd);
+        int index = 0;
+        for(int i = 0; i < bd.size(); i++){
+            if(bd.get(i).compareTo(minDate) == 0){
+                index = i;
+            }
+        }
+
+
+        PrintWriter out = new PrintWriter(log);
+        String toWrite = "Eldest Student: " + names.get(index);
+        out.append(toWrite);
+        out.close();    
+
+        }catch(IOException e){
+            System.out.println("COULD NOT LOG!!");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     });
- */
-
- 
-
 
 
         try {
