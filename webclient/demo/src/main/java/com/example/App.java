@@ -233,7 +233,7 @@ public class App
     }); */
 
 
-          // ex 8
+/*           // ex 8
 
       ArrayList<Date> bd = new ArrayList<>();
       ArrayList<String> bd2 = new ArrayList<>();
@@ -276,7 +276,49 @@ public class App
         } catch (ParseException e) {
             e.printStackTrace();
         }
-    });
+    }); */
+
+
+
+        // ex 9
+
+        ArrayList<Integer> arr = new ArrayList<>();
+        ArrayList<Integer> rows = new ArrayList<>();
+
+        
+        WebClient.create("http://localhost:8080").get().uri("/student_teacher").retrieve().bodyToFlux(StudentTeacher.class)
+        .sort((s1, s2) -> {
+            return s1.getStudent_id() - s2.getStudent_id();
+          })
+        .subscribe(s -> {  
+
+          rows.add(1);
+  
+          File log = new File("avg_teacher_per_student.txt");
+      
+          try{
+          if(log.exists()==false){
+                  System.out.println("We had to make a new file.");
+                  log.createNewFile();
+          }
+
+          if(!arr.contains(s.getStudent_id())){
+            arr.add(s.getStudent_id());
+          }
+  
+          
+  
+          PrintWriter out = new PrintWriter(log);
+          String toWrite = arr.size() + " | " + rows.size() + "\n";
+          out.append(toWrite);
+          out.close();    
+  
+          }catch(IOException e){
+              System.out.println("COULD NOT LOG!!");
+          } 
+      });
+
+
 
 
         try {
