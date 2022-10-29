@@ -1,1 +1,1 @@
-5 | 9
+Average Number of Professors per Student: 1.5

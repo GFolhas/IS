@@ -1,6 +1,8 @@
 package com.example;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -280,8 +282,21 @@ public class App
 
 
 
-        // ex 9
+         // ex 9
+/* 
+         try{
+            String nos;
+            
+            BufferedReader br = new BufferedReader(new FileReader("total_students.txt"));
+            
+            nos = br.readLine().split(": ")[1];
 
+            br.close();
+
+        int NumOfStudents = Integer.parseInt(nos);
+
+
+        //TODO: Add students without teachers to the sql table in a way tbat they also show up and are accounted for in the counting process
         ArrayList<Integer> arr = new ArrayList<>();
         ArrayList<Integer> rows = new ArrayList<>();
 
@@ -309,7 +324,7 @@ public class App
           
   
           PrintWriter out = new PrintWriter(log);
-          String toWrite = arr.size() + " | " + rows.size() + "\n";
+          String toWrite = "Average Number of Professors per Student: " + (float)rows.size() / NumOfStudents;
           out.append(toWrite);
           out.close();    
   
@@ -317,6 +332,128 @@ public class App
               System.out.println("COULD NOT LOG!!");
           } 
       });
+                
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+ */
+ 
+
+      //TODO: Add an arraylist to teachers so i can continue to account for the students of each teacher in a way this can be done automatically in this webclient
+        WebClient.create("http://localhost:8080").get().uri("/teacher").retrieve().bodyToFlux(Teacher.class)
+        .sort((s1, s2) -> s1.getId() - s2.getId())
+        .subscribe(s -> {
+
+            
+            File log = new File("teachers.txt");
+        
+            try{
+            if(log.exists()==false){
+                    System.out.println("We had to make a new file.");
+                    log.createNewFile();
+            }
+            PrintWriter out = new PrintWriter(new FileWriter(log, true));
+            String toWrite = s.getName() + "\n";
+            out.append(toWrite);
+            out.close();
+            }catch(IOException e){
+                System.out.println("COULD NOT LOG!!");
+            }
+
+        });
+
+        WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
+        .sort((s1, s2) -> s1.getId() - s2.getId())
+        .subscribe(s -> {
+
+            
+            File log = new File("students.txt");
+        
+            try{
+            if(log.exists()==false){
+                    System.out.println("We had to make a new file.");
+                    log.createNewFile();
+            }
+            PrintWriter out = new PrintWriter(new FileWriter(log, true));
+            String toWrite = s.getName() + "\n";
+            out.append(toWrite);
+            out.close();
+            }catch(IOException e){
+                System.out.println("COULD NOT LOG!!");
+            }
+
+        });
+
+        WebClient.create("http://localhost:8080").get().uri("/student_teacher").retrieve().bodyToFlux(StudentTeacher.class)
+        .sort((s1, s2) -> s1.getStudent_id() - s2.getStudent_id())
+        .subscribe(s -> {
+
+            
+            File log = new File("relationship.txt");
+        
+            try{
+            if(log.exists()==false){
+                    System.out.println("We had to make a new file.");
+                    log.createNewFile();
+            }
+            PrintWriter out = new PrintWriter(new FileWriter(log, true));
+            String toWrite = s.getStudent_id() + " - " + s.getTeacher_id() + "\n";
+            out.append(toWrite);
+            out.close();
+            }catch(IOException e){
+                System.out.println("COULD NOT LOG!!");
+            }
+
+        });
+
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<String> teach = new ArrayList<>();
+        ArrayList<String> stud = new ArrayList<>();
+        ArrayList<String> rela = new ArrayList<>();
+
+        try {
+        BufferedReader br = new BufferedReader(new FileReader("teachers.txt"));
+ 
+        String value;
+
+        while ((value = br.readLine()) != null){
+            teach.add(value);
+        }
+        
+        br.close();
+
+        br = new BufferedReader(new FileReader("students.txt"));
+
+        while ((value = br.readLine()) != null){
+            stud.add(value);
+        }
+
+        br.close();
+
+        br = new BufferedReader(new FileReader("relationship.txt"));
+
+        while ((value = br.readLine()) != null){
+            rela.add(value);
+        }
+
+        br.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+
+        //TODO: Compare all the arraylists and select accordingly (see below)
+
+        System.out.println("\n\n\n\n\n");
+        System.out.println(teach);
+        System.out.println(stud);
+        System.out.println(rela);
 
 
 
