@@ -1,0 +1,17 @@
+Teacher: Folhas
+	Student: Vaz
+	Student: Rodrigo
+	Student: Guilherme
+
+Teacher: xoto
+	Student: Vaz
+	Student: Rodrigo
+	Student: Rolo
+
+Teacher: mafralda
+	Student: Anibal
+	Student: Rodrigo
+	Student: Guilherme
+
+Teacher: Bernas
+

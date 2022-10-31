@@ -408,7 +408,7 @@ public class App
 
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -450,14 +450,35 @@ public class App
 
         //TODO: Compare all the arraylists and select accordingly (see below)
 
-        System.out.println("\n\n\n\n\n");
-        System.out.println(teach);
-        System.out.println(stud);
-        System.out.println(rela);
 
+        File log = new File("students_per_prof.txt");
 
+        try{
+        if(log.exists()==false){
+                System.out.println("We had to make a new file.");
+                log.createNewFile();
+            }     
 
-
+            PrintWriter out = new PrintWriter(new FileWriter(log, true));
+            for(int i = 0; i < teach.size(); i++){
+                
+                String toWrite = "Teacher: " + teach.get(i) + "\n";
+                out.append(toWrite);
+                for(int j = 0; j < rela.size(); j++){
+                    if(Integer.parseInt(rela.get(j).split(" - ")[1])-1 == i){
+                        int tmp = Integer.parseInt(rela.get(j).split(" - ")[0]);
+                        toWrite = "\tStudent: " + stud.get(tmp-1) + "\n";
+                        out.append(toWrite);
+                    }
+                }
+                out.append("\n");
+            }
+            out.close();
+            
+        }catch(IOException e){
+            System.out.println("COULD NOT LOG!!");
+        }    
+        
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
