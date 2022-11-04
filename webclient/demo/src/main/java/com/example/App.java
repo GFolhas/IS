@@ -278,21 +278,11 @@ public class App
             br.close();
 
         int NumOfStudents = Integer.parseInt(nos);
-
-
-        //TODO: Add students without teachers to the sql table in a way tbat they also show up and are accounted for in the counting process
-        ArrayList<Integer> arr = new ArrayList<>();
-        ArrayList<Integer> rows = new ArrayList<>();
-
         
         WebClient.create("http://localhost:8080").get().uri("/student_teacher").retrieve().bodyToFlux(StudentTeacher.class)
-        .sort((s1, s2) -> {
-            return s1.getStudent_id() - s2.getStudent_id();
-          })
+        .count()
         .subscribe(s -> {  
-
-          rows.add(1);
-  
+ 
           File log = new File("avg_teacher_per_student.txt");
       
           try{
@@ -301,14 +291,11 @@ public class App
                   log.createNewFile();
           }
 
-          if(!arr.contains(s.getStudent_id())){
-            arr.add(s.getStudent_id());
-          }
-  
           
-  
           PrintWriter out = new PrintWriter(log);
-          String toWrite = "Average Number of Professors per Student: " + (float)rows.size() / NumOfStudents;
+          String toWrite = "Average Number of Professors per Student: " + (float)s / NumOfStudents;
+          System.out.println("\n\n\n\n");
+          System.out.println(s);
           out.append(toWrite);
           out.close();    
   
