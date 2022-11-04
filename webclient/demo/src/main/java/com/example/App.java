@@ -65,7 +65,7 @@ public class App
             }catch(IOException e){
                 System.out.println("COULD NOT LOG!!");
             } 
-        });       
+        });    
 
 
 
@@ -234,56 +234,40 @@ public class App
         }
     }); */
 
+    // ex 8
 
-/*           // ex 8
+/*     DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");   
 
-      ArrayList<Date> bd = new ArrayList<>();
-      ArrayList<String> bd2 = new ArrayList<>();
-      ArrayList<String> names = new ArrayList<>();
-      
-      WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
-      .subscribe(s -> {  
-
-        File log = new File("eldest.txt");
-    
-        try{
-        if(log.exists()==false){
-                System.out.println("We had to make a new file.");
-                log.createNewFile();
+    WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
+    .sort((s1, s2) -> {try {
+            return formatter.parse(s1.getBirthdate()).compareTo(formatter.parse(s2.getBirthdate()));
+        } catch (ParseException e1) {
+            e1.printStackTrace();
         }
-
-        bd2.add(s.getBirthdate());
-        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        Date birth;
-        birth = formatter.parse(s.getBirthdate());
-        names.add(s.getName());
-        bd.add(birth);
-
-        Date minDate = Collections.min(bd);
-        int index = 0;
-        for(int i = 0; i < bd.size(); i++){
-            if(bd.get(i).compareTo(minDate) == 0){
-                index = i;
-            }
-        }
-
-
-        PrintWriter out = new PrintWriter(log);
-        String toWrite = "Eldest Student: " + names.get(index);
-        out.append(toWrite);
-        out.close();    
-
-        }catch(IOException e){
-            System.out.println("COULD NOT LOG!!");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        return 0;
+    })
+    .take(1)
+    .subscribe(s -> {
+        File log = new File("eldest_student.txt");
+         
+         try{
+         if(log.exists()==false){
+                 System.out.println("We had to make a new file.");
+                 log.createNewFile();
+         }
+         PrintWriter out = new PrintWriter(new FileWriter(log, true));
+         String toWrite = "Eldest Student: " + s.getName() + "\n";
+         out.append(toWrite);
+         out.close();
+         }catch(IOException e){
+             System.out.println("COULD NOT LOG!!");
+         }
     }); */
 
 
 
          // ex 9
-/* 
+
          try{
             String nos;
             
@@ -336,10 +320,10 @@ public class App
         }catch(IOException e){
             e.printStackTrace();
         }
- */
+
  
 
-      //TODO: Add an arraylist to teachers so i can continue to account for the students of each teacher in a way this can be done automatically in this webclient
+/*       //TODO: Add an arraylist to teachers so i can continue to account for the students of each teacher in a way this can be done automatically in this webclient
         WebClient.create("http://localhost:8080").get().uri("/teacher").retrieve().bodyToFlux(Teacher.class)
         .sort((s1, s2) -> s1.getId() - s2.getId())
         .subscribe(s -> {
@@ -483,7 +467,15 @@ public class App
             Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } */
+
+
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-   
+
+
     }
 }
