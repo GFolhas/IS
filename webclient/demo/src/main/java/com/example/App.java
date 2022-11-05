@@ -16,6 +16,9 @@ import java.util.Date;
 
 import org.springframework.web.reactive.function.client.WebClient;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 public class App 
 {
     public static void main( String[] args )
@@ -266,7 +269,7 @@ public class App
 
 
 
-         // ex 9
+/*          // ex 9
 
          try{
             String nos;
@@ -307,7 +310,7 @@ public class App
         }catch(IOException e){
             e.printStackTrace();
         }
-
+ */
  
 
 /*       //TODO: Add an arraylist to teachers so i can continue to account for the students of each teacher in a way this can be done automatically in this webclient
@@ -457,12 +460,72 @@ public class App
         } */
 
 
+
+        WebClient wc = WebClient.create("http://localhost:8080");
+
+        wc.get()
+        .uri("/teacher/")
+        .retrieve()
+        .bodyToFlux(Teacher.class)
+        .sort((s1, s2) -> {
+            return s1.getId() - s2.getId();
+          })
+        .subscribe(v -> {
+            File log = new File(v.getName() + ".txt");
+
+            try{
+                if(log.exists()==false){
+                    System.out.println("We had to make a new file.");
+                    log.createNewFile();
+                }
+                else{
+                    System.out.println("File already exists.");  
+                }
+
+
+                wc.get()
+                .uri("/student_teacher")
+                .retrieve()
+                .bodyToFlux(StudentTeacher.class)
+                .filter(s ->  s.getTeacher_id() == v.getId())
+                .subscribe(s -> {
+
+                    wc.get()
+                    .uri("/student")
+                    .retrieve()
+                    .bodyToFlux(Student.class)
+                    .filter(k -> k.getId() == s.getStudent_id())
+                    .sort((k1, k2) -> {
+                        return k1.getId() - k2.getId();
+                      })
+                    .subscribe( k -> {
+
+                        try{
+                            PrintWriter out = new PrintWriter(new FileWriter(log, true));
+                            String toWrite = k.getName() + "\n";
+                            out.append(toWrite);
+                            out.close();
+                            
+                        } catch(IOException e){e.printStackTrace();}
+
+                    });
+
+                });
+
+            } catch(IOException e){e.printStackTrace();}
+        });
+
+
+
+        
+
+
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-
     }
+
 }
