@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.StudentTeacher;
 import com.example.demo.repo.StudentTeacherRepo;
 
+import io.r2dbc.spi.Parameter.In;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -25,6 +26,12 @@ public class StudentTeacherController {
     @GetMapping
     public Flux<StudentTeacher> getStudentTeachers(){
         return repo.findAll();
+    }
+
+    @GetMapping("/s/{id}")
+    public Flux<StudentTeacher> getStudentTeacherSByID(@PathVariable Integer id){
+        Flux<Integer> r = Flux.just(id);
+        return repo.findAllById(r);
     }
 
     @PostMapping
