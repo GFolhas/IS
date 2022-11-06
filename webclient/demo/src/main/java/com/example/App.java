@@ -16,6 +16,7 @@ import java.util.Date;
 
 import org.springframework.web.reactive.function.client.WebClient;
 
+import lombok.extern.java.Log;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -482,6 +483,21 @@ public class App
                     System.out.println("File already exists.");  
                 }
 
+                wc.get()
+                .uri("/student_teacher")
+                .retrieve()
+                .bodyToFlux(StudentTeacher.class)
+                .filter(s ->  s.getTeacher_id() == v.getId())
+                .count()
+                .subscribe(w -> {
+                    try{
+                        PrintWriter out = new PrintWriter(log);
+                        String toWrite = "Number of Students: " + w + "\n";
+                        out.append(toWrite);
+                        out.close();
+                        
+                    } catch(IOException e){e.printStackTrace();}
+                });
 
                 wc.get()
                 .uri("/student_teacher")
@@ -496,7 +512,7 @@ public class App
                     .bodyToFlux(Student.class)
                     .filter(k -> k.getId() == s.getStudent_id())
                     .sort((k1, k2) -> {
-                        return k1.getId() - k2.getId();
+                        return k2.getId() - k1.getId();
                       })
                     .subscribe( k -> {
 
