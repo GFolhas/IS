@@ -1,4 +1,4 @@
 Number of Students: 3
-Guilherme
-Vaz
+Anibal
 Rodrigo
+Guilherme

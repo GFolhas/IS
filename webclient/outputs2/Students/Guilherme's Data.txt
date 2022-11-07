@@ -4,5 +4,5 @@ Birthdate: 15-09-2000
 Credits: 162
 Grade: 14.3
 Professors:
-			-Folhas
 			-mafralda
+			-Folhas

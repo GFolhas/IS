@@ -35,7 +35,9 @@ public class App
         File f = new File(path);
 
         try {
-            deleteDir(f);
+            if(f.exists()){
+                deleteDir(f);
+            }
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -59,7 +61,7 @@ public class App
         // ex.1
 
          WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
-        .map(s -> {
+        .subscribe(s -> {
 
             String path12 = System.getProperty("user.dir");
             path12 = path12 + "/outputs/";
@@ -78,10 +80,7 @@ public class App
             }catch(IOException e){
                 System.out.println("COULD NOT LOG!!");
             }
-            
-            return s;
-        })
-        .subscribe();
+        });
 
 
         // ex.2
@@ -480,8 +479,7 @@ public class App
             } catch(IOException e){e.printStackTrace();}
         });
 
-
-
+        
         // ex 7
 
         ArrayList<Float> grades2 = new ArrayList<>();
@@ -530,7 +528,7 @@ public class App
 
         
         try {
-            Thread.sleep(15000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

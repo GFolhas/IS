@@ -1,0 +1,6 @@
+ID: 6
+Name: David
+Birthdate: 30-06-2001
+Credits: 180
+Grade: 14.5
+Professors:
