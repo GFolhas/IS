@@ -2,6 +2,7 @@ package com.example;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
+import org.springframework.http.converter.xml.SourceHttpMessageConverter;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import lombok.extern.java.Log;
@@ -195,7 +197,7 @@ public class App
 
 
         // ex.6
-         ArrayList<Float> grades = new ArrayList<>();
+        ArrayList<Float> grades = new ArrayList<>();
 
         WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
         .subscribe(s -> {  
@@ -226,6 +228,9 @@ public class App
             }
             double standardDev = Math.sqrt(std/grades.size());
 
+            System.out.println("\n\n\n\n");
+            System.out.println(avg);
+            System.out.println(standardDev);
 
             PrintWriter out = new PrintWriter(log);
             String toWrite = "Average: " + avg + "\nStandard Deviation: " + standardDev;
@@ -236,54 +241,6 @@ public class App
                 System.out.println("COULD NOT LOG!!");
             }
       });
-
-
-
-      // ex 7
-
-      //grades.clear();
-      
-      WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
-      .filter(s -> s.getCredits() == 180)
-      .subscribe(s -> {  
-
-        String path6 = System.getProperty("user.dir");
-        path6 = path6 + "/outputs/";
-
-        File log = new File(path6 + "finalist_avg_std.txt");
-    
-        try{
-        if(log.exists()==false){
-            System.out.println("We had to make a new file.");
-            log.createNewFile();
-        }
-
-        grades.add(s.getGrade());
-
-        
-        float std = 0;
-        float allSum = 0;
-        for(float el : grades){
-            allSum += el;
-        }
-                
-        float avg = allSum / grades.size();
-
-       for(float temp: grades) {
-          std += Math.pow(temp - avg, 2);
-       }
-       double standardDev = Math.sqrt(std/grades.size());
-
-
-        PrintWriter out = new PrintWriter(log);
-        String toWrite = "Average: " + avg + "\nStandard Deviation: " + standardDev;
-        out.append(toWrite);
-        out.close();    
-
-        }catch(IOException e){
-            System.out.println("COULD NOT LOG!!");
-        }
-    }); 
 
     // ex 8
 
@@ -322,48 +279,45 @@ public class App
 
           // ex 9
 
-         try{
-            String nos;
-            
-            BufferedReader br = new BufferedReader(new FileReader("total_students.txt"));
-            
-            nos = br.readLine().split(": ")[1];
+        WebClient client = WebClient.create("http://localhost:8080");
 
-            br.close();
-
-        int NumOfStudents = Integer.parseInt(nos);
-        
-        WebClient.create("http://localhost:8080").get().uri("/student_teacher").retrieve().bodyToFlux(StudentTeacher.class)
+        client.get().uri("/student_teacher").retrieve().bodyToFlux(StudentTeacher.class)
         .count()
         .subscribe(s -> {  
 
-            String path4 = System.getProperty("user.dir");
-            path4 = path4 + "/outputs/";
- 
-          File log = new File(path4 + "avg_teacher_per_student.txt");
-      
-          try{
-          if(log.exists()==false){
-                  System.out.println("We had to make a new file.");
-                  log.createNewFile();
-          }
+        String path13 = System.getProperty("user.dir");
+        path13 = path13 + "/outputs/";
 
-          
-          PrintWriter out = new PrintWriter(log);
-          String toWrite = "Average Number of Professors per Student: " + (float)s / NumOfStudents;
-          System.out.println("\n\n\n\n");
-          System.out.println(s);
-          out.append(toWrite);
-          out.close();    
-  
-          }catch(IOException e){
-              System.out.println("COULD NOT LOG!!");
-          } 
-      });
-                
-        }catch(IOException e){
-            e.printStackTrace();
+        File log = new File(path13 + "avg_teacher_per_student.txt");
+    
+        try{
+        if(log.exists()==false){
+                System.out.println("We had to make a new file.");
+                log.createNewFile();
         }
+
+        client.get()
+                .uri("/student")
+                .retrieve()
+                .bodyToFlux(StudentTeacher.class)
+                .count()
+                .subscribe(v -> {
+
+                    PrintWriter out;
+                    try {
+                        out = new PrintWriter(log);
+                        String toWrite = "Average Number of Professors per Student: " + (float)s / v;
+                        out.append(toWrite);
+                        out.close();
+                    } catch (FileNotFoundException e) {e.printStackTrace();}
+
+                });  
+
+        }catch(IOException e){
+            System.out.println("COULD NOT LOG!!");
+        } 
+    });
+                
  
  
 
@@ -525,6 +479,54 @@ public class App
             
             } catch(IOException e){e.printStackTrace();}
         });
+
+
+
+        // ex 7
+
+        ArrayList<Float> grades2 = new ArrayList<>();
+        
+        WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
+        .filter(s -> s.getCredits() == 180)
+        .subscribe(s -> {  
+
+            String path6 = System.getProperty("user.dir");
+            path6 = path6 + "/outputs/";
+
+            File log = new File(path6 + "finalist_avg_std.txt");
+        
+            try{
+            if(log.exists()==false){
+                System.out.println("We had to make a new file.");
+                log.createNewFile();
+            }
+
+            grades2.add(s.getGrade());
+
+            
+            float std = 0;
+            float allSum = 0;
+            for(float el : grades2){
+                allSum += el;
+            }
+                    
+            float avg = allSum / grades2.size();
+
+        for(float temp: grades2) {
+            std += Math.pow(temp - avg, 2);
+        }
+        double standardDev = Math.sqrt(std/grades2.size());
+
+
+            PrintWriter out = new PrintWriter(log);
+            String toWrite = "Average: " + avg + "\nStandard Deviation: " + standardDev;
+            out.append(toWrite);
+            out.close();    
+
+            }catch(IOException e){
+                System.out.println("COULD NOT LOG!!");
+            }
+        }); 
 
         
         try {
