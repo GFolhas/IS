@@ -1,4 +1,4 @@
 Number of Students: 3
-Vaz
 Rodrigo
 Guilherme
+Anibal

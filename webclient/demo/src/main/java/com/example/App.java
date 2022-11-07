@@ -20,18 +20,49 @@ import lombok.extern.java.Log;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+
+
 public class App 
 {
     public static void main( String[] args )
     {
         
+        String path = System.getProperty("user.dir");
+        path = path + "/outputs/";
+
+        File f = new File(path);
+
+        try {
+            deleteDir(f);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        if (f.mkdir()) {
+            System.out.println("Directory is created");
+        }
+        else {
+            System.out.println("Directory cannot be created");
+        }
+
+
 
         // ex.1
 
-/*         WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
+         WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
         .map(s -> {
 
-            File log = new File("names_and_birthdates.txt");
+            String path12 = System.getProperty("user.dir");
+            path12 = path12 + "/outputs/";
+
+            File log = new File(path12 + "names_and_birthdates.txt");
             
             try{
             if(log.exists()==false){
@@ -57,7 +88,10 @@ public class App
         .count()
         .subscribe(v->{
 
-            File log = new File("total_students.txt");
+            String path11 = System.getProperty("user.dir");
+            path11 = path11 + "/outputs/";
+
+            File log = new File(path11 + "total_students.txt");
             try{
             if(log.exists()==false){
                     System.out.println("We had to make a new file.");
@@ -81,7 +115,11 @@ public class App
         .filter(s -> s.getCredits()!=180 )
         .count()
         .subscribe(v -> {
-            File log = new File("active_students.txt");
+
+            String path10 = System.getProperty("user.dir");
+            path10 = path10 + "/outputs/";
+
+            File log = new File(path10 + "active_students.txt");
             try{
             if(log.exists()==false){
                     System.out.println("We had to make a new file.");
@@ -101,7 +139,10 @@ public class App
          WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
          .map(s -> {
  
-             File log = new File("total_courses.txt");
+            String path9 = System.getProperty("user.dir");
+            path9 = path9 + "/outputs/";
+
+             File log = new File(path9 + "total_courses.txt");
              
              try{
              if(log.exists()==false){
@@ -119,10 +160,7 @@ public class App
              
              return s;
          })
-         .subscribe(v -> {
-
-            // if i want i can open file, read everything and then sum all the courses
-         });
+         .subscribe();
 
 
 
@@ -135,7 +173,10 @@ public class App
           })
           .subscribe(s -> {  
 
-            File log = new File("finalists.txt");
+            String path8 = System.getProperty("user.dir");
+            path8 = path8 + "/outputs/";
+
+            File log = new File(path8 + "finalists.txt");
         
             try{
             if(log.exists()==false){
@@ -159,38 +200,41 @@ public class App
         WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
         .subscribe(s -> {  
 
-          File log = new File("avg_std.txt");
+            String path7 = System.getProperty("user.dir");
+            path7 = path7 + "/outputs/";
+        
+            File log = new File(path7 + "avg_std.txt");
       
-          try{
-          if(log.exists()==false){
-                  System.out.println("We had to make a new file.");
-                  log.createNewFile();
-          }
+            try{
+            if(log.exists()==false){
+                    System.out.println("We had to make a new file.");
+                    log.createNewFile();
+            }
 
-          grades.add(s.getGrade());
+            grades.add(s.getGrade());
 
-          float std = 0;
-          float allSum = 0;
-          for(float el : grades){
-            allSum += el;
-          }
- 
-          float avg = allSum / grades.size();
+            float std = 0;
+            float allSum = 0;
+            for(float el : grades){
+                allSum += el;
+            }
+    
+            float avg = allSum / grades.size();
 
-         for(float temp: grades) {
-            std += Math.pow(temp - avg, 2);
-         }
-         double standardDev = Math.sqrt(std/grades.size());
+            for(float temp: grades) {
+                std += Math.pow(temp - avg, 2);
+            }
+            double standardDev = Math.sqrt(std/grades.size());
 
 
-          PrintWriter out = new PrintWriter(log);
-          String toWrite = "Average: " + avg + "\nStandard Deviation: " + standardDev;
-          out.append(toWrite);
-          out.close();    
+            PrintWriter out = new PrintWriter(log);
+            String toWrite = "Average: " + avg + "\nStandard Deviation: " + standardDev;
+            out.append(toWrite);
+            out.close();    
 
-          }catch(IOException e){
-              System.out.println("COULD NOT LOG!!");
-          }
+            }catch(IOException e){
+                System.out.println("COULD NOT LOG!!");
+            }
       });
 
 
@@ -203,12 +247,15 @@ public class App
       .filter(s -> s.getCredits() == 180)
       .subscribe(s -> {  
 
-        File log = new File("finalist_avg_std.txt");
+        String path6 = System.getProperty("user.dir");
+        path6 = path6 + "/outputs/";
+
+        File log = new File(path6 + "finalist_avg_std.txt");
     
         try{
         if(log.exists()==false){
-                System.out.println("We had to make a new file.");
-                log.createNewFile();
+            System.out.println("We had to make a new file.");
+            log.createNewFile();
         }
 
         grades.add(s.getGrade());
@@ -236,11 +283,11 @@ public class App
         }catch(IOException e){
             System.out.println("COULD NOT LOG!!");
         }
-    }); */
+    }); 
 
     // ex 8
 
-/*     DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");   
+     DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");   
 
     WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
     .sort((s1, s2) -> {try {
@@ -252,7 +299,10 @@ public class App
     })
     .take(1)
     .subscribe(s -> {
-        File log = new File("eldest_student.txt");
+
+        String path5 = System.getProperty("user.dir");
+        path5 = path5 + "/outputs/";
+        File log = new File(path5 + "eldest_student.txt");
          
          try{
          if(log.exists()==false){
@@ -266,11 +316,11 @@ public class App
          }catch(IOException e){
              System.out.println("COULD NOT LOG!!");
          }
-    }); */
+    }); 
 
 
 
-/*          // ex 9
+          // ex 9
 
          try{
             String nos;
@@ -286,8 +336,11 @@ public class App
         WebClient.create("http://localhost:8080").get().uri("/student_teacher").retrieve().bodyToFlux(StudentTeacher.class)
         .count()
         .subscribe(s -> {  
+
+            String path4 = System.getProperty("user.dir");
+            path4 = path4 + "/outputs/";
  
-          File log = new File("avg_teacher_per_student.txt");
+          File log = new File(path4 + "avg_teacher_per_student.txt");
       
           try{
           if(log.exists()==false){
@@ -311,160 +364,14 @@ public class App
         }catch(IOException e){
             e.printStackTrace();
         }
- */
+ 
  
 
-/*       //TODO: Add an arraylist to teachers so i can continue to account for the students of each teacher in a way this can be done automatically in this webclient
-        WebClient.create("http://localhost:8080").get().uri("/teacher").retrieve().bodyToFlux(Teacher.class)
-        .sort((s1, s2) -> s1.getId() - s2.getId())
-        .subscribe(s -> {
-
-            
-            File log = new File("teachers.txt");
-        
-            try{
-            if(log.exists()==false){
-                    System.out.println("We had to make a new file.");
-                    log.createNewFile();
-            }
-            PrintWriter out = new PrintWriter(new FileWriter(log, true));
-            String toWrite = s.getName() + "\n";
-            out.append(toWrite);
-            out.close();
-            }catch(IOException e){
-                System.out.println("COULD NOT LOG!!");
-            }
-
-        });
-
-        WebClient.create("http://localhost:8080").get().uri("/student").retrieve().bodyToFlux(Student.class)
-        .sort((s1, s2) -> s1.getId() - s2.getId())
-        .subscribe(s -> {
-
-            
-            File log = new File("students.txt");
-        
-            try{
-            if(log.exists()==false){
-                    System.out.println("We had to make a new file.");
-                    log.createNewFile();
-            }
-            PrintWriter out = new PrintWriter(new FileWriter(log, true));
-            String toWrite = s.getName() + "\n";
-            out.append(toWrite);
-            out.close();
-            }catch(IOException e){
-                System.out.println("COULD NOT LOG!!");
-            }
-
-        });
-
-        WebClient.create("http://localhost:8080").get().uri("/student_teacher").retrieve().bodyToFlux(StudentTeacher.class)
-        .sort((s1, s2) -> s1.getStudent_id() - s2.getStudent_id())
-        .subscribe(s -> {
-
-            
-            File log = new File("relationship.txt");
-        
-            try{
-            if(log.exists()==false){
-                    System.out.println("We had to make a new file.");
-                    log.createNewFile();
-            }
-            PrintWriter out = new PrintWriter(new FileWriter(log, true));
-            String toWrite = s.getStudent_id() + " - " + s.getTeacher_id() + "\n";
-            out.append(toWrite);
-            out.close();
-            }catch(IOException e){
-                System.out.println("COULD NOT LOG!!");
-            }
-
-        });
-
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ArrayList<String> teach = new ArrayList<>();
-        ArrayList<String> stud = new ArrayList<>();
-        ArrayList<String> rela = new ArrayList<>();
-
-        try {
-        BufferedReader br = new BufferedReader(new FileReader("teachers.txt"));
- 
-        String value;
-
-        while ((value = br.readLine()) != null){
-            teach.add(value);
-        }
-        
-        br.close();
-
-        br = new BufferedReader(new FileReader("students.txt"));
-
-        while ((value = br.readLine()) != null){
-            stud.add(value);
-        }
-
-        br.close();
-
-        br = new BufferedReader(new FileReader("relationship.txt"));
-
-        while ((value = br.readLine()) != null){
-            rela.add(value);
-        }
-
-        br.close();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-
-
-        //TODO: Compare all the arraylists and select accordingly (see below)
-
-
-        File log = new File("students_per_prof.txt");
-
-        try{
-        if(log.exists()==false){
-                System.out.println("We had to make a new file.");
-                log.createNewFile();
-            }     
-
-            PrintWriter out = new PrintWriter(new FileWriter(log, true));
-            for(int i = 0; i < teach.size(); i++){
-                
-                String toWrite = "Teacher: " + teach.get(i) + "\n";
-                out.append(toWrite);
-                for(int j = 0; j < rela.size(); j++){
-                    if(Integer.parseInt(rela.get(j).split(" - ")[1])-1 == i){
-                        int tmp = Integer.parseInt(rela.get(j).split(" - ")[0]);
-                        toWrite = "\tStudent: " + stud.get(tmp-1) + "\n";
-                        out.append(toWrite);
-                    }
-                }
-                out.append("\n");
-            }
-            out.close();
-            
-        }catch(IOException e){
-            System.out.println("COULD NOT LOG!!");
-        }    
-        
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } */
-
-
+        // ex 10
 
         WebClient wc = WebClient.create("http://localhost:8080");
 
-        wc.get()
+       wc.get()
         .uri("/teacher/")
         .retrieve()
         .bodyToFlux(Teacher.class)
@@ -472,7 +379,19 @@ public class App
             return s1.getId() - s2.getId();
           })
         .subscribe(v -> {
-            File log = new File(v.getName() + ".txt");
+
+            String path3 = System.getProperty("user.dir");
+            path3 = path3 + "/outputs/Teachers/";
+            
+            File f3 = new File(path3);
+              if (f3.mkdir()) {
+                System.out.println("Directory is created");
+            }
+            else {
+                System.out.println("Directory cannot be created");
+            }
+
+            File log = new File(path3 + v.getName() + ".txt");
 
             try{
                 if(log.exists()==false){
@@ -533,15 +452,103 @@ public class App
 
 
 
+        // ex 11
+
+
+        wc.get()
+        .uri("/student")
+        .retrieve()
+        .bodyToFlux(Student.class)
+        .sort((s1, s2) -> {
+            return s1.getId() - s2.getId();
+          })
+        .subscribe(s -> {
+
+            String path2 = System.getProperty("user.dir");
+            path2 = path2 + "/outputs/Students/";
+
+            File f2 = new File(path2);
+              if (f2.mkdir()) {
+                System.out.println("Directory is created");
+            }
+            else {
+                System.out.println("Directory cannot be created");
+            }
+
+
+            File log = new File(path2 + s.getName() + "'s Data.txt");
+
+            try{
+                if(log.exists()==false){
+                    System.out.println("We had to make a new file.");
+                    log.createNewFile();
+                }
+                else{
+                    System.out.println("File already exists.");  
+                }
+
+
+                PrintWriter out = new PrintWriter(new FileWriter(log, true));
+                String toWrite = "ID: " + s.getId() + "\nName: " + s.getName() + "\nBirthdate: " + s.getBirthdate() + "\nCredits: " + s.getCredits() + "\nGrade: " + s.getGrade() + "\nProfessors:\n";
+                out.append(toWrite);
+                out.close();
+
+                wc.get()
+                .uri("/student_teacher")
+                .retrieve()
+                .bodyToFlux(StudentTeacher.class)
+                .filter(st ->  st.getStudent_id() == s.getId())
+                .subscribe(st -> {
+
+                    wc.get()
+                    .uri("/teacher")
+                    .retrieve()
+                    .bodyToFlux(Teacher.class)
+                    .filter(t -> t.getId() == st.getTeacher_id())
+                    .sort((t1, t2) -> {
+                        return t2.getId() - t1.getId();
+                      })
+                    .subscribe(t -> {
+
+                        try{
+                            PrintWriter out2 = new PrintWriter(new FileWriter(log, true));
+                            String toWrit = "\t\t\t-" + t.getName() + "\n";
+                            out2.append(toWrit);
+                            out2.close();
+                        } catch(IOException e){e.printStackTrace();}
+
+                    });
+
+
+                });
+
+            
+            } catch(IOException e){e.printStackTrace();}
+        });
+
         
-
-
         try {
-            Thread.sleep(10000);
+            Thread.sleep(15000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
     }
+
+
+    static void deleteDir(File f) throws IOException {
+        if (f.isDirectory()) {
+          File[] content = f.listFiles();
+          if (content != null) {
+            for (File entry : content) {
+              deleteDir(entry);
+            }
+          }
+        }
+        if (!f.delete()) {
+          throw new IOException("Failed to delete file " + f);
+        }
+      }
+
 
 }

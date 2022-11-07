@@ -1,0 +1,9 @@
+ID: 3
+Name: Rodrigo
+Birthdate: 04-05-2001
+Credits: 114
+Grade: 18.4
+Professors:
+			-Folhas
+			-xoto
+			-mafralda
