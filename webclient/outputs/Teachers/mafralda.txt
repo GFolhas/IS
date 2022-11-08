@@ -1,4 +1,0 @@
-Number of Students: 3
-Guilherme
-Anibal
-Rodrigo

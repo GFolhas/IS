@@ -5,5 +5,5 @@ Credits: 114
 Grade: 18.4
 Professors:
 			-Folhas
-			-xoto
-			-mafralda
+			-Margarida
+			-Mafalda

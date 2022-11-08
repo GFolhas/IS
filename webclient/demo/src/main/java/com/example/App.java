@@ -11,6 +11,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
+
 
 
 public class App 
@@ -55,7 +59,7 @@ public class App
             String path12 = System.getProperty("user.dir");
             path12 = path12 + "/outputs/";
 
-            File log = new File(path12 + "names_and_birthdates.txt");
+            File log = new File(path12 + "ex1.txt");
             
             try{
             if(log.exists()==false){
@@ -67,7 +71,7 @@ public class App
             out.append(toWrite);
             out.close();
             }catch(IOException e){
-                System.out.println("COULD NOT LOG!!");
+                System.out.println("Log failed!");
             }
         });
 
@@ -86,7 +90,7 @@ public class App
             String path11 = System.getProperty("user.dir");
             path11 = path11 + "/outputs/";
 
-            File log = new File(path11 + "total_students.txt");
+            File log = new File(path11 + "ex2.txt");
             try{
             if(log.exists()==false){
                     System.out.println("We had to make a new file.");
@@ -96,7 +100,7 @@ public class App
             out.append("Total Students: " + v);
             out.close();
             }catch(IOException e){
-                System.out.println("COULD NOT LOG!!");
+                System.out.println("Log failed!");
             } 
         });    
 
@@ -114,7 +118,7 @@ public class App
             String path10 = System.getProperty("user.dir");
             path10 = path10 + "/outputs/";
 
-            File log = new File(path10 + "active_students.txt");
+            File log = new File(path10 + "ex3.txt");
             try{
             if(log.exists()==false){
                     System.out.println("We had to make a new file.");
@@ -124,7 +128,7 @@ public class App
             out.append("Active Students: " + v);
             out.close();
             }catch(IOException e){
-                System.out.println("COULD NOT LOG!!");
+                System.out.println("Log failed!");
             } 
         }); 
 
@@ -137,7 +141,7 @@ public class App
             String path9 = System.getProperty("user.dir");
             path9 = path9 + "/outputs/";
 
-             File log = new File(path9 + "total_courses.txt");
+             File log = new File(path9 + "ex4.txt");
              
              try{
              if(log.exists()==false){
@@ -150,7 +154,7 @@ public class App
              out.append(toWrite);
              out.close();
              }catch(IOException e){
-                 System.out.println("COULD NOT LOG!!");
+                 System.out.println("Log failed!");
              }
              
              return s;
@@ -171,7 +175,7 @@ public class App
             String path8 = System.getProperty("user.dir");
             path8 = path8 + "/outputs/";
 
-            File log = new File(path8 + "finalists.txt");
+            File log = new File(path8 + "ex5.txt");
         
             try{
             if(log.exists()==false){
@@ -183,7 +187,7 @@ public class App
             out.append(toWrite);
             out.close();
             }catch(IOException e){
-                System.out.println("COULD NOT LOG!!");
+                System.out.println("Log failed!");
             }
         });
 
@@ -198,7 +202,7 @@ public class App
             String path7 = System.getProperty("user.dir");
             path7 = path7 + "/outputs/";
         
-            File log = new File(path7 + "avg_std.txt");
+            File log = new File(path7 + "ex6.txt");
       
             try{
             if(log.exists()==false){
@@ -231,7 +235,7 @@ public class App
             out.close();    
 
             }catch(IOException e){
-                System.out.println("COULD NOT LOG!!");
+                System.out.println("Log failed!");
             }
       });
 
@@ -252,7 +256,7 @@ public class App
 
         String path5 = System.getProperty("user.dir");
         path5 = path5 + "/outputs/";
-        File log = new File(path5 + "eldest_student.txt");
+        File log = new File(path5 + "ex8.txt");
          
          try{
          if(log.exists()==false){
@@ -264,7 +268,7 @@ public class App
          out.append(toWrite);
          out.close();
          }catch(IOException e){
-             System.out.println("COULD NOT LOG!!");
+             System.out.println("Log failed!");
          }
     }); 
 
@@ -281,7 +285,7 @@ public class App
         String path13 = System.getProperty("user.dir");
         path13 = path13 + "/outputs/";
 
-        File log = new File(path13 + "avg_teacher_per_student.txt");
+        File log = new File(path13 + "ex9.txt");
     
         try{
         if(log.exists()==false){
@@ -307,16 +311,60 @@ public class App
                 });  
 
         }catch(IOException e){
-            System.out.println("COULD NOT LOG!!");
+            System.out.println("Log failed!");
         } 
     });
-                
- 
- 
 
+                
         // ex 10
 
+        //ArrayList<TeacherCount> fin = new ArrayList<>();
+
         WebClient wc = WebClient.create("http://localhost:8080");
+
+        wc.get()
+        .uri("/teacher/")
+        .retrieve()
+        .bodyToFlux(Teacher.class)
+        .publishOn(Schedulers.boundedElastic())
+        .map(v -> {
+
+                Mono<Long> ml =  wc.get()
+                .uri("/student_teacher")
+                .retrieve()
+                .bodyToFlux(StudentTeacher.class)
+                .publishOn(Schedulers.boundedElastic())
+                .filter(s ->  s.getTeacher_id() == v.getId())
+                .count();
+
+            return new TeacherCount(v.getName(), ml.block());
+        })
+        .sort((r1, r2) -> {
+            return (int) (r2.getCounter() - r1.getCounter());
+        })
+        .subscribe(r -> {
+
+            try{ 
+
+                String path13 = System.getProperty("user.dir");
+                path13 = path13 + "/outputs/";
+                File log = new File(path13 + "ex10.txt");
+
+                if(log.exists()==false){
+                    System.out.println("We had to make a new file.");
+                    log.createNewFile();
+            }
+                PrintWriter out = new PrintWriter(new FileWriter(log, true));
+                String toWrite = "Name: " + r.getName() + "\tNumber of Students: " + r.getCounter() + "\n";
+                out.append(toWrite);
+                out.close();
+                        
+            } catch(IOException e){e.printStackTrace();}
+        });
+
+
+
+  /*       WebClient wc = WebClient.create("http://localhost:8080");
 
        wc.get()
         .uri("/teacher/")
@@ -395,8 +443,7 @@ public class App
                 });
 
             } catch(IOException e){e.printStackTrace();}
-        });
-
+        }); */
 
 
         // ex 11
@@ -485,7 +532,7 @@ public class App
             String path6 = System.getProperty("user.dir");
             path6 = path6 + "/outputs/";
 
-            File log = new File(path6 + "finalist_avg_std.txt");
+            File log = new File(path6 + "ex7.txt");
         
             try{
             if(log.exists()==false){
@@ -516,7 +563,7 @@ public class App
             out.close();    
 
             }catch(IOException e){
-                System.out.println("COULD NOT LOG!!");
+                System.out.println("Log failed!");
             }
         }); 
 
