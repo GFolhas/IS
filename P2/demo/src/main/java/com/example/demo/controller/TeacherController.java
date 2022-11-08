@@ -60,7 +60,7 @@ public class TeacherController {
 
     @DeleteMapping("/{id}")
     public Mono<Void> deleteTeacher(@PathVariable Integer id){
-        LOGGER.info("> Updating a teacher");
+        LOGGER.info("> Deleting a teacher");
         return repo.deleteById(id);
     }
 
