@@ -1,26 +1,15 @@
 package com.example;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.SocketTimeoutException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-
-import org.springframework.http.converter.xml.SourceHttpMessageConverter;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import lombok.extern.java.Log;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 
 
@@ -82,6 +71,11 @@ public class App
             }
         });
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // ex.2
 

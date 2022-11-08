@@ -1,8 +1,0 @@
-ID: 1
-Name: Vaz
-Birthdate: 12-12-2012
-Credits: 180
-Grade: 15.0
-Professors:
-			-Folhas
-			-xoto

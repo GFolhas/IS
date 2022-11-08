@@ -1,8 +1,0 @@
-ID: 5
-Name: Guilherme
-Birthdate: 15-09-2000
-Credits: 162
-Grade: 14.3
-Professors:
-			-mafralda
-			-Folhas

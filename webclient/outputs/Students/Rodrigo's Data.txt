@@ -4,6 +4,6 @@ Birthdate: 04-05-2001
 Credits: 114
 Grade: 18.4
 Professors:
-			-mafralda
-			-Folhas
 			-xoto
+			-Folhas
+			-mafralda
