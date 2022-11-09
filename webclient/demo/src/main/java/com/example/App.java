@@ -533,69 +533,7 @@ public class App
 
 
 
-
-
-        /* wc.get()
-        .uri("/student/")
-        .retrieve()
-        .bodyToFlux(Student.class)
-        .publishOn(Schedulers.boundedElastic())
-        .map(v -> {
-            
-            Flux<StudentFullInfo> tmp = wc.get()
-            .uri("/student_teacher")
-            .retrieve()
-            .bodyToFlux(StudentTeacher.class)
-            .publishOn(Schedulers.boundedElastic())
-            .filter(s ->  s.getStudent_id() == v.getId())
-            .map(s -> {
-
-                Flux<String> c = wc.get()
-                .uri("/teacher")
-                .retrieve()
-                .bodyToFlux(Teacher.class)
-                .publishOn(Schedulers.boundedElastic())
-                .filter(k ->  s.getTeacher_id() == k.getId())
-                .map(k -> {
-                    return k.getName();
-                });
-
-                //return "test";
-                return new StudentFullInfo(v.getId(), v.getName(), v.getBirthdate(), v.getCredits(), v.getGrade(), c);
-            });
-
-
-            return tmp;
-        })
-        .subscribe(g -> {
-
-            try{ 
-
-                String path13 = System.getProperty("user.dir");
-                path13 = path13 + "/outputs/";
-                File log = new File(path13 + "ex11.txt");
-
-                if(log.exists()==false){
-                    System.out.println("We had to make a new file.");
-                    log.createNewFile();
-                }
-
-                Mono<List<StudentFullInfo>> tmp = g.collectList();
-
-                PrintWriter out = new PrintWriter(new FileWriter(log, true));
-                for(int i = 0; i < tmp.block().size(); i++){
-                    String toWrite = "Name: " + tmp.block().get(i).getName() + "\n";
-                    out.append(toWrite);
-                }
-                out.close();
-                        
-            } catch(IOException e){e.printStackTrace();}
-        });
-
- */
-
-
-       /*  wc.get()
+ /*         wc.get()
         .uri("/student")
         .retrieve()
         .bodyToFlux(Student.class)
@@ -665,7 +603,7 @@ public class App
             
             } catch(IOException e){e.printStackTrace();}
         });
-
+ */
         
         // ex 7
 
@@ -712,10 +650,10 @@ public class App
                 System.out.println("Log failed!");
             }
         }); 
- */
+
         
         try {
-            Thread.sleep(5000);
+            Thread.sleep(6000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
