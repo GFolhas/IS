@@ -9,8 +9,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.web.reactive.function.client.WebClient;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
@@ -318,8 +321,6 @@ public class App
                 
         // ex 10
 
-        //ArrayList<TeacherCount> fin = new ArrayList<>();
-
         WebClient wc = WebClient.create("http://localhost:8080");
 
         wc.get()
@@ -450,6 +451,151 @@ public class App
 
 
         wc.get()
+        .uri("/student/")
+        .retrieve()
+        .bodyToFlux(Student.class)
+        .publishOn(Schedulers.boundedElastic())
+        .sort((v1, v2) -> {
+            return v1.getId() - v2.getId();
+        })
+        .map(v -> {
+
+
+            Flux<String> t = wc.get()
+            .uri("/student_teacher/")
+            .retrieve()
+            .bodyToFlux(StudentTeacher.class)
+            .publishOn(Schedulers.boundedElastic())
+            .filter(s -> s.getStudent_id() == v.getId())
+            .map(s -> {
+
+                Flux<String> x = wc.get()
+                .uri("/teacher")
+                .retrieve()
+                .bodyToFlux(Teacher.class)
+                .publishOn(Schedulers.boundedElastic())
+                .filter(k ->  s.getTeacher_id() == k.getId())
+                .map(k -> {
+                    return k.getName();
+                });
+
+                String val = x.collectList().block().get(0);
+
+                return val;
+            });
+
+
+            return new StudentFullInfo(v.getId(), v.getName(), v.getBirthdate(), v.getCredits(), v.getGrade(), t);
+        })
+        .subscribe(g -> {
+            try{ 
+
+                String path13 = System.getProperty("user.dir");
+                path13 = path13 + "/outputs/";
+                File log = new File(path13 + "ex11.txt");
+
+                if(log.exists()==false){
+                    System.out.println("We had to make a new file.");
+                    log.createNewFile();
+                }
+
+                PrintWriter out = new PrintWriter(new FileWriter(log, true));
+
+                String toWrite = "ID: " + g.getId() + 
+                "\nName: " + g.getName() + 
+                "\nBirthdate: " + g.getBirthdate() +
+                "\nCredits: " + g.getCredits() +
+                "\nGrade: " + g.getGrade() +
+                "\nProfessors: ";
+
+                out.append(toWrite);
+                if(g.getProfs() != null && g.getProfs().collectList().block().size() > 0){
+                    List<String> w = new ArrayList<>();
+
+                    for(int i = 0; i < g.getProfs().collectList().block().size(); i++){
+                        w.add(g.getProfs().collectList().block().get(i));
+                    }
+
+                    for(int i = 0; i < w.size()-1; i++){
+                        toWrite = w.get(i) + ", ";
+                        out.append(toWrite);
+                    }
+                    toWrite = w.get(w.size()-1);
+                    out.append(toWrite);
+                }
+                out.append("\n\n");
+                out.close();
+                        
+            } catch(IOException e){e.printStackTrace();}
+        });
+
+
+
+
+
+
+
+        /* wc.get()
+        .uri("/student/")
+        .retrieve()
+        .bodyToFlux(Student.class)
+        .publishOn(Schedulers.boundedElastic())
+        .map(v -> {
+            
+            Flux<StudentFullInfo> tmp = wc.get()
+            .uri("/student_teacher")
+            .retrieve()
+            .bodyToFlux(StudentTeacher.class)
+            .publishOn(Schedulers.boundedElastic())
+            .filter(s ->  s.getStudent_id() == v.getId())
+            .map(s -> {
+
+                Flux<String> c = wc.get()
+                .uri("/teacher")
+                .retrieve()
+                .bodyToFlux(Teacher.class)
+                .publishOn(Schedulers.boundedElastic())
+                .filter(k ->  s.getTeacher_id() == k.getId())
+                .map(k -> {
+                    return k.getName();
+                });
+
+                //return "test";
+                return new StudentFullInfo(v.getId(), v.getName(), v.getBirthdate(), v.getCredits(), v.getGrade(), c);
+            });
+
+
+            return tmp;
+        })
+        .subscribe(g -> {
+
+            try{ 
+
+                String path13 = System.getProperty("user.dir");
+                path13 = path13 + "/outputs/";
+                File log = new File(path13 + "ex11.txt");
+
+                if(log.exists()==false){
+                    System.out.println("We had to make a new file.");
+                    log.createNewFile();
+                }
+
+                Mono<List<StudentFullInfo>> tmp = g.collectList();
+
+                PrintWriter out = new PrintWriter(new FileWriter(log, true));
+                for(int i = 0; i < tmp.block().size(); i++){
+                    String toWrite = "Name: " + tmp.block().get(i).getName() + "\n";
+                    out.append(toWrite);
+                }
+                out.close();
+                        
+            } catch(IOException e){e.printStackTrace();}
+        });
+
+ */
+
+
+       /*  wc.get()
         .uri("/student")
         .retrieve()
         .bodyToFlux(Student.class)
@@ -459,7 +605,7 @@ public class App
         .subscribe(s -> {
 
             String path2 = System.getProperty("user.dir");
-            path2 = path2 + "/outputs/Students/";
+            path2 = path2 + "/outputs/ex11/";
 
             File f2 = new File(path2);
               if (f2.mkdir()) {
@@ -566,7 +712,7 @@ public class App
                 System.out.println("Log failed!");
             }
         }); 
-
+ */
         
         try {
             Thread.sleep(5000);
