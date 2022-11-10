@@ -1,0 +1,4 @@
+Name: Folhas	Number of Students: 3
+Name: Mafalda	Number of Students: 3
+Name: Margarida	Number of Students: 3
+Name: Bernas	Number of Students: 0
