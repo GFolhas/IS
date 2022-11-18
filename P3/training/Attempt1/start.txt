@@ -1,0 +1,44 @@
+(run yaml file)
+docker-compose -f docker-compose.yml up -d
+
+docker ps (ver se estão a correr)
+
+(open kafka shell)
+docker exec -it kafka /bin/sh
+
+pwd
+
+cd opt/kafka_2.13-2.7.1/bin
+
+(create kafka topic)
+kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic [topic name]
+
+(list all kafka topics)
+kafka-topics.sh --list --zookeeper zookeeper:2181
+
+(get info from topic)
+kafka-topics.sh --describe --zookeeper zookeeper:2181 --topic [topic name]
+
+(delete topic)
+kafka-topics.sh --delete --zookeeper zookeeper:2181 --topic [topic name]
+
+(produce messages)
+kafka-console-producer.sh --broker-list kafka:9092 --topic [topic name]
+
+(inner console opens and we write the messages)
+{'user_id': 1, 'recipient_id': 2, 'message': 'Hi Vaz'}
+{'user_id': 2, 'recipient_id': 1, 'message': 'Hello There!'}
+
+(close inner console)
+ctrl+C
+
+
+(receive messages)
+kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic [topic name]
+
+(list all received messages)
+kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic [topic name] --from-beginning
+
+
+
+
