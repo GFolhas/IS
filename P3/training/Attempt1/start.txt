@@ -42,3 +42,16 @@ kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic [topic name] --f
 
 
 
+
+
+(iniciar um zookeeper - estando na pasta do kafka)
+bin/windows/zookeeper-server-start.bat config/zookeeper.properties
+
+
+(iniciar o kafka - estando na pasta do kafka)
+bin/windows/kafka-server-start.bat config/server.properties
+
+
+
+
+
