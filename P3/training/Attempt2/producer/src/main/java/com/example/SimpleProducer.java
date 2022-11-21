@@ -23,10 +23,10 @@ public class SimpleProducer {
   // create instance for properties to access producer configs   
   Properties props = getProperties();
 
-  Producer<String, Long> producer = new KafkaProducer<>(props);
+  Producer<String, String> producer = new KafkaProducer<>(props);
 
   for(int i = 0; i < 1000; i++)
-   producer.send(new ProducerRecord<String, Long>(topicName, Integer.toString(i), (long) i));
+   producer.send(new ProducerRecord<String, String>(topicName, Integer.toString(i), String.valueOf(i)));
   
   System.out.println("Message sent successfully to topic " + topicName);
   producer.close();
@@ -58,13 +58,13 @@ public class SimpleProducer {
         "org.apache.kafka.common.serialization.StringSerializer");
 
     props.put("value.serializer", 
-        "org.apache.kafka.common.serialization.LongSerializer");
+        "org.apache.kafka.common.serialization.StringSerializer");
 
     props.put("key.deserializer", 
         "org.apache.kafka.common.serialization.StringDeserializer");
 
     props.put("value.deserializer", 
-        "org.apache.kafka.common.serialization.LongDeserializer");
+        "org.apache.kafka.common.serialization.StringDeserializer");
 
     return props;
  }
