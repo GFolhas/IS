@@ -2,8 +2,12 @@ package com.example;
 
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.Random;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.KafkaStreams;
@@ -23,11 +27,12 @@ public class SimpleStreams {
         String inputTopic = "messages";
         String outtopicname = "result";
 
+
         java.util.Properties props = new Properties();
         // Give the Streams application a unique name.  The name must be unique in the Kafka cluster
         // against which the application is run.
-        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "wordcount-lambda-example");
-        props.put(StreamsConfig.CLIENT_ID_CONFIG, "wordcount-lambda-example-client");
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG,UUID.randomUUID().toString());
+        //props.put(StreamsConfig.CLIENT_ID_CONFIG, "wordcount-lambda-example-client");
         // Where to find Kafka broker(s).
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         // Specify default (de)serializers for record keys and for record values.
@@ -42,19 +47,52 @@ public class SimpleStreams {
         //props.put(StreamsConfig.STATE_DIR_CONFIG, TestUtils.tempDirectory().getAbsolutePath());
 
 
-        final StreamsBuilder builder = new StreamsBuilder();
-        final KStream<String, String> textLines = builder.stream(inputTopic, Consumed.with(Serdes.String(), Serdes.String()));
+        StreamsBuilder builder = new StreamsBuilder();
+        KStream<String, String> textLines = builder.stream(inputTopic, Consumed.with(Serdes.String(), Serdes.String()));
 
-        final Pattern pattern = Pattern.compile("\\W+", Pattern.UNICODE_CHARACTER_CLASS);
+      /*   textLines.mapValues((key, value) -> {
+            System.out.print(key);
+            System.out.print(" : ");
+            System.out.println(value);
+            return value;
+        })
+        .groupBy((key, value) -> value)
+        .count()
+        .mapValues((key, value) -> {
+            System.out.println("2nd mapping:");
+            System.out.print(key);
+            System.out.print(" : ");
+            System.out.println(value);
+            return String.valueOf(value);
+        })
+        .toStream()
+        .to(outtopicname); */
 
-        final KTable<String, Long> wordCounts = textLines
-        .flatMapValues(value -> Arrays.asList(pattern.split(value.toLowerCase())))
-        .groupBy((keyIgnored, word) -> word)
-        .count();
 
-        wordCounts.toStream().filter((key, value) -> value != null).to(outtopicname, Produced.with(Serdes.String(), Serdes.Long()));
-        final KafkaStreams streams = new KafkaStreams(builder.build(), props);
-        //streams.cleanUp();
+        textLines
+        .mapValues((key, value) -> {
+            System.out.println("1st mapping:");
+            System.out.print(key);
+            System.out.print(" : ");
+            System.out.println(value);
+            return String.valueOf(value);
+        })
+        .flatMapValues(value -> Arrays.asList(value.toLowerCase().split("\\W+")))
+        .groupBy((key, value) -> value)
+        .count()
+        .mapValues((key, value) -> {
+            System.out.println("2nd mapping:");
+            System.out.print(key);
+            System.out.print(" : ");
+            System.out.println(value);
+            String tmp = String.valueOf(value) + " -> " + key;
+            return tmp;
+        })
+        .toStream()
+        .to(outtopicname);
+
+
+        KafkaStreams streams = new KafkaStreams(builder.build(), props);
         streams.start();
         Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 

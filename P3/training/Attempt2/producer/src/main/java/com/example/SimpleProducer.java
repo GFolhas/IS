@@ -1,18 +1,12 @@
 package com.example;
 
-//import util.properties packages
 import java.util.Properties;
+import java.util.Scanner;
 
-//import simple producer packages
 import org.apache.kafka.clients.producer.Producer;
-
-//import KafkaProducer packages
 import org.apache.kafka.clients.producer.KafkaProducer;
-
-//import ProducerRecord packages
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-//Create java class named “SimpleProducer”
 public class SimpleProducer {
 
  public static void main(String[] args) throws Exception{
@@ -25,8 +19,18 @@ public class SimpleProducer {
 
   Producer<String, String> producer = new KafkaProducer<>(props);
 
-  for(int i = 0; i < 1000; i++)
-   producer.send(new ProducerRecord<String, String>(topicName, Integer.toString(i), String.valueOf(i)));
+  Scanner sc = new Scanner(System.in);
+  int count = 0;
+  while(true){
+    count++;
+    System.out.print("Type here: ");
+    String val = sc.nextLine();
+    producer.send(new ProducerRecord<String, String>(topicName, Integer.toString(count), val));
+    if(val.equals("end")) break;
+  }
+
+  //for(int i = 0; i < 1000; i++)
+   //producer.send(new ProducerRecord<String, String>(topicName, Integer.toString(i), String.valueOf(i)));
   
   System.out.println("Message sent successfully to topic " + topicName);
   producer.close();
@@ -59,12 +63,6 @@ public class SimpleProducer {
 
     props.put("value.serializer", 
         "org.apache.kafka.common.serialization.StringSerializer");
-
-    props.put("key.deserializer", 
-        "org.apache.kafka.common.serialization.StringDeserializer");
-
-    props.put("value.deserializer", 
-        "org.apache.kafka.common.serialization.StringDeserializer");
 
     return props;
  }
