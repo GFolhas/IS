@@ -2,6 +2,9 @@ package com.example;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.UUID;
@@ -16,7 +19,7 @@ public class SimpleProducer {
  public static void main(String[] args) throws Exception{
 
   //Assign topicName to string variable
-  String topicName = "messages";
+  String topicName = "dbinfo";
   String id = UUID.randomUUID().toString();
   Properties props = getProperties(id);
 
@@ -30,31 +33,36 @@ public class SimpleProducer {
 
   Connection conn = DriverManager.getConnection(dbURL, parameters);
   if (conn != null) {
-      System.out.println("Connected to database #3");
+      System.out.println("Connected to database");
   }
 
-
   // pull info from dbms
-  
+
+  ArrayList<Station> allStations = new ArrayList<>();
+  Statement stmt = conn.createStatement();
+  ResultSet rs = stmt.executeQuery( "select * from stations;" );
+
+  while ( rs.next() ) {
+    int sid = rs.getInt("id");
+    String  name = rs.getString("name");
+    String location  = rs.getString("location");
+    System.out.printf( "Id = %s\nName = %s\nLocation = %s\n\n", sid, name, location);
+    Station st = new Station(sid, name, location);
+    allStations.add(st);
+  }
+
+  rs.close();
+  stmt.close();
+  conn.close();
 
 
-  
-/*   Producer<String, String> producer = new KafkaProducer<>(props);
-  Thread.sleep(1000);
+  Producer<String, String> producer = new KafkaProducer<>(props);
 
-  Scanner sc = new Scanner(System.in);
-  while(true){
-    System.out.print("Type here: ");
-    String val = sc.nextLine();
-    if(val.equals("end")) break;
-    producer.send(new ProducerRecord<String, String>(topicName, id, val));
-  } */
+  for(int i = 0; i < allStations.size(); i++)
+    producer.send(new ProducerRecord<String, String>(topicName,allStations.get(i).getName(), allStations.get(i).getLocation()));
 
-  //for(int i = 0; i < 1000; i++)
-   //producer.send(new ProducerRecord<String, String>(topicName, Integer.toString(i), String.valueOf(i)));
-/*   
   System.out.println("Message sent successfully to topic " + topicName);
-  producer.close(); */
+  producer.close();
  }
 
 

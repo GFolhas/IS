@@ -1,0 +1,15 @@
+create 4 topics:
+
+	- DBInfo (list of weather stations and locations)
+	- Results (calculate metrics and store them in the database)
+	- Standard Weather (location and temperature)
+	- Weather Alerts (type of alert, location and name)
+
+
+file.java -> connect to dbms, get info from dbms and send to topic (producer)
+
+other.java -> receive info from dbinfo and process it (random temperature) and send it to Standard Weather topic
+	   -> receive info from dbinfo and process it (random alert and name) and send it to Weather Alert topic
+
+metrics.java -> receive info from 2 topics, calculate metrics and then store it in the dbms
+

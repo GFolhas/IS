@@ -2,10 +2,12 @@ package com.example;
 
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.UUID;
 
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.streams.StreamsConfig;
 
 public class SimpleProducer {
 
@@ -14,19 +16,20 @@ public class SimpleProducer {
   //Assign topicName to string variable
   String topicName = "messages";
 
+  String id = UUID.randomUUID().toString();
   // create instance for properties to access producer configs   
-  Properties props = getProperties();
+  Properties props = getProperties(id);
 
   Producer<String, String> producer = new KafkaProducer<>(props);
 
+  Thread.sleep(1000);
+
   Scanner sc = new Scanner(System.in);
-  int count = 0;
   while(true){
-    count++;
     System.out.print("Type here: ");
     String val = sc.nextLine();
-    producer.send(new ProducerRecord<String, String>(topicName, Integer.toString(count), val));
     if(val.equals("end")) break;
+    producer.send(new ProducerRecord<String, String>(topicName, id, val));
   }
 
   //for(int i = 0; i < 1000; i++)
@@ -37,11 +40,14 @@ public class SimpleProducer {
  }
 
 
- public static Properties getProperties(){
+ public static Properties getProperties(String id){
+
     
     Properties props = new Properties();
     //Assign localhost id
     props.put("bootstrap.servers", "localhost:9092");
+
+    props.put(StreamsConfig.CLIENT_ID_CONFIG, id);
 
     //Set acknowledgements for producer requests.      
     props.put("acks", "all");

@@ -1,3 +1,14 @@
+// our topics
+
+dbinfo
+stweather
+alerts
+results
+
+
+=====================================
+
+
 (run yaml file)
 docker-compose -f docker-compose.yml up -d
 
@@ -40,9 +51,6 @@ kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic [topic name]
 kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic [topic name] --from-beginning
 
 
-
-
-
 (iniciar um zookeeper - estando na pasta do kafka)
 bin/windows/zookeeper-server-start.bat config/zookeeper.properties
 
@@ -51,7 +59,7 @@ bin/windows/zookeeper-server-start.bat config/zookeeper.properties
 bin/windows/kafka-server-start.bat config/server.properties
 
 
-kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic result --from-beginning --formatter kafka.tools.DefaultMessageFormatter --property print.key=true --property print.value=true --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic dbinfo --from-beginning --formatter kafka.tools.DefaultMessageFormatter --property print.key=true --property print.value=true --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
 --property value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
 
 
