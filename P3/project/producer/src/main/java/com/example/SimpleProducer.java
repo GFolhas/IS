@@ -4,20 +4,67 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Properties;
-import java.util.Scanner;
+import java.util.Random;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.streams.KeyValue;
+import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
+import org.apache.kafka.streams.kstream.Consumed;
+import org.apache.kafka.streams.kstream.KStream;
 
 public class SimpleProducer {
 
  public static void main(String[] args) throws Exception{
 
+  final Logger log = LoggerFactory.getLogger(SimpleProducer.class);
+
+
+  String inputTopic = "stations";
+  String id = UUID.randomUUID().toString();
+
+  java.util.Properties props = getProperties(id);
+
+  // send the standard weather events
+
+  // create consumer
+  KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+  // subscribe consumer to our topic(s)
+  consumer.subscribe(Arrays.asList(inputTopic));
+
+  while(true){
+    ConsumerRecords<String, String> records =
+            consumer.poll(Duration.ofMillis(100));
+
+    for (ConsumerRecord<String, String> record : records){
+        log.info("Key: " + record.key() + ", Value: " + record.value());
+        log.info("Partition: " + record.partition() + ", Offset:" + record.offset());
+    }
+}
+
+
+//TODO: work this info and send it to two different topics
+
+
+
+
+/* 
   //Assign topicName to string variable
   String topicName = "dbinfo";
   String id = UUID.randomUUID().toString();
@@ -25,7 +72,7 @@ public class SimpleProducer {
 
 
   // connect to dbms
-  // Connect method #3
+  
   String dbURL = "jdbc:postgresql://localhost:5432/kafka";
   Properties parameters = new Properties();
   parameters.put("user", "postgres");
@@ -58,11 +105,14 @@ public class SimpleProducer {
 
   Producer<String, String> producer = new KafkaProducer<>(props);
 
-  for(int i = 0; i < allStations.size(); i++)
+  while(true){
+    Thread.sleep(1000); // generate new values every 15 seconds
+    for(int i = 0; i < allStations.size(); i++)
     producer.send(new ProducerRecord<String, String>(topicName,allStations.get(i).getName(), allStations.get(i).getLocation()));
-
-  System.out.println("Message sent successfully to topic " + topicName);
-  producer.close();
+  }
+   */
+  //System.out.println("Message sent successfully to topic " + topicName);
+  //producer.close();
  }
 
 
@@ -71,30 +121,11 @@ public class SimpleProducer {
     
     Properties props = new Properties();
     //Assign localhost id
-    props.put("bootstrap.servers", "localhost:9092");
-
-    props.put(StreamsConfig.CLIENT_ID_CONFIG, id);
-
-    //Set acknowledgements for producer requests.      
-    props.put("acks", "all");
-
-    //If the request fails, the producer can automatically retry,
-    props.put("retries", 0);
-
-    //Specify buffer size in config
-    props.put("batch.size", 16384);
-
-    //Reduce the no of requests less than 0   
-    props.put("linger.ms", 1);
-
-    //The buffer.memory controls the total amount of memory available to the producer for buffering.   
-    props.put("buffer.memory", 33554432);
-
-    props.put("key.serializer", 
-        "org.apache.kafka.common.serialization.StringSerializer");
-
-    props.put("value.serializer", 
-        "org.apache.kafka.common.serialization.StringSerializer");
+    props.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
+    props.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+    props.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+    props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, id);
+    props.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
     return props;
  }
