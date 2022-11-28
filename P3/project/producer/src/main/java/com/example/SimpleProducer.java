@@ -23,6 +23,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
@@ -34,15 +35,49 @@ public class SimpleProducer {
  public static void main(String[] args) throws Exception{
 
   final Logger log = LoggerFactory.getLogger(SimpleProducer.class);
+  
 
 
   String inputTopic = "stations";
+  String outputTopic1 = "stweather";
+  String outputTopic2 = "alerts";
   String id = UUID.randomUUID().toString();
 
   java.util.Properties props = getProperties(id);
 
-  // send the standard weather events
 
+  StreamsBuilder builder = new StreamsBuilder();
+  KStream<String, String> textLines = builder.stream(inputTopic, Consumed.with(Serdes.String(), Serdes.String()));
+  
+  textLines.peek((key, value) -> {
+    System.out.println("key: " + key);
+    System.out.println("value: " + value);
+  })
+  .filter((key, value) -> key.equals(null));
+
+  /* textLines
+  .map((name, loc) -> {
+
+      Random rand = new Random();
+      int upperbound = 50;
+      int int_random = rand.nextInt(upperbound);
+      String temp = String.valueOf(int_random);
+
+      System.out.print(loc);
+      System.out.print(" : ");
+      System.out.println(temp + " degrees");
+      return new KeyValue<>(loc, temp);
+  })
+  .to(outputTopic1); */
+  
+  /* KafkaStreams streams = new KafkaStreams(builder.build(), props);
+  streams.start();
+  Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
+
+
+
+   // send the standard weather events
+/* 
   // create consumer
   KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
   // subscribe consumer to our topic(s)
@@ -53,10 +88,27 @@ public class SimpleProducer {
             consumer.poll(Duration.ofMillis(100));
 
     for (ConsumerRecord<String, String> record : records){
-        log.info("Key: " + record.key() + ", Value: " + record.value());
-        log.info("Partition: " + record.partition() + ", Offset:" + record.offset());
+
+        String[] x = record.value().split("payload\"");
+
+        x[1] = x[1].replace(":", " ");
+        x[1] = x[1].replace("{", "");
+        x[1] = x[1].replace("}", "");
+        x[1] = x[1].replace("\"", "");
+
+        String[] nstr = x[1].split(",");
+
+        String eventId = nstr[0].split(" ")[2];
+        String station = nstr[1].split(" ")[1];
+        String location = nstr[2].split(" ")[1];
+        
+        log.info("\n\n");
+        log.info(eventId);
+        log.info(station);
+        log.info(location + "\n\n");
+
     }
-}
+} */
 
 
 //TODO: work this info and send it to two different topics
