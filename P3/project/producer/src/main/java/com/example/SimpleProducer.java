@@ -90,10 +90,28 @@ public class SimpleProducer {
 } */
 
 
+// ex 1
+
+
 StreamsBuilder builder = new StreamsBuilder();
 KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
 
-System.out.println("before\n");
+textLines
+.map((k, v) -> new KeyValue<>(k, v))
+.groupByKey()
+.count()
+.mapValues(c -> c.toString())
+.toStream()
+.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+
+KafkaStreams streams = new KafkaStreams(builder.build(), props);
+streams.start();
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+
+// ex 2
+
+/* StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
 
 textLines.map((k,v) -> {
   System.out.println(k);
@@ -104,29 +122,41 @@ textLines.map((k,v) -> {
 .groupByKey()
 .count()
 .mapValues(c -> {
-  System.out.println(c);
   return c.toString() + " temperatures recorded";
 })
 .toStream().to("testing", Produced.with(Serdes.String(), Serdes.String()));
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 
-System.out.println("after\n");
 
+// PRODUCE STUFF FOR STATIONS
+
+/*   Producer<String, String> producer = new KafkaProducer<>(props);
+  producer.send(new ProducerRecord<String, String>(inputTopic, "A Station", "Agueda"));
+  producer.send(new ProducerRecord<String, String>(inputTopic, "A Station", "Fermentelos"));
+  producer.send(new ProducerRecord<String, String>(inputTopic, "B Station", "Condeixa"));
+  producer.send(new ProducerRecord<String, String>(inputTopic, "C Station", "Arroais"));
+  producer.close(); */
+
+/*   ArrayList<Station> allStations = new ArrayList<>();
+  allStations.add(new Station("A Station", "Agueda"));
+  allStations.add(new Station("A Station", "Fermentelos"));
+  allStations.add(new Station("B Station", "Condeixa"));
+  allStations.add(new Station("C Station", "Arroais")); */
 
 // PRODUCE STUFF FOR STWEATHER
+
 
 /*   Producer<String, String> producer = new KafkaProducer<>(props);
   Random rand = new Random();  
   int upperbound = 50;
 
-
   for(int i = 0; i < allStations.size(); i++){
     int int_random = rand.nextInt(upperbound);
     String temp = String.valueOf(int_random);
-    producer.send(new ProducerRecord<String, String>(outputTopic1, allStations.get(i).getLocation(), temp));
+    producer.send(new ProducerRecord<String, String>(outputTopic1, allStations.get(i).getName(), allStations.get(i).getLocation() + "*" + temp));
   }
 
   producer.close(); */
@@ -145,11 +175,11 @@ System.out.println("after\n");
   for(int i = 0; i < allStations.size(); i++){
     int random_index = rand.nextInt(upperbound);
     String event = type[random_index];
-    producer.send(new ProducerRecord<String, String>(outputTopic2, allStations.get(i).getLocation(), event));
+    producer.send(new ProducerRecord<String, String>(outputTopic2, allStations.get(i).getName(), allStations.get(i).getLocation() + "*" + event));
   }
 
-  producer.close();
- */
+  producer.close(); */
+
 
 
   // =================================================
@@ -284,6 +314,8 @@ System.out.println("after\n");
     props.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
     props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, id);
     props.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+    props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
+    props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
