@@ -43,8 +43,9 @@ public class SimpleProducer {
   String outputTopic1 = "stweather";
   String outputTopic2 = "alerts";
   String id = UUID.randomUUID().toString();
+  String appId = UUID.randomUUID().toString();
 
-  java.util.Properties props = getProperties(id);
+  java.util.Properties props = getProperties(id, appId);
 
 
 /*   StreamsBuilder builder = new StreamsBuilder();
@@ -107,6 +108,10 @@ textLines.map((k,v) -> {
   return c.toString() + " temperatures recorded";
 })
 .toStream().to("testing", Produced.with(Serdes.String(), Serdes.String()));
+
+KafkaStreams streams = new KafkaStreams(builder.build(), props);
+streams.start();
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
 System.out.println("after\n");
 
@@ -267,11 +272,13 @@ System.out.println("after\n");
  }
 
 
- public static Properties getProperties(String id){
+ public static Properties getProperties(String id, String appId){
 
     
     Properties props = new Properties();
     //Assign localhost id
+    
+    props.put(StreamsConfig.APPLICATION_ID_CONFIG, appId);
     props.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
     props.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
     props.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
