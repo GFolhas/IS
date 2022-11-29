@@ -29,6 +29,7 @@ import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
+import org.apache.kafka.streams.kstream.Produced;
 
 public class SimpleProducer {
 
@@ -46,14 +47,110 @@ public class SimpleProducer {
   java.util.Properties props = getProperties(id);
 
 
-  StreamsBuilder builder = new StreamsBuilder();
+/*   StreamsBuilder builder = new StreamsBuilder();
   KStream<String, String> textLines = builder.stream(inputTopic, Consumed.with(Serdes.String(), Serdes.String()));
   
   textLines.peek((key, value) -> {
     System.out.println("key: " + key);
     System.out.println("value: " + value);
   })
-  .filter((key, value) -> key.equals(null));
+  .filter((key, value) -> key.equals(null)); */
+
+
+  // PRODUCING GENERAL INFO TO START THE REQUIREMENTS
+
+/*   ArrayList<Station> allStations = new ArrayList<>();
+  KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+  // subscribe consumer to our topic(s)
+  consumer.subscribe(Arrays.asList(inputTopic)); */
+
+/*   while(true){
+    ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
+
+    for (ConsumerRecord<String, String> record : records){
+
+        String[] x = record.value().split("payload\"");
+
+        x[1] = x[1].replace(":", " ");
+        x[1] = x[1].replace("{", "");
+        x[1] = x[1].replace("}", "");
+        x[1] = x[1].replace("\"", "");
+
+        String[] nstr = x[1].split(",");
+
+        String eventId = nstr[0].split(" ")[2];
+        String station = nstr[1].split(" ")[1];
+        String location = nstr[2].split(" ")[1];
+        
+        allStations.add(new Station(Integer.parseInt(eventId), station, location));
+    }
+
+    if(allStations.size() == 8) break;
+} */
+
+
+StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+
+System.out.println("before\n");
+
+textLines.map((k,v) -> {
+  System.out.println(k);
+  System.out.println(v);
+  System.out.println("\n\n");
+  return new KeyValue<>(k, v);
+})
+.groupByKey()
+.count()
+.mapValues(c -> {
+  System.out.println(c);
+  return c.toString() + " temperatures recorded";
+})
+.toStream().to("testing", Produced.with(Serdes.String(), Serdes.String()));
+
+System.out.println("after\n");
+
+
+// PRODUCE STUFF FOR STWEATHER
+
+/*   Producer<String, String> producer = new KafkaProducer<>(props);
+  Random rand = new Random();  
+  int upperbound = 50;
+
+
+  for(int i = 0; i < allStations.size(); i++){
+    int int_random = rand.nextInt(upperbound);
+    String temp = String.valueOf(int_random);
+    producer.send(new ProducerRecord<String, String>(outputTopic1, allStations.get(i).getLocation(), temp));
+  }
+
+  producer.close(); */
+
+
+
+
+  // PRODUCE STUFF FOR ALERTS
+
+/*   Producer<String, String> producer = new KafkaProducer<>(props);
+  Random rand = new Random();  
+  int upperbound = 4;
+  String [] type = new String[]{"red", "orange", "yellow", "green"};
+  
+  
+  for(int i = 0; i < allStations.size(); i++){
+    int random_index = rand.nextInt(upperbound);
+    String event = type[random_index];
+    producer.send(new ProducerRecord<String, String>(outputTopic2, allStations.get(i).getLocation(), event));
+  }
+
+  producer.close();
+ */
+
+
+  // =================================================
+
+
+
 
   /* textLines
   .map((name, loc) -> {
@@ -165,6 +262,8 @@ public class SimpleProducer {
    */
   //System.out.println("Message sent successfully to topic " + topicName);
   //producer.close();
+
+
  }
 
 
@@ -178,6 +277,8 @@ public class SimpleProducer {
     props.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
     props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, id);
     props.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+    props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+    props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
     return props;
  }
