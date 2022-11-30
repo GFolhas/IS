@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +30,8 @@ import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
+import org.apache.kafka.streams.kstream.KTable;
+import org.apache.kafka.streams.kstream.Materialized;
 import org.apache.kafka.streams.kstream.Produced;
 
 public class SimpleProducer {
@@ -36,6 +39,7 @@ public class SimpleProducer {
  public static void main(String[] args) throws Exception{
 
   final Logger log = LoggerFactory.getLogger(SimpleProducer.class);
+  final DecimalFormat df = new DecimalFormat("0.00");
   
 
 
@@ -90,10 +94,10 @@ public class SimpleProducer {
 } */
 
 
-// ex 1
+// ex 1 - DONE (takes a while to run)
 
 
-StreamsBuilder builder = new StreamsBuilder();
+/* StreamsBuilder builder = new StreamsBuilder();
 KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
 
 textLines
@@ -106,29 +110,241 @@ textLines
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 
-// ex 2
+
+// ex 2 - DONE (takes a while to run)
 
 /* StreamsBuilder builder = new StreamsBuilder();
 KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
 
-textLines.map((k,v) -> {
-  System.out.println(k);
-  System.out.println(v);
-  System.out.println("\n\n");
-  return new KeyValue<>(k, v);
+textLines
+.map((k, v) -> {
+  String[] vals = v.split("\\*");
+  return new KeyValue<>(vals[0], v);
 })
 .groupByKey()
 .count()
-.mapValues(c -> {
-  return c.toString() + " temperatures recorded";
-})
-.toStream().to("testing", Produced.with(Serdes.String(), Serdes.String()));
+.mapValues(c -> c.toString())
+.toStream()
+.to("testing", Produced.with(Serdes.String(), Serdes.String()));
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
 Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
+
+
+
+// ex 3 - DONE (takes a while to run)
+
+//Max temp per weather station
+
+/* StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+
+textLines
+.map((k, v) -> {
+  String[] vals = v.split("\\*");
+  return new KeyValue<>(k, vals[1]);
+})
+.selectKey((key, value) -> key)
+.groupByKey()
+.reduce((value1, value2) -> {
+  if (Integer.parseInt(value1) > Integer.parseInt(value2)) {
+      return value1;
+  } else {
+      return value2;
+  }
+})
+.toStream()
+.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+
+KafkaStreams streams = new KafkaStreams(builder.build(), props);
+streams.start();
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
+
+
+//Min temp per weather station
+
+/* StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+
+textLines
+.map((k, v) -> {
+  String[] vals = v.split("\\*");
+  return new KeyValue<>(k, vals[1]);
+})
+.selectKey((key, value) -> key)
+.groupByKey()
+.reduce((value1, value2) -> {
+  if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
+      return value1;
+  } else {
+      return value2;
+  }
+})
+.toStream()
+.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+
+KafkaStreams streams = new KafkaStreams(builder.build(), props);
+streams.start();
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
+
+
+// ex 4 - DONE (takes a while to run)
+
+//Max temp per location
+
+/* StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+
+textLines
+.map((k, v) -> {
+  String[] vals = v.split("\\*");
+  double temperature = Double.parseDouble(vals[1]);
+  temperature = temperature*1.8;
+  temperature += 32;
+  return new KeyValue<>(vals[0], df.format(temperature));
+})
+.selectKey((key, value) -> key)
+.groupByKey()
+.reduce((value1, value2) -> {
+  if (Integer.parseInt(value1) > Integer.parseInt(value2)) {
+      return value1;
+  } else {
+      return value2;
+  }
+})
+.toStream()
+.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+
+KafkaStreams streams = new KafkaStreams(builder.build(), props);
+streams.start();
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
+
+
+//Min temp per location
+
+/* StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+
+textLines
+.map((k, v) -> {
+  String[] vals = v.split("\\*");
+  double temperature = Double.parseDouble(vals[1]);
+  temperature = temperature*1.8;
+  temperature += 32;
+  return new KeyValue<>(vals[0], df.format(temperature));
+})
+.selectKey((key, value) -> key)
+.groupByKey()
+.reduce((value1, value2) -> {
+  if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
+      return value1;
+  } else {
+      return value2;
+  }
+})
+.toStream()
+.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+
+KafkaStreams streams = new KafkaStreams(builder.build(), props);
+streams.start();
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
+
+
+// ex 5 - DONE (takes a while to run)
+
+
+/* StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
+
+textLines
+.map((k, v) -> new KeyValue<>(k, v))
+.groupByKey()
+.count()
+.mapValues(c -> c.toString())
+.toStream()
+.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+
+KafkaStreams streams = new KafkaStreams(builder.build(), props);
+streams.start();
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
+
+
+// ex 6 - DONE (takes a while to run)
+
+/* StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
+
+textLines
+.map((k, v) -> {
+  String[] vals = v.split("\\*");
+  return new KeyValue<>(vals[1], k);
+})
+.groupByKey()
+.count()
+.mapValues(c -> c.toString())
+.toStream()
+.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+
+KafkaStreams streams = new KafkaStreams(builder.build(), props);
+streams.start();
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
+
+
+// ex 7 
+
+StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
+StreamsBuilder builder2 = new StreamsBuilder();
+KStream<String, String> textLines2 = builder2.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+
+String alert = "green";
+
+textLines
+.map((k, v) -> {
+  String[] vals = v.split("\\*");
+  return new KeyValue<>(vals[1], k); // (type, station)
+})
+.map((k, v) -> {
+
+  KStream<String, String> smallest = textLines2
+  .map((k2, v2) -> {
+    String[] vals = v2.split("\\*");
+    return new KeyValue<>(k, vals[1]); // (station, temp)
+  })
+  .filter((k2, v2) -> k.equals(alert) && k2.equals(v))
+  .selectKey((key, value) -> key)
+  .groupByKey()
+  .reduce((value1, value2) -> {
+    if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
+        return value1;
+    } else {
+        return value2;
+    }
+  })
+  .toStream();
+
+  // basicamente o que falta é pegar no value2 e tornar isso o nosso v (abaixo)
+
+  return new KeyValue<>(k, v);
+})
+.groupByKey();
+
+KafkaStreams streams = new KafkaStreams(builder.build(), props);
+streams.start();
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+
+
+
+
+
+
+
+
+
+
 
 
 // PRODUCE STUFF FOR STATIONS
