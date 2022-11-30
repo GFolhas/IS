@@ -300,7 +300,7 @@ KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(S
 StreamsBuilder builder2 = new StreamsBuilder();
 KStream<String, String> textLines2 = builder2.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
 
-String alert = "green";
+String alert = "red";
 
 textLines
 .map((k, v) -> {
@@ -315,7 +315,7 @@ textLines
     return new KeyValue<>(k, vals[1]); // (station, temp)
   })
   .filter((k2, v2) -> k.equals(alert) && k2.equals(v))
-  .selectKey((key, value) -> key)
+  // .selectKey((key, value) -> key)
   .groupByKey()
   .reduce((value1, value2) -> {
     if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
@@ -327,8 +327,8 @@ textLines
   .toStream();
 
   // basicamente o que falta é pegar no value2 e tornar isso o nosso v (abaixo)
-
-  return new KeyValue<>(k, v);
+  // return new KeyValue<>(k, v);
+  return (KeyValue<String, String>) smallest;
 })
 .groupByKey();
 
@@ -349,52 +349,52 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
 // PRODUCE STUFF FOR STATIONS
 
-/*   Producer<String, String> producer = new KafkaProducer<>(props);
-  producer.send(new ProducerRecord<String, String>(inputTopic, "A Station", "Agueda"));
-  producer.send(new ProducerRecord<String, String>(inputTopic, "A Station", "Fermentelos"));
-  producer.send(new ProducerRecord<String, String>(inputTopic, "B Station", "Condeixa"));
-  producer.send(new ProducerRecord<String, String>(inputTopic, "C Station", "Arroais"));
-  producer.close(); */
+  // Producer<String, String> producer = new KafkaProducer<>(props);
+  // producer.send(new ProducerRecord<String, String>(inputTopic, "A Station", "Agueda"));
+  // producer.send(new ProducerRecord<String, String>(inputTopic, "A Station", "Fermentelos"));
+  // producer.send(new ProducerRecord<String, String>(inputTopic, "B Station", "Condeixa"));
+  // producer.send(new ProducerRecord<String, String>(inputTopic, "C Station", "Arroais"));
+  // producer.close();
 
-/*   ArrayList<Station> allStations = new ArrayList<>();
+  ArrayList<Station> allStations = new ArrayList<>();
   allStations.add(new Station("A Station", "Agueda"));
   allStations.add(new Station("A Station", "Fermentelos"));
   allStations.add(new Station("B Station", "Condeixa"));
-  allStations.add(new Station("C Station", "Arroais")); */
+  allStations.add(new Station("C Station", "Arroais"));
 
 // PRODUCE STUFF FOR STWEATHER
 
 
-/*   Producer<String, String> producer = new KafkaProducer<>(props);
-  Random rand = new Random();  
-  int upperbound = 50;
+  // Producer<String, String> producer = new KafkaProducer<>(props);
+  // Random rand = new Random();  
+  // int upperbound = 50;
 
-  for(int i = 0; i < allStations.size(); i++){
-    int int_random = rand.nextInt(upperbound);
-    String temp = String.valueOf(int_random);
-    producer.send(new ProducerRecord<String, String>(outputTopic1, allStations.get(i).getName(), allStations.get(i).getLocation() + "*" + temp));
-  }
+  // for(int i = 0; i < allStations.size(); i++){
+  //   int int_random = rand.nextInt(upperbound);
+  //   String temp = String.valueOf(int_random);
+  //   producer.send(new ProducerRecord<String, String>(outputTopic1, allStations.get(i).getName(), allStations.get(i).getLocation() + "*" + temp));
+  // }
 
-  producer.close(); */
+  // producer.close();
 
 
 
 
   // PRODUCE STUFF FOR ALERTS
 
-/*   Producer<String, String> producer = new KafkaProducer<>(props);
-  Random rand = new Random();  
-  int upperbound = 4;
-  String [] type = new String[]{"red", "orange", "yellow", "green"};
+  // Producer<String, String> producer = new KafkaProducer<>(props);
+  // Random rand = new Random();  
+  // int upperbound = 4;
+  // String [] type = new String[]{"red", "orange", "yellow", "green"};
   
   
-  for(int i = 0; i < allStations.size(); i++){
-    int random_index = rand.nextInt(upperbound);
-    String event = type[random_index];
-    producer.send(new ProducerRecord<String, String>(outputTopic2, allStations.get(i).getName(), allStations.get(i).getLocation() + "*" + event));
-  }
+  // for(int i = 0; i < allStations.size(); i++){
+  //   int random_index = rand.nextInt(upperbound);
+  //   String event = type[random_index];
+  //   producer.send(new ProducerRecord<String, String>(outputTopic2, allStations.get(i).getName(), allStations.get(i).getLocation() + "*" + event));
+  // }
 
-  producer.close(); */
+  // producer.close();
 
 
 
@@ -541,8 +541,6 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 }
 
 
-
-
 //! (°C x 9/5) + 32 =°F
 /*
 ex4 --> {
@@ -570,25 +568,49 @@ ex6 --> {
 ex7 --> {
   - ler info alerts
   - fazer filtro por red alerts --> r1
-  - ler info do stdweather
+  - ler info do stweather
   - fazer filtro pela key do r1 --> r2
   - calcular o minimo dos value (temp) do r2
 }
 
+! perguntar ao prof se é suposto o conteudo tambem ter a hora da ocorrencia nos eventos
 ex8 --> {
   - ler info alerts
   - fazer filtro por ocorrencia da ultima hora --> r1
-  - ler info do stdweather
+  - ler info do stweather
   - fazer filtro pela value (location) do r1 --> r2
   - fazer groupByValue (location)
   - calcular o máximo dos value (temp) do r2
 }
 
+! se uma zona der red alert, mas depois já der green, conta para red zone alerts
+? Assumir que é só para o que atualmente estao com red alert
 ex9 --> {
-  
+  - ler a info do topico alerts
+  - agrupar pelos names
+  - fazer reduce por mais recente
+  - fazer filtro por red alert --> r1
+  - ler info do topico stweather
+  - fazer filtro por name dos r1 --> r2
+  - fazer groupByKey name dos r2 
+  - get min
+  - escrever no tópico de resultados
 }
 
+ex10 --> {
+  - ler info do topico stweather
+  - fazer filtro groupByKey name
+  - calcular o average (ver video da aula)
+  - escrever no topico de resultados
+}
 
-
-
+ex11 --> {
+  - ler info do topico alert
+  - fazer reduce por ultima hora --> r1
+  - fazer filtro por red alert no r1 --> r2
+  - ler info do topico stweather
+  - fazer filtro por name dos r2 --> r3
+  - agrupar por name no r3
+  - calcular a average
+}
 */ 
