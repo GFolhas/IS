@@ -29,10 +29,12 @@ import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.Consumed;
+import org.apache.kafka.streams.kstream.JoinWindows;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Materialized;
 import org.apache.kafka.streams.kstream.Produced;
+import org.apache.kafka.streams.kstream.ValueJoiner;
 
 public class SimpleProducer {
 
@@ -300,22 +302,26 @@ KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(S
 StreamsBuilder builder2 = new StreamsBuilder();
 KStream<String, String> textLines2 = builder2.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
 
-String alert = "red";
+
+// gotta do an inner join to merge the table's info
+ValueJoiner<String, String, String> valueJoiner = (left, right) -> left + right;
+textLines.join(textLines2, valueJoiner, JoinWindows.of(Duration.ofSeconds(3)));
+
+String alert = "green";
 
 textLines
-.map((k, v) -> {
+/* .map((k, v) -> {
   String[] vals = v.split("\\*");
   return new KeyValue<>(vals[1], k); // (type, station)
-})
-.map((k, v) -> {
+}) */
+/* .map((k, v) -> {
 
-  KStream<String, String> smallest = textLines2
+  textLines2
   .map((k2, v2) -> {
     String[] vals = v2.split("\\*");
     return new KeyValue<>(k, vals[1]); // (station, temp)
   })
   .filter((k2, v2) -> k.equals(alert) && k2.equals(v))
-  // .selectKey((key, value) -> key)
   .groupByKey()
   .reduce((value1, value2) -> {
     if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
@@ -324,13 +330,13 @@ textLines
         return value2;
     }
   })
-  .toStream();
+  .toStream()
+  .to("testing", Produced.with(Serdes.String(), Serdes.String()));
 
   // basicamente o que falta é pegar no value2 e tornar isso o nosso v (abaixo)
-  // return new KeyValue<>(k, v);
-  return (KeyValue<String, String>) smallest;
-})
-.groupByKey();
+  return new KeyValue<>(k, v);
+}) */
+.to("testing", Produced.with(Serdes.String(), Serdes.String()));
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
