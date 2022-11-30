@@ -291,3 +291,56 @@ System.out.println("after\n");
  }
 
 }
+
+
+
+
+//! (°C x 9/5) + 32 =°F
+/*
+ex4 --> {
+  - mesma logica do ex 2
+  - em vez de se fazer o .count()
+  - tentar fazer sort
+  - ir buscar o 1.o / ultimo
+  - converter para ºF
+}
+
+ex5 --> {
+  - fazer a leitura dos dados do tópico do alerts
+  - fazer groupByKey (para agrupar por nome da estação)
+  - fazer count()
+  - colocar o resultado no topico results
+}
+
+ex6 --> {
+  - fazer leitura do topico alerts
+  - fazer filter pelo tipo de alert
+  - fazer count()
+  - escrever o resultado para o tópico de results
+}
+
+ex7 --> {
+  - ler info alerts
+  - fazer filtro por red alerts --> r1
+  - ler info do stdweather
+  - fazer filtro pela key do r1 --> r2
+  - calcular o minimo dos value (temp) do r2
+}
+
+ex8 --> {
+  - ler info alerts
+  - fazer filtro por ocorrencia da ultima hora --> r1
+  - ler info do stdweather
+  - fazer filtro pela value (location) do r1 --> r2
+  - fazer groupByValue (location)
+  - calcular o máximo dos value (temp) do r2
+}
+
+ex9 --> {
+  
+}
+
+
+
+
+*/ 
