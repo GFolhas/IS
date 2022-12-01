@@ -305,7 +305,7 @@ KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(
 textLines = textLines
 .map((k, v) -> {
   String[] vals = v.split("\\*");
-  return new KeyValue<>(k, vals[1]); // (type, station)
+  return new KeyValue<>(k, vals[1]); // (station, type)
 });
 
 
@@ -322,7 +322,7 @@ KStream<String, String> joined = textLines.join(right,valueJoiner,
     Joined.valueSerde(Serdes.String()));
 
 
-String alert = "yellow";
+String alert = "red";
 
 joined
 .map((k, v) -> {
@@ -344,6 +344,55 @@ joined
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
 Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+
+ */
+
+
+ // ex 9 - DONE (takes a while to run)
+
+ /* StreamsBuilder builder = new StreamsBuilder();
+ KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
+ KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+ 
+ textLines = textLines
+ .map((k, v) -> {
+   String[] vals = v.split("\\*");
+   return new KeyValue<>(k, vals[1]); // (station, type)
+ })
+ .filter((k, v) -> v.equals("red"));
+ 
+ 
+ KTable<String, String> right = textLines2
+ .map((k, v) -> {
+   String[] vals = v.split("\\*");
+   return new KeyValue<>(k, vals[1]); // (station, temp)
+ }).toTable();
+ 
+ 
+ ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
+ Joined.keySerde(Serdes.String());
+ KStream<String, String> joined = textLines.join(right,valueJoiner,
+     Joined.valueSerde(Serdes.String()));
+  
+ joined
+ .map((k, v) -> {
+   String[] vals = v.split("\\*");
+   return new KeyValue<>(k, vals[1]); // (station, temp)
+ })
+ .groupByKey()
+ .reduce((value1, value2) -> {
+   if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
+       return value1;
+   } else {
+       return value2;
+   }
+ })
+ .toStream()
+ .to("testing", Produced.with(Serdes.String(), Serdes.String()));
+ 
+ KafkaStreams streams = new KafkaStreams(builder.build(), props);
+ streams.start();
+ Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
  */
 
