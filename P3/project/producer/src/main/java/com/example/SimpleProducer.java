@@ -30,6 +30,7 @@ import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.JoinWindows;
+import org.apache.kafka.streams.kstream.Joined;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Materialized;
@@ -295,57 +296,61 @@ streams.start();
 Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 
 
-// ex 7 
-
+// ex 7 - DONE (takes a while to run)
+/* 
 StreamsBuilder builder = new StreamsBuilder();
 KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
-StreamsBuilder builder2 = new StreamsBuilder();
-KStream<String, String> textLines2 = builder2.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
 
-
-// gotta do an inner join to merge the table's info
-ValueJoiner<String, String, String> valueJoiner = (left, right) -> left + right;
-textLines.join(textLines2, valueJoiner, JoinWindows.of(Duration.ofSeconds(3)));
-
-String alert = "green";
-
-textLines
-/* .map((k, v) -> {
+textLines = textLines
+.map((k, v) -> {
   String[] vals = v.split("\\*");
-  return new KeyValue<>(vals[1], k); // (type, station)
-}) */
-/* .map((k, v) -> {
+  return new KeyValue<>(k, vals[1]); // (type, station)
+});
 
-  textLines2
-  .map((k2, v2) -> {
-    String[] vals = v2.split("\\*");
-    return new KeyValue<>(k, vals[1]); // (station, temp)
-  })
-  .filter((k2, v2) -> k.equals(alert) && k2.equals(v))
-  .groupByKey()
-  .reduce((value1, value2) -> {
-    if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
-        return value1;
-    } else {
-        return value2;
-    }
-  })
-  .toStream()
-  .to("testing", Produced.with(Serdes.String(), Serdes.String()));
 
-  // basicamente o que falta é pegar no value2 e tornar isso o nosso v (abaixo)
-  return new KeyValue<>(k, v);
-}) */
+KTable<String, String> right = textLines2
+.map((k, v) -> {
+  String[] vals = v.split("\\*");
+  return new KeyValue<>(k, vals[1]); // (station, temp)
+}).toTable();
+
+
+ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
+Joined.keySerde(Serdes.String());
+KStream<String, String> joined = textLines.join(right,valueJoiner,
+    Joined.valueSerde(Serdes.String()));
+
+
+String alert = "yellow";
+
+joined
+.map((k, v) -> {
+  String[] vals = v.split("\\*");
+  return new KeyValue<>(vals[0], vals[1]); // (type, temp)
+})
+.filter((k, v) -> k.equals(alert))
+.groupByKey()
+.reduce((value1, value2) -> {
+  if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
+      return value1;
+  } else {
+      return value2;
+  }
+})
+.toStream()
 .to("testing", Produced.with(Serdes.String(), Serdes.String()));
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
 Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
+ */
 
 
+// ex 10 - DONE (takes a while to run)
 
-// ex 10
+
 /* StreamsBuilder builder = new StreamsBuilder();
 
 KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
