@@ -357,46 +357,39 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 // Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
 
+// ex 8 - DONE (takes a while to run)
 
-// ex8 --> {
-//   - ler info alerts
-//   - fazer filtro por estação --> r1
-//   - ler info do stweather
-//   - fazer filtro pela value (location) do r1 --> r2
-//   - fazer groupByValue (location)
-//   - calcular o máximo dos value (temp) do r2
-// }
-// ex 8 
+// StreamsBuilder builder = new StreamsBuilder();
+// KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
+// KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
 
-StreamsBuilder builder = new StreamsBuilder();
-KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
-KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+// textLines = textLines
+// .map((k, v) -> {
+//   String[] vals = v.split("\\*");
+//   return new KeyValue<>(k, vals); // (station, String[])
+// })
+// .filter((k, v) -> {
+//   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+//   LocalDateTime dateTime = LocalDateTime.parse(v[2], formatter);
+//   LocalDateTime lasthour = LocalDateTime.now().minusHours(3);
 
-textLines = textLines
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(k, vals); // (station, String[])
-})
-.filter((k, v) -> {
-  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-  LocalDateTime dateTime = LocalDateTime.parse(v[2], formatter);
-  LocalDateTime lasthour = LocalDateTime.now().minusHours(1);
-
-  return lasthour.isBefore(dateTime);
-})
-.map((k,v) -> new KeyValue<>(v[0], k));
+//   return lasthour.isBefore(dateTime);
+// })
+// .map((k,v) -> new KeyValue<>(v[0], k));
 
 // KTable<String, String> right = textLines2
 // .map((k, v) -> {
 //   String[] vals = v.split("\\*");
 //   return new KeyValue<>(vals[0], vals[1]); // (location, temp)
-// }).toTable();
-textLines2
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(vals[0], vals[1]); // (location, temp)
-})
-.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+// })
+// .groupByKey()
+// .reduce((value1, value2) -> {
+//   if (Integer.parseInt(value1) > Integer.parseInt(value2)) {
+//       return value1;
+//   } else {
+//       return value2;
+//   }
+// });
 
 // ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
 // Joined.keySerde(Serdes.String());
@@ -406,24 +399,14 @@ textLines2
 // joined
 // .map((k, v) -> {  // location -> station*temp
 //   String[] vals = v.split("\\*");
-//   System.out.println(vals.length);
 //   return new KeyValue<>(k, vals[1]); // (station, temp)
 // })
-// .groupByKey()
-// .reduce((value1, value2) -> {
-//   if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
-//       return value1;
-//   } else {
-//       return value2;
-//   }
-// })
-// .toStream()
 // .to("testing", Produced.with(Serdes.String(), Serdes.String()));
 
 
-KafkaStreams streams = new KafkaStreams(builder.build(), props);
-streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+// KafkaStreams streams = new KafkaStreams(builder.build(), props);
+// streams.start();
+// Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
 
 // ex 9 - DONE (takes a while to run)
@@ -507,6 +490,67 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
   Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 */
 
+
+// ex 11
+
+StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
+KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+
+textLines = textLines
+.map((k, v) -> {
+  String[] vals = v.split("\\*");
+  return new KeyValue<>(k, vals); // (station, String[])
+})
+.filter((k, v) -> {
+  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+  LocalDateTime dateTime = LocalDateTime.parse(v[2], formatter);
+  LocalDateTime lasthour = LocalDateTime.now().minusHours(3);
+  
+  return (lasthour.isBefore(dateTime) && v[1].equals("orange"));
+})
+.map((k,v) -> new KeyValue<>(k, v[0])) // (station, location)
+.flatMap((k,v) -> {
+  return Arrays.asList(KeyValue.pair(k, v)).iterator();
+});
+
+
+
+KTable<String, String> right = textLines2
+.map((k, v) -> {
+  String[] vals = v.split("\\*");
+  return new KeyValue<>(k, vals[1]); // (station, temp)
+})
+.groupByKey()
+.aggregate(() -> new int[] {0, 0}, (aggKey, newValue, aggValue) -> {
+  aggValue[0] += 1;
+  aggValue[1] += Integer.parseInt(newValue);
+
+  return aggValue;
+}, Materialized.with(Serdes.String(), new IntArraySerde()))
+.mapValues(v -> {
+  if (v[0] != 0) { return "" + v[1] / v[0];}
+  else {return "Divided by zero"; }
+});
+
+
+ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
+Joined.keySerde(Serdes.String());
+KStream<String, String> joined = textLines.join(right,valueJoiner, Joined.valueSerde(Serdes.String()));
+
+
+joined
+.map((k, v) -> {  // station -> location*temp
+  String[] vals = v.split("\\*");
+  return new KeyValue<>(k, vals[1]); // (station, temp)
+})
+
+.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+
+
+KafkaStreams streams = new KafkaStreams(builder.build(), props);
+streams.start();
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
 // PRODUCE STUFF FOR STATIONS
 
