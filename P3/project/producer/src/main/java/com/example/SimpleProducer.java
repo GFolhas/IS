@@ -5,25 +5,36 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
 import java.util.UUID;
+
+import java.time.format.DateTimeFormatter;  
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerRecord;
+
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.StringDeserializer;
+
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -297,7 +308,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 
 
 // ex 7 - DONE (takes a while to run)
-/* 
+/*
 StreamsBuilder builder = new StreamsBuilder();
 KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
 KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
@@ -345,12 +356,61 @@ KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
 Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
- */
+*/
+
+// ex8 --> {
+//   - ler info alerts
+//   - fazer filtro por estação --> r1
+//   - ler info do stweather
+//   - fazer filtro pela value (location) do r1 --> r2
+//   - fazer groupByValue (location)
+//   - calcular o máximo dos value (temp) do r2
+// }
+// ex 8 
+
+StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
+KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+
+textLines
+.map((k, v) -> {
+  String[] vals = v.split("\\*");
+  return new KeyValue<>(k, vals); // (station, [])
+})
+.filter((k, v) -> {
+  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+  LocalDateTime dateTime = LocalDateTime.parse(v[2], formatter);
+  LocalDateTime lasthour = LocalDateTime.now().minusHours(1);
+
+  return lasthour.isBefore(dateTime);
+})
+.map((k, v) -> {
+  String values = v[0] + "*" + v[1] + "*" + v[2];
+  return new KeyValue<>(k, values);
+})
+// .groupByKey()
+// .aggregate(() -> new int[] {0, 0}, (aggKey, newValue, aggValue) -> {
+//   aggValue[0] += 1;
+//   aggValue[1] += Integer.parseInt(newValue);
+
+//   return aggValue;
+// }, Materialized.with(Serdes.String(), new IntArraySerde()))
+// .mapValues(v -> {
+//   if (v[0] != 0) { return "" + v[1] / v[0];}
+//   else {return "Divided by zero"; }
+// })
+// .toStream()
+.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+
+KafkaStreams streams = new KafkaStreams(builder.build(), props);
+streams.start();
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
 
- // ex 9 - DONE (takes a while to run)
+// ex 9 - DONE (takes a while to run)
 
- /* StreamsBuilder builder = new StreamsBuilder();
+/* 
+ StreamsBuilder builder = new StreamsBuilder();
  KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
  KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
  
@@ -394,43 +454,39 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
  streams.start();
  Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
- */
+*/
 
 
 // ex 10 - DONE (takes a while to run)
 
 
-/* StreamsBuilder builder = new StreamsBuilder();
+/* 
+  StreamsBuilder builder = new StreamsBuilder();
+  KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
 
-KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+  textLines
+  .map((k, v) -> {
+    String[] vals = v.split("\\*");
+    return new KeyValue<>(k, vals[1]); // (station, temp)
+  })
+  .groupByKey()
+  .aggregate(() -> new int[] {0, 0}, (aggKey, newValue, aggValue) -> {
+    aggValue[0] += 1;
+    aggValue[1] += Integer.parseInt(newValue);
 
-textLines
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(k, vals[1]); // (station, temp)
-})
-.groupByKey()
-.aggregate(() -> new int[] {0, 0}, (aggKey, newValue, aggValue) -> {
-  aggValue[0] += 1;
-  aggValue[1] += Integer.parseInt(newValue);
+    return aggValue;
+  }, Materialized.with(Serdes.String(), new IntArraySerde()))
+  .mapValues(v -> {
+    if (v[0] != 0) { return "" + v[1] / v[0];}
+    else {return "Divided by zero"; }
+  })
+  .toStream()
+  .to("testing", Produced.with(Serdes.String(), Serdes.String()));
 
-  return aggValue;
-}, Materialized.with(Serdes.String(), new IntArraySerde()))
-.mapValues(v -> {
-  if (v[0] != 0) { return "" + v[1] / v[0];}
-  else {return "Divided by zero"; }
-})
-.toStream()
-.to("testing", Produced.with(Serdes.String(), Serdes.String()));
-
-KafkaStreams streams = new KafkaStreams(builder.build(), props);
-streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
-
-
-
-
-
+  KafkaStreams streams = new KafkaStreams(builder.build(), props);
+  streams.start();
+  Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+*/
 
 
 // PRODUCE STUFF FOR STATIONS
@@ -451,19 +507,22 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 // PRODUCE STUFF FOR STWEATHER
 
 
-  Producer<String, String> producer = new KafkaProducer<>(props);
-  Random rand = new Random();  
-  int upperbound = 50;
+  // Producer<String, String> producer = new KafkaProducer<>(props);
+  // Random rand = new Random();  
+  // int upperbound = 50;
 
-  for(int i = 0; i < allStations.size(); i++){
-    int int_random = rand.nextInt(upperbound);
-    String temp = String.valueOf(int_random);
-    producer.send(new ProducerRecord<String, String>(outputTopic1, allStations.get(i).getName(), allStations.get(i).getLocation() + "*" + temp));
-  }
-
-  producer.close();
-
-
+  // for(int i = 0; i < allStations.size(); i++){
+  //   int int_random = rand.nextInt(upperbound);
+  //   String temp = String.valueOf(int_random);
+  //   DateTimeFormatter formater = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+  //   LocalDateTime now = LocalDateTime.now();  
+  //   producer.send(new ProducerRecord<String, String>(outputTopic1, allStations.get(i).getName(), allStations.get(i).getLocation() + "*" + temp + "*" + formater.format(now)));
+  //   Thread.sleep(2000); 
+  // }
+  
+  // producer.close();
+  
+  
 
 
   // PRODUCE STUFF FOR ALERTS
@@ -477,7 +536,10 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
   // for(int i = 0; i < allStations.size(); i++){
   //   int random_index = rand.nextInt(upperbound);
   //   String event = type[random_index];
-  //   producer.send(new ProducerRecord<String, String>(outputTopic2, allStations.get(i).getName(), allStations.get(i).getLocation() + "*" + event));
+  //   DateTimeFormatter formater = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+  //   LocalDateTime now = LocalDateTime.now();  
+  //   producer.send(new ProducerRecord<String, String>(outputTopic2, allStations.get(i).getName(), allStations.get(i).getLocation() + "*" + event + "*" + formater.format(now)));
+  //   Thread.sleep(2000); 
   // }
 
   // producer.close();
