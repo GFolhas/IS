@@ -308,55 +308,55 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 
 
 // ex 7 - DONE (takes a while to run)
-/*
-StreamsBuilder builder = new StreamsBuilder();
-KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
-KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
 
-textLines = textLines
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(k, vals[1]); // (station, type)
-});
+// StreamsBuilder builder = new StreamsBuilder();
+// KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
+// KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
 
-
-KTable<String, String> right = textLines2
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(k, vals[1]); // (station, temp)
-}).toTable();
+// textLines = textLines
+// .map((k, v) -> {
+//   String[] vals = v.split("\\*");
+//   return new KeyValue<>(k, vals[1]); // (station, type)
+// });
 
 
-ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
-Joined.keySerde(Serdes.String());
-KStream<String, String> joined = textLines.join(right,valueJoiner,
-    Joined.valueSerde(Serdes.String()));
+// KTable<String, String> right = textLines2
+// .map((k, v) -> {
+//   String[] vals = v.split("\\*");
+//   return new KeyValue<>(k, vals[1]); // (station, temp)
+// }).toTable();
 
 
-String alert = "red";
+// ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
+// Joined.keySerde(Serdes.String());
+// KStream<String, String> joined = textLines.join(right,valueJoiner,
+//     Joined.valueSerde(Serdes.String()));
 
-joined
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(vals[0], vals[1]); // (type, temp)
-})
-.filter((k, v) -> k.equals(alert))
-.groupByKey()
-.reduce((value1, value2) -> {
-  if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
-      return value1;
-  } else {
-      return value2;
-  }
-})
-.toStream()
-.to("testing", Produced.with(Serdes.String(), Serdes.String()));
 
-KafkaStreams streams = new KafkaStreams(builder.build(), props);
-streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+// String alert = "red";
 
-*/
+// joined
+// .map((k, v) -> {
+//   String[] vals = v.split("\\*");
+//   return new KeyValue<>(vals[0], vals[1]); // (type, temp)
+// })
+// .filter((k, v) -> k.equals(alert))
+// .groupByKey()
+// .reduce((value1, value2) -> {
+//   if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
+//       return value1;
+//   } else {
+//       return value2;
+//   }
+// })
+// .toStream()
+// .to("testing", Produced.with(Serdes.String(), Serdes.String()));
+
+// KafkaStreams streams = new KafkaStreams(builder.build(), props);
+// streams.start();
+// Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+
+
 
 // ex8 --> {
 //   - ler info alerts
@@ -372,10 +372,10 @@ StreamsBuilder builder = new StreamsBuilder();
 KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
 KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
 
-textLines
+textLines = textLines
 .map((k, v) -> {
   String[] vals = v.split("\\*");
-  return new KeyValue<>(k, vals); // (station, [])
+  return new KeyValue<>(k, vals); // (station, String[])
 })
 .filter((k, v) -> {
   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
@@ -384,23 +384,42 @@ textLines
 
   return lasthour.isBefore(dateTime);
 })
-.map((k, v) -> {
-  String values = v[0] + "*" + v[1] + "*" + v[2];
-  return new KeyValue<>(k, values);
-})
-// .groupByKey()
-// .aggregate(() -> new int[] {0, 0}, (aggKey, newValue, aggValue) -> {
-//   aggValue[0] += 1;
-//   aggValue[1] += Integer.parseInt(newValue);
+.map((k,v) -> new KeyValue<>(v[0], k));
 
-//   return aggValue;
-// }, Materialized.with(Serdes.String(), new IntArraySerde()))
-// .mapValues(v -> {
-//   if (v[0] != 0) { return "" + v[1] / v[0];}
-//   else {return "Divided by zero"; }
+// KTable<String, String> right = textLines2
+// .map((k, v) -> {
+//   String[] vals = v.split("\\*");
+//   return new KeyValue<>(vals[0], vals[1]); // (location, temp)
+// }).toTable();
+textLines2
+.map((k, v) -> {
+  String[] vals = v.split("\\*");
+  return new KeyValue<>(vals[0], vals[1]); // (location, temp)
+})
+.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+
+// ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
+// Joined.keySerde(Serdes.String());
+// KStream<String, String> joined = textLines.join(right,valueJoiner, Joined.valueSerde(Serdes.String()));
+
+
+// joined
+// .map((k, v) -> {  // location -> station*temp
+//   String[] vals = v.split("\\*");
+//   System.out.println(vals.length);
+//   return new KeyValue<>(k, vals[1]); // (station, temp)
+// })
+// .groupByKey()
+// .reduce((value1, value2) -> {
+//   if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
+//       return value1;
+//   } else {
+//       return value2;
+//   }
 // })
 // .toStream()
-.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+// .to("testing", Produced.with(Serdes.String(), Serdes.String()));
+
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
