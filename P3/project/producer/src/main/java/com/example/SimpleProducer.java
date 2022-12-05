@@ -49,6 +49,13 @@ import org.apache.kafka.streams.kstream.Materialized;
 import org.apache.kafka.streams.kstream.Produced;
 import org.apache.kafka.streams.kstream.ValueJoiner;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 public class SimpleProducer {
 
  public static void main(String[] args) throws Exception{
@@ -65,8 +72,37 @@ public class SimpleProducer {
   String appId = UUID.randomUUID().toString();
 
   java.util.Properties props = getProperties(id, appId);
+  
+  Gson gson = new Gson();
+  
+/*   StreamsBuilder builder = new StreamsBuilder();
+  KStream<String, String> textLines = builder.stream(jsonTopic, Consumed.with(Serdes.String(), Serdes.String()));
 
-  KafkaConsumer<String, Station> consumer = new KafkaConsumer<>(props);
+  textLines
+  .map((k, v) -> {
+
+    System.out.println(v);
+    JsonElement jsonElement = gson.fromJson(v, JsonElement.class);
+    String name = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("name").getAsString();
+    String location = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("location").getAsString();;
+    return new KeyValue<>(name, location);
+  })
+  .groupByKey()
+  .count()
+  .mapValues(c -> c.toString())
+  .toStream()
+  .to("testing", Produced.with(Serdes.String(), Serdes.String()));
+
+  KafkaStreams streams = new KafkaStreams(builder.build(), props);
+  streams.start();
+  Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
+
+
+  
+
+
+
+/*   KafkaConsumer<String, Station> consumer = new KafkaConsumer<>(props);
   consumer.subscribe(Arrays.asList(jsonTopic));
 
   while(true){
@@ -84,7 +120,7 @@ public class SimpleProducer {
     }
     if(count == records.count()) break;
   }
-  consumer.close();
+  consumer.close(); */
 
 
 /*   StreamsBuilder builder = new StreamsBuilder();
@@ -130,6 +166,33 @@ public class SimpleProducer {
 
     if(allStations.size() == 8) break;
 } */
+
+
+
+// ex 0 - DONE
+
+StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> textLines = builder.stream(jsonTopic, Consumed.with(Serdes.String(), Serdes.String()));
+
+textLines
+.map((k, v) -> {
+
+  System.out.println(v);
+  JsonElement jsonElement = gson.fromJson(v, JsonElement.class);
+  String name = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("name").getAsString();
+  String location = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("location").getAsString();;
+  return new KeyValue<>(name, location);
+})
+.to("testing", Produced.with(Serdes.String(), Serdes.String())); //TODO: Change this to "stations" when stations is clear of info
+
+KafkaStreams streams = new KafkaStreams(builder.build(), props);
+streams.start();
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+
+
+
+
+
 
 
 // ex 1 - DONE (takes a while to run)
@@ -779,8 +842,8 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
     props.put(StreamsConfig.APPLICATION_ID_CONFIG, appId);
     props.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
     props.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-    props.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class.getName());
-    props.put(JsonDeserializer.VALUE_CLASS_NAME_CONFIG, Station.class);
+    props.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+    //props.put(JsonDeserializer.VALUE_CLASS_NAME_CONFIG, Station.class);
     props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, id);
     props.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
     props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
