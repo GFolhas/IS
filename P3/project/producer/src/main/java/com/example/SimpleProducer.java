@@ -64,10 +64,11 @@ public class SimpleProducer {
   final DecimalFormat df = new DecimalFormat("0.00");
   
 
-  String jsonTopic = "dbinfostations";
+  String dbinfo = "dbinfo-stations";
   String inputTopic = "stations";
-  String outputTopic1 = "stweather";
-  String outputTopic2 = "alerts";
+  String stweather = "stweather";
+  String alerts = "alerts";
+  String results = "results";
   String id = UUID.randomUUID().toString();
   String appId = UUID.randomUUID().toString();
 
@@ -75,122 +76,62 @@ public class SimpleProducer {
   
   Gson gson = new Gson();
   
-/*   StreamsBuilder builder = new StreamsBuilder();
-  KStream<String, String> textLines = builder.stream(jsonTopic, Consumed.with(Serdes.String(), Serdes.String()));
-
-  textLines
-  .map((k, v) -> {
-
-    System.out.println(v);
-    JsonElement jsonElement = gson.fromJson(v, JsonElement.class);
-    String name = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("name").getAsString();
-    String location = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("location").getAsString();;
-    return new KeyValue<>(name, location);
-  })
-  .groupByKey()
-  .count()
-  .mapValues(c -> c.toString())
-  .toStream()
-  .to("testing", Produced.with(Serdes.String(), Serdes.String()));
-
-  KafkaStreams streams = new KafkaStreams(builder.build(), props);
-  streams.start();
-  Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
-
-
-  
-
-
-
-/*   KafkaConsumer<String, Station> consumer = new KafkaConsumer<>(props);
-  consumer.subscribe(Arrays.asList(jsonTopic));
-
-  while(true){
-    int count = 0;
-    ConsumerRecords<String, Station> records = consumer.poll(Duration.ofMillis(5000));
-    for(ConsumerRecord<String, Station> record : records){
-      //System.out.println("Key: " + record.key());
-      System.out.println(record.value());
-      System.out.println("Schema: " + record.value().getSchema());
-      System.out.println("Payload: " + record.value().getPayload());
-      System.out.println("Station: " + record.value().getName());
-      System.out.println("Location: " +  record.value().getLocation());
-      System.out.println("\n");
-      count++;
-    }
-    if(count == records.count()) break;
-  }
-  consumer.close(); */
-
-
-/*   StreamsBuilder builder = new StreamsBuilder();
-  KStream<String, String> textLines = builder.stream(jsonTopic, Consumed.with(Serdes.String(), Serdes.String()));
-  
-  textLines.peek((key, value) -> {
-    System.out.println("key: " + key);
-    System.out.println("value: " + value);
-  });
-
-  KafkaStreams streams = new KafkaStreams(builder.build(), props);
-  streams.start();
-  Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
-
-
-  // PRODUCING GENERAL INFO TO START THE REQUIREMENTS
-
-/*   ArrayList<Station> allStations = new ArrayList<>();
-  KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
-  // subscribe consumer to our topic(s)
-  consumer.subscribe(Arrays.asList(inputTopic)); */
-
-/*   while(true){
-    ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
-
-    for (ConsumerRecord<String, String> record : records){
-
-        String[] x = record.value().split("payload\"");
-
-        x[1] = x[1].replace(":", " ");
-        x[1] = x[1].replace("{", "");
-        x[1] = x[1].replace("}", "");
-        x[1] = x[1].replace("\"", "");
-
-        String[] nstr = x[1].split(",");
-
-        String eventId = nstr[0].split(" ")[2];
-        String station = nstr[1].split(" ")[1];
-        String location = nstr[2].split(" ")[1];
-        
-        allStations.add(new Station(Integer.parseInt(eventId), station, location));
-    }
-
-    if(allStations.size() == 8) break;
-} */
-
-
 
 // ex 0 - DONE
 
-StreamsBuilder builder = new StreamsBuilder();
-KStream<String, String> textLines = builder.stream(jsonTopic, Consumed.with(Serdes.String(), Serdes.String()));
+// produce info to stweather 
+
+/* StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> textLines = builder.stream(dbinfo, Consumed.with(Serdes.String(), Serdes.String()));
+Random rand = new Random();
+
 
 textLines
 .map((k, v) -> {
-
   System.out.println(v);
   JsonElement jsonElement = gson.fromJson(v, JsonElement.class);
   String name = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("name").getAsString();
-  String location = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("location").getAsString();;
-  return new KeyValue<>(name, location);
+  String location = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("location").getAsString();
+  String random_temperature = String.valueOf(rand.nextInt(50));
+  DateTimeFormatter formater = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+  LocalDateTime now = LocalDateTime.now(); 
+  String value = location + "*" + random_temperature + "*" + formater.format(now); 
+
+  return new KeyValue<>(name, value);
 })
-.to("testing", Produced.with(Serdes.String(), Serdes.String())); //TODO: Change this to "stations" when stations is clear of info
+.to(stweather, Produced.with(Serdes.String(), Serdes.String()));
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 
 
+// produce info to alerts
 
+/* StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> textLines = builder.stream(dbinfo, Consumed.with(Serdes.String(), Serdes.String()));
+Random rand = new Random();
+String [] type = new String[]{"red", "orange", "yellow", "green"};
+
+textLines
+.map((k, v) -> {
+  System.out.println(v);
+  JsonElement jsonElement = gson.fromJson(v, JsonElement.class);
+  String name = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("name").getAsString();
+  String location = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("location").getAsString();
+  int random_index = rand.nextInt(4);
+  String event = type[random_index];
+  DateTimeFormatter formater = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+  LocalDateTime now = LocalDateTime.now(); 
+  String value = location + "*" + event + "*" + formater.format(now); 
+
+  return new KeyValue<>(name, value);
+})
+.to(alerts, Produced.with(Serdes.String(), Serdes.String()));
+
+KafkaStreams streams = new KafkaStreams(builder.build(), props);
+streams.start();
+Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 
 
 
@@ -199,7 +140,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
 
 /* StreamsBuilder builder = new StreamsBuilder();
-KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+KStream<String, String> textLines = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
 
 textLines
 .map((k, v) -> new KeyValue<>(k, v))
@@ -207,7 +148,7 @@ textLines
 .count()
 .mapValues(c -> c.toString())
 .toStream()
-.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+.to("results", Produced.with(Serdes.String(), Serdes.String()));
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
@@ -217,7 +158,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 // ex 2 - DONE (takes a while to run)
 
 /* StreamsBuilder builder = new StreamsBuilder();
-KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+KStream<String, String> textLines = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
 
 textLines
 .map((k, v) -> {
@@ -228,7 +169,7 @@ textLines
 .count()
 .mapValues(c -> c.toString())
 .toStream()
-.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+.to("results", Produced.with(Serdes.String(), Serdes.String()));
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
@@ -241,7 +182,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 //Max temp per weather station
 
 /* StreamsBuilder builder = new StreamsBuilder();
-KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+KStream<String, String> textLines = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
 
 textLines
 .map((k, v) -> {
@@ -258,7 +199,7 @@ textLines
   }
 })
 .toStream()
-.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+.to("results", Produced.with(Serdes.String(), Serdes.String()));
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
@@ -268,7 +209,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 //Min temp per weather station
 
 /* StreamsBuilder builder = new StreamsBuilder();
-KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+KStream<String, String> textLines = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
 
 textLines
 .map((k, v) -> {
@@ -285,7 +226,7 @@ textLines
   }
 })
 .toStream()
-.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+.to("results", Produced.with(Serdes.String(), Serdes.String()));
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
@@ -297,7 +238,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 //Max temp per location
 
 /* StreamsBuilder builder = new StreamsBuilder();
-KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+KStream<String, String> textLines = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
 
 textLines
 .map((k, v) -> {
@@ -317,7 +258,7 @@ textLines
   }
 })
 .toStream()
-.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+.to("results", Produced.with(Serdes.String(), Serdes.String()));
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
@@ -327,7 +268,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 //Min temp per location
 
 /* StreamsBuilder builder = new StreamsBuilder();
-KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+KStream<String, String> textLines = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
 
 textLines
 .map((k, v) -> {
@@ -347,7 +288,7 @@ textLines
   }
 })
 .toStream()
-.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+.to("results", Produced.with(Serdes.String(), Serdes.String()));
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
@@ -358,7 +299,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 
 
 /* StreamsBuilder builder = new StreamsBuilder();
-KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
+KStream<String, String> textLines = builder.stream(alerts, Consumed.with(Serdes.String(), Serdes.String()));
 
 textLines
 .map((k, v) -> new KeyValue<>(k, v))
@@ -366,7 +307,7 @@ textLines
 .count()
 .mapValues(c -> c.toString())
 .toStream()
-.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+.to("results", Produced.with(Serdes.String(), Serdes.String()));
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
@@ -376,7 +317,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 // ex 6 - DONE (takes a while to run)
 
 /* StreamsBuilder builder = new StreamsBuilder();
-KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
+KStream<String, String> textLines = builder.stream(alerts, Consumed.with(Serdes.String(), Serdes.String()));
 
 textLines
 .map((k, v) -> {
@@ -387,7 +328,7 @@ textLines
 .count()
 .mapValues(c -> c.toString())
 .toStream()
-.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+.to("results", Produced.with(Serdes.String(), Serdes.String()));
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
@@ -397,8 +338,8 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 // ex 7 - DONE (takes a while to run)
 
 /* StreamsBuilder builder = new StreamsBuilder();
-KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
-KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+KStream<String, String> textLines = builder.stream(alerts, Consumed.with(Serdes.String(), Serdes.String()));
+KStream<String, String> textLines2 = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
 
 textLines = textLines
 .map((k, v) -> {
@@ -438,7 +379,7 @@ joined
   }
 })
 .toStream()
-.to("testing", Produced.with(Serdes.String(), Serdes.String()));
+.to("results", Produced.with(Serdes.String(), Serdes.String()));
 
 KafkaStreams streams = new KafkaStreams(builder.build(), props);
 streams.start();
@@ -448,8 +389,8 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 // ex 8 - DONE (takes a while to run)
 
 // StreamsBuilder builder = new StreamsBuilder();
-// KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
-// KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+// KStream<String, String> textLines = builder.stream(alerts, Consumed.with(Serdes.String(), Serdes.String()));
+// KStream<String, String> textLines2 = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
 
 // textLines = textLines
 // .map((k, v) -> {
@@ -489,7 +430,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 //   String[] vals = v.split("\\*");
 //   return new KeyValue<>(k, vals[1]); // (station, temp)
 // })
-// .to("testing", Produced.with(Serdes.String(), Serdes.String()));
+// .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
 
 // KafkaStreams streams = new KafkaStreams(builder.build(), props);
@@ -501,8 +442,8 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 
 
 /*  StreamsBuilder builder = new StreamsBuilder();
- KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
- KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+ KStream<String, String> textLines = builder.stream(alerts, Consumed.with(Serdes.String(), Serdes.String()));
+ KStream<String, String> textLines2 = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
  
   textLines = textLines
   .map((k, v) -> {
@@ -552,7 +493,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
    }
  })
  .toStream()
- .to("testing", Produced.with(Serdes.String(), Serdes.String()));
+ .to("results", Produced.with(Serdes.String(), Serdes.String()));
  
  KafkaStreams streams = new KafkaStreams(builder.build(), props);
  streams.start();
@@ -566,7 +507,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 
 /* 
   StreamsBuilder builder = new StreamsBuilder();
-  KStream<String, String> textLines = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+  KStream<String, String> textLines = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
 
   textLines
   .map((k, v) -> {
@@ -585,7 +526,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
     else {return "Divided by zero"; }
   })
   .toStream()
-  .to("testing", Produced.with(Serdes.String(), Serdes.String()));
+  .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
   KafkaStreams streams = new KafkaStreams(builder.build(), props);
   streams.start();
@@ -596,8 +537,8 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 // ex 11 - DONE (takes a while to run)
 
 // StreamsBuilder builder = new StreamsBuilder();
-// KStream<String, String> textLines = builder.stream(outputTopic2, Consumed.with(Serdes.String(), Serdes.String()));
-// KStream<String, String> textLines2 = builder.stream(outputTopic1, Consumed.with(Serdes.String(), Serdes.String()));
+// KStream<String, String> textLines = builder.stream(alerts, Consumed.with(Serdes.String(), Serdes.String()));
+// KStream<String, String> textLines2 = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
 
 // textLines = textLines
 // .map((k, v) -> {
@@ -649,7 +590,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
 //   String[] vals = v.split("\\*");
 //   return new KeyValue<>(k, vals[vals.length-1]); // (station, temp)
 // })
-// .to("testing", Produced.with(Serdes.String(), Serdes.String()));
+// .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
 
 // KafkaStreams streams = new KafkaStreams(builder.build(), props);
@@ -683,7 +624,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
      String temp = String.valueOf(int_random);
      DateTimeFormatter formater = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
      LocalDateTime now = LocalDateTime.now();  
-     producer.send(new ProducerRecord<String, String>(outputTopic1, allStations.get(i).getName(), allStations.get(i).getLocation() + "*" + temp + "*" + formater.format(now)));
+     producer.send(new ProducerRecord<String, String>(stweather, allStations.get(i).getName(), allStations.get(i).getLocation() + "*" + temp + "*" + formater.format(now)));
      Thread.sleep(2000); 
    }
   
@@ -705,7 +646,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
      String event = type[random_index];
      DateTimeFormatter formater = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
      LocalDateTime now = LocalDateTime.now();  
-     producer.send(new ProducerRecord<String, String>(outputTopic2, allStations.get(i).getName(), allStations.get(i).getLocation() + "*" + event + "*" + formater.format(now)));
+     producer.send(new ProducerRecord<String, String>(alerts, allStations.get(i).getName(), allStations.get(i).getLocation() + "*" + event + "*" + formater.format(now)));
      Thread.sleep(2000); 
    }
 
@@ -731,7 +672,7 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close)); */
       System.out.println(temp + " degrees");
       return new KeyValue<>(loc, temp);
   })
-  .to(outputTopic1); */
+  .to(stweather); */
   
   /* KafkaStreams streams = new KafkaStreams(builder.build(), props);
   streams.start();
