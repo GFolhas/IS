@@ -44,7 +44,7 @@ public class SimpleProducer {
   public static void main(String[] args) throws Exception {
 
     // ex1();
-    // ex2();
+    ex2();
     // ex3();
     // ex4();
     // ex5();
@@ -305,13 +305,13 @@ public class SimpleProducer {
     textLines = textLines
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[1]);
+          return new KeyValue<>(k, vals[1]); // -> (station, alert)
         });
 
     KTable<String, String> right = textLines2
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[1]);
+          return new KeyValue<>(k, vals[1]);  // -> (station, temp)
         }).toTable();
 
     ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
@@ -324,10 +324,10 @@ public class SimpleProducer {
     joined
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals);
+          return new KeyValue<>(k, vals); // -> (station, [alert, temp])
         })
         .filter((k, v) -> v[0].equals(alert))
-        .map((k, v) -> new KeyValue<>(k, v[1]))
+        .map((k, v) -> new KeyValue<>(k, v[1])) // -> (station, temp)
         .groupByKey()
         .reduce((value1, value2) -> {
           if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
@@ -357,12 +357,12 @@ public class SimpleProducer {
     textLines = textLines
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(vals[0], vals[2]);
+          return new KeyValue<>(vals[0], vals[2]);  // -> (location, alert)
         })
         .filter((k, v) -> {
           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
           LocalDateTime dateTime = LocalDateTime.parse(v, formatter);
-          LocalDateTime lasthour = LocalDateTime.now().minusHours(4);
+          LocalDateTime lasthour = LocalDateTime.now().minusHours(1);
           return lasthour.isBefore(dateTime);
         })
         .groupByKey()
@@ -379,7 +379,7 @@ public class SimpleProducer {
     KTable<String, String> right = textLines2
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(vals[0], vals[1]);
+          return new KeyValue<>(vals[0], vals[1]);  // -> (location, temp)
         })
         .groupByKey()
         .reduce((value1, value2) -> {
@@ -419,15 +419,15 @@ public class SimpleProducer {
     textLines = textLines
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals);
+          return new KeyValue<>(k, vals); // -> (station, [location, alert, hour])
         })
         .filter((k, v) -> v[1].equals("red"))
-        .map((k, v) -> new KeyValue<>(k, v[1]));
+        .map((k, v) -> new KeyValue<>(k, v[1])); // -> (station, alert)
 
     KStream<String, String> right = textLines2
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[1]);
+          return new KeyValue<>(k, vals[1]); // -> (station, temp)
         })
         .groupByKey()
         .reduce((value1, value2) -> {
@@ -476,7 +476,7 @@ public class SimpleProducer {
     textLines
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[1]);
+          return new KeyValue<>(k, vals[1]);  // -> (station, temp)
         })
         .groupByKey()
         .aggregate(() -> new int[] { 0, 0 }, (aggKey, newValue, aggValue) -> {
@@ -513,16 +513,16 @@ public class SimpleProducer {
     textLines = textLines
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals);
+          return new KeyValue<>(k, vals); // -> (station, [location, alert, hour])
         })
         .filter((k, v) -> {
           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
           LocalDateTime dateTime = LocalDateTime.parse(v[2], formatter);
-          LocalDateTime lasthour = LocalDateTime.now().minusHours(12);
+          LocalDateTime lasthour = LocalDateTime.now().minusHours(1);
 
-          return (lasthour.isBefore(dateTime) && v[1].equals("orange"));
+          return (lasthour.isBefore(dateTime) && v[1].equals("red"));
         })
-        .map((k, v) -> new KeyValue<>(k, v[0]))
+        .map((k, v) -> new KeyValue<>(k, v[0])) // -> (station, location)
         .groupByKey()
         .reduce((value1, value2) -> {
           return value1 + "*" + value2;
@@ -532,7 +532,7 @@ public class SimpleProducer {
     KTable<String, String> right = textLines2
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[1]);
+          return new KeyValue<>(k, vals[1]);  // -> (station, temp)
         })
         .groupByKey()
         .aggregate(() -> new int[] { 0, 0 }, (aggKey, newValue, aggValue) -> {
@@ -555,7 +555,7 @@ public class SimpleProducer {
     joined
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[vals.length - 1]);
+          return new KeyValue<>(k, vals[vals.length - 1]);  // -> (station, avg. temp)
         })
         .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
