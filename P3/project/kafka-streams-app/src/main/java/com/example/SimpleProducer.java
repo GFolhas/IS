@@ -1,41 +1,31 @@
+/*
+ * NOTAS SOBRE O PROJETO:
+ * 
+ * - Não recorremos ao uso do docker, sendo tudo realizado diretamente na
+ * máquina;
+ * 
+ * - As execuções dos exercícios demoram um bocado mais do que o esperado,
+ * principalmente nos que implicam a utilização de joins.
+ * 
+ * - O acesso à informação em json foi algo que nos apresentou algumas
+ * dificuldades pela forma como o json estava a ser gerado, pelo que não tendo
+ * muito tempo decidimos optar pela opção mais simples e rápida e assumi-mos o
+ * json como string e separá-mos a informação manualmente. Não é o mais
+ * eficiente mas provou-se uma solução viável.
+ * 
+ */
+
 package com.example;
 
-import java.lang.reflect.Array;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.Properties;
-import java.util.Random;
 import java.util.UUID;
-
 import java.time.format.DateTimeFormatter;
+import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerRecord;
-
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.StringDeserializer;
-
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -49,16 +39,10 @@ import org.apache.kafka.streams.kstream.Materialized;
 import org.apache.kafka.streams.kstream.Produced;
 import org.apache.kafka.streams.kstream.ValueJoiner;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
-
 public class SimpleProducer {
 
   public static void main(String[] args) throws Exception {
+
     // ex1();
     // ex2();
     // ex3();
@@ -70,6 +54,7 @@ public class SimpleProducer {
     // ex9();
     // ex10();
     // ex11();
+
   }
 
   public static void ex1() {
@@ -320,13 +305,13 @@ public class SimpleProducer {
     textLines = textLines
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[1]); // (station, type)
+          return new KeyValue<>(k, vals[1]);
         });
 
     KTable<String, String> right = textLines2
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[1]); // (station, temp)
+          return new KeyValue<>(k, vals[1]);
         }).toTable();
 
     ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
@@ -339,7 +324,7 @@ public class SimpleProducer {
     joined
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals); // (type, temp)
+          return new KeyValue<>(k, vals);
         })
         .filter((k, v) -> v[0].equals(alert))
         .map((k, v) -> new KeyValue<>(k, v[1]))
@@ -394,7 +379,7 @@ public class SimpleProducer {
     KTable<String, String> right = textLines2
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(vals[0], vals[1]); // (location, temp)
+          return new KeyValue<>(vals[0], vals[1]);
         })
         .groupByKey()
         .reduce((value1, value2) -> {
@@ -410,9 +395,9 @@ public class SimpleProducer {
     KStream<String, String> joined = textLines.join(right, valueJoiner, Joined.valueSerde(Serdes.String()));
 
     joined
-        .map((k, v) -> { // location -> station*temp
+        .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[1]); // (location, temp)
+          return new KeyValue<>(k, vals[1]);
         })
         .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
@@ -434,38 +419,34 @@ public class SimpleProducer {
     textLines = textLines
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals); // (station, type)
+          return new KeyValue<>(k, vals);
         })
         .filter((k, v) -> v[1].equals("red"))
-        .map((k, v) -> new KeyValue<>(k, v[2]))
+        .map((k, v) -> new KeyValue<>(k, v[1]));
+
+    KStream<String, String> right = textLines2
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(k, vals[1]);
+        })
         .groupByKey()
         .reduce((value1, value2) -> {
-          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-          LocalDateTime dateTime = LocalDateTime.parse(value1, formatter);
-          LocalDateTime lasthour = LocalDateTime.parse(value2, formatter);
-
-          if (lasthour.isBefore(dateTime)) {
+          if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
             return value1;
           } else {
             return value2;
           }
-        })
-        .toStream();
-
-    KTable<String, String> right = textLines2
-        .map((k, v) -> {
-          String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[1]); // (station, temp)
-        }).toTable();
+        }).toStream();
 
     ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
     Joined.keySerde(Serdes.String());
-    KStream<String, String> joined = textLines.join(right, valueJoiner, Joined.valueSerde(Serdes.String()));
+    KStream<String, String> joined = textLines.leftJoin(right, valueJoiner,
+        JoinWindows.ofTimeDifferenceWithNoGrace(Duration.ofSeconds(30)));
 
     joined
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[1]); // (station, temp)
+          return new KeyValue<>(vals[0], vals[1]);
         })
         .groupByKey()
         .reduce((value1, value2) -> {
@@ -495,7 +476,7 @@ public class SimpleProducer {
     textLines
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[1]); // (station, temp)
+          return new KeyValue<>(k, vals[1]);
         })
         .groupByKey()
         .aggregate(() -> new int[] { 0, 0 }, (aggKey, newValue, aggValue) -> {
@@ -532,7 +513,7 @@ public class SimpleProducer {
     textLines = textLines
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals); // (station, String[])
+          return new KeyValue<>(k, vals);
         })
         .filter((k, v) -> {
           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -541,7 +522,7 @@ public class SimpleProducer {
 
           return (lasthour.isBefore(dateTime) && v[1].equals("orange"));
         })
-        .map((k, v) -> new KeyValue<>(k, v[0])) // (station, location)
+        .map((k, v) -> new KeyValue<>(k, v[0]))
         .groupByKey()
         .reduce((value1, value2) -> {
           return value1 + "*" + value2;
@@ -551,7 +532,7 @@ public class SimpleProducer {
     KTable<String, String> right = textLines2
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[1]); // (station, temp)
+          return new KeyValue<>(k, vals[1]);
         })
         .groupByKey()
         .aggregate(() -> new int[] { 0, 0 }, (aggKey, newValue, aggValue) -> {
@@ -572,9 +553,9 @@ public class SimpleProducer {
     KStream<String, String> joined = textLines.join(right, valueJoiner, Joined.valueSerde(Serdes.String()));
 
     joined
-        .map((k, v) -> { // station -> location*temp
+        .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[vals.length - 1]); // (station, temp)
+          return new KeyValue<>(k, vals[vals.length - 1]);
         })
         .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
@@ -591,13 +572,10 @@ public class SimpleProducer {
   public static Properties getProperties(String id, String appId) {
 
     Properties props = new Properties();
-    // Assign localhost id
-
     props.put(StreamsConfig.APPLICATION_ID_CONFIG, appId);
     props.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
     props.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
     props.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-    // props.put(JsonDeserializer.VALUE_CLASS_NAME_CONFIG, Station.class);
     props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, id);
     props.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
     props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
