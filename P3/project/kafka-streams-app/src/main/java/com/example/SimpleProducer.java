@@ -17,7 +17,7 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.UUID;
 
-import java.time.format.DateTimeFormatter;  
+import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -58,547 +58,546 @@ import java.util.stream.StreamSupport;
 
 public class SimpleProducer {
 
- public static void main(String[] args) throws Exception{
-
-  final Logger log = LoggerFactory.getLogger(SimpleProducer.class);
-  final DecimalFormat df = new DecimalFormat("0.00");
-  
-
-  String dbinfo = "dbinfo-stations";
-  String inputTopic = "stations";
-  String stweather = "stweather";
-  String alerts = "alerts";
-  String results = "results";
-
-  String id;
-  String appId;
-  Properties props;
-  
-
-// ex 1 - DONE (takes a while to run)
-
-
-StreamsBuilder builder = new StreamsBuilder();
-KStream<String, String> textLines = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
-
-textLines
-.map((k, v) -> new KeyValue<>(k, v))
-.groupByKey()
-.count()
-.mapValues(c -> c.toString())
-.toStream()
-.to("results", Produced.with(Serdes.String(), Serdes.String()));
-
-id = UUID.randomUUID().toString();
-appId = UUID.randomUUID().toString();
-props = getProperties(id, appId);
-
-KafkaStreams streams = new KafkaStreams(builder.build(), props);
-streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
-
-
-Thread.sleep(1000);
-
-// ex 2 - DONE (takes a while to run)
-
-builder = new StreamsBuilder();
-textLines = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
-
-textLines
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(vals[0], v);
-})
-.groupByKey()
-.count()
-.mapValues(c -> c.toString())
-.toStream()
-.to("results", Produced.with(Serdes.String(), Serdes.String()));
-
-
-id = UUID.randomUUID().toString();
-appId = UUID.randomUUID().toString();
-props = getProperties(id, appId);
-streams = new KafkaStreams(builder.build(), props);
-streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
-
-Thread.sleep(1000);
-
-// ex 3 - DONE (takes a while to run)
-
-//Max temp per weather station
-
-builder = new StreamsBuilder();
-textLines = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
-
-textLines
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(k, vals[1]);
-})
-.selectKey((key, value) -> key)
-.groupByKey()
-.reduce((value1, value2) -> {
-  if (Integer.parseInt(value1) > Integer.parseInt(value2)) {
-      return value1;
-  } else {
-      return value2;
+  public static void main(String[] args) throws Exception {
+    // ex1();
+    // ex2();
+    // ex3();
+    // ex4();
+    // ex5();
+    // ex6();
+    // ex7();
+    // ex8();
+    // ex9();
+    // ex10();
+    // ex11();
   }
-})
-.toStream()
-.to("results", Produced.with(Serdes.String(), Serdes.String()));
 
-id = UUID.randomUUID().toString();
-appId = UUID.randomUUID().toString();
-props = getProperties(id, appId);
+  public static void ex1() {
+    StreamsBuilder builder = new StreamsBuilder();
+    KStream<String, String> textLines = builder.stream("stweather", Consumed.with(Serdes.String(), Serdes.String()));
 
-streams = new KafkaStreams(builder.build(), props);
-streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+    textLines
+        .map((k, v) -> new KeyValue<>(k, v))
+        .groupByKey()
+        .count()
+        .mapValues(c -> c.toString())
+        .toStream()
+        .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
-Thread.sleep(1000);
+    String id = UUID.randomUUID().toString();
+    String appId = UUID.randomUUID().toString();
+    Properties props = getProperties(id, appId);
 
-//Min temp per weather station
-
-builder = new StreamsBuilder();
-textLines = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
-
-textLines
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(k, vals[1]);
-})
-.selectKey((key, value) -> key)
-.groupByKey()
-.reduce((value1, value2) -> {
-  if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
-      return value1;
-  } else {
-      return value2;
+    KafkaStreams streams = new KafkaStreams(builder.build(), props);
+    streams.start();
+    Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
   }
-})
-.toStream()
-.to("results", Produced.with(Serdes.String(), Serdes.String()));
 
-id = UUID.randomUUID().toString();
-appId = UUID.randomUUID().toString();
-props = getProperties(id, appId);
+  public static void ex2() {
 
-streams = new KafkaStreams(builder.build(), props);
-streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+    StreamsBuilder builder = new StreamsBuilder();
+    KStream<String, String> textLines = builder.stream("stweather", Consumed.with(Serdes.String(), Serdes.String()));
 
-Thread.sleep(1000);
+    textLines
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(vals[0], v);
+        })
+        .groupByKey()
+        .count()
+        .mapValues(c -> c.toString())
+        .toStream()
+        .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
-// ex 4 - DONE (takes a while to run)
+    String id = UUID.randomUUID().toString();
+    String appId = UUID.randomUUID().toString();
+    Properties props = getProperties(id, appId);
 
-//Max temp per location
+    KafkaStreams streams = new KafkaStreams(builder.build(), props);
+    streams.start();
+    Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
-builder = new StreamsBuilder();
-textLines = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
-
-textLines
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  double temperature = Double.parseDouble(vals[1]);
-  temperature = temperature*1.8;
-  temperature += 32;
-  return new KeyValue<>(vals[0], df.format(temperature));
-})
-.selectKey((key, value) -> key)
-.groupByKey()
-.reduce((value1, value2) -> {
-  if (Integer.parseInt(value1) > Integer.parseInt(value2)) {
-      return value1;
-  } else {
-      return value2;
   }
-})
-.toStream()
-.to("results", Produced.with(Serdes.String(), Serdes.String()));
 
-id = UUID.randomUUID().toString();
-appId = UUID.randomUUID().toString();
-props = getProperties(id, appId);
-
-streams = new KafkaStreams(builder.build(), props);
-streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
-
-Thread.sleep(1000);
-
-//Min temp per location
-
-builder = new StreamsBuilder();
-textLines = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
-
-textLines
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  double temperature = Double.parseDouble(vals[1]);
-  temperature = temperature*1.8;
-  temperature += 32;
-  return new KeyValue<>(vals[0], df.format(temperature));
-})
-.selectKey((key, value) -> key)
-.groupByKey()
-.reduce((value1, value2) -> {
-  if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
-      return value1;
-  } else {
-      return value2;
+  public static void ex3() {
+    ex3Max();
+    ex3Min();
   }
-})
-.toStream()
-.to("results", Produced.with(Serdes.String(), Serdes.String()));
 
-id = UUID.randomUUID().toString();
-appId = UUID.randomUUID().toString();
-props = getProperties(id, appId);
+  public static void ex3Min() {
 
-streams = new KafkaStreams(builder.build(), props);
-streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+    StreamsBuilder builder = new StreamsBuilder();
+    KStream<String, String> textLines = builder.stream("stweather", Consumed.with(Serdes.String(), Serdes.String()));
 
-Thread.sleep(1000);
+    textLines
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(k, vals[1]);
+        })
+        .selectKey((key, value) -> key)
+        .groupByKey()
+        .reduce((value1, value2) -> {
+          if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
+            return value1;
+          } else {
+            return value2;
+          }
+        })
+        .toStream()
+        .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
-// ex 5 - DONE (takes a while to run)
+    String id = UUID.randomUUID().toString();
+    String appId = UUID.randomUUID().toString();
+    Properties props = getProperties(id, appId);
 
+    KafkaStreams streams = new KafkaStreams(builder.build(), props);
+    streams.start();
+    Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
-builder = new StreamsBuilder();
-textLines = builder.stream(alerts, Consumed.with(Serdes.String(), Serdes.String()));
-
-textLines
-.map((k, v) -> new KeyValue<>(k, v))
-.groupByKey()
-.count()
-.mapValues(c -> c.toString())
-.toStream()
-.to("results", Produced.with(Serdes.String(), Serdes.String()));
-
-id = UUID.randomUUID().toString();
-appId = UUID.randomUUID().toString();
-props = getProperties(id, appId);
-
-streams = new KafkaStreams(builder.build(), props);
-streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
-
-
-// ex 6 - DONE (takes a while to run)
-
-builder = new StreamsBuilder();
-textLines = builder.stream(alerts, Consumed.with(Serdes.String(), Serdes.String()));
-
-textLines
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(vals[1], k);
-})
-.groupByKey()
-.count()
-.mapValues(c -> c.toString())
-.toStream()
-.to("results", Produced.with(Serdes.String(), Serdes.String()));
-
-id = UUID.randomUUID().toString();
-appId = UUID.randomUUID().toString();
-props = getProperties(id, appId);
-
-streams = new KafkaStreams(builder.build(), props);
-streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
-
-
-// ex 7 - DONE (takes a while to run)
-
-builder = new StreamsBuilder();
-textLines = builder.stream(alerts, Consumed.with(Serdes.String(), Serdes.String()));
-KStream<String, String> textLines2 = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
-
-textLines = textLines
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(k, vals[1]); // (station, type)
-});
-
-
-KTable<String, String> right = textLines2
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(k, vals[1]); // (station, temp)
-}).toTable();
-
-
-ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
-Joined.keySerde(Serdes.String());
-KStream<String, String> joined = textLines.join(right,valueJoiner,
-    Joined.valueSerde(Serdes.String()));
-
-
-String alert = "red";
-
-joined
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(k, vals); // (type, temp)
-})
-.filter((k, v) -> v[0].equals(alert))
-.map((k,v) -> new KeyValue<>(k, v[1]))
-.groupByKey()
-.reduce((value1, value2) -> {
-  if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
-      return value1;
-  } else {
-     return value2;
   }
-})
-.toStream()
-.to("results", Produced.with(Serdes.String(), Serdes.String()));
 
-id = UUID.randomUUID().toString();
-appId = UUID.randomUUID().toString();
-props = getProperties(id, appId);
+  public static void ex3Max() {
 
-streams = new KafkaStreams(builder.build(), props);
-streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+    StreamsBuilder builder = new StreamsBuilder();
+    KStream<String, String> textLines = builder.stream("stweather", Consumed.with(Serdes.String(), Serdes.String()));
 
+    textLines
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(k, vals[1]);
+        })
+        .selectKey((key, value) -> key)
+        .groupByKey()
+        .reduce((value1, value2) -> {
+          if (Integer.parseInt(value1) > Integer.parseInt(value2)) {
+            return value1;
+          } else {
+            return value2;
+          }
+        })
+        .toStream()
+        .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
-// ex 8 - DONE (takes a while to run)
+    String id = UUID.randomUUID().toString();
+    String appId = UUID.randomUUID().toString();
+    Properties props = getProperties(id, appId);
 
-builder = new StreamsBuilder();
-textLines = builder.stream(alerts, Consumed.with(Serdes.String(), Serdes.String()));
-textLines2 = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
+    KafkaStreams streams = new KafkaStreams(builder.build(), props);
+    streams.start();
+    Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
-textLines = textLines
-.map((k, v) -> {
-   String[] vals = v.split("\\*");
-   return new KeyValue<>(k, vals); // (station, String[])
-})
-.filter((k, v) -> {
-  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-  LocalDateTime dateTime = LocalDateTime.parse(v[2], formatter);
-  LocalDateTime lasthour = LocalDateTime.now().minusHours(3);
-
-  return lasthour.isBefore(dateTime);
-})
-.map((k,v) -> new KeyValue<>(v[0], k));
-
-right = textLines2
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(vals[0], vals[1]); // (location, temp)
-})
-.groupByKey()
-.reduce((value1, value2) -> {
-  if (Integer.parseInt(value1) > Integer.parseInt(value2)) {
-      return value1;
-  } else {
-      return value2;
   }
-});
 
-valueJoiner = (l, r) -> l + "*" + r;
-Joined.keySerde(Serdes.String());
-joined = textLines.join(right,valueJoiner, Joined.valueSerde(Serdes.String()));
+  public static void ex4() {
+    ex4Max();
+    ex4Min();
+  }
 
+  public static void ex4Min() {
 
-joined
-.map((k, v) -> {  // location -> station*temp
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(k, vals[1]); // (station, temp)
-})
-.to("results", Produced.with(Serdes.String(), Serdes.String()));
+    final DecimalFormat df = new DecimalFormat("0.00");
 
-id = UUID.randomUUID().toString();
-appId = UUID.randomUUID().toString();
-props = getProperties(id, appId);
+    StreamsBuilder builder = new StreamsBuilder();
+    KStream<String, String> textLines = builder.stream("stweather", Consumed.with(Serdes.String(), Serdes.String()));
 
-streams = new KafkaStreams(builder.build(), props);
-streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+    textLines
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          double temperature = Double.parseDouble(vals[1]);
+          temperature = temperature * 1.8;
+          temperature += 32;
+          String tVal = df.format(temperature).replace(",", ".");
+          return new KeyValue<>(vals[0], tVal);
+        })
+        .selectKey((key, value) -> key)
+        .groupByKey()
+        .reduce((value1, value2) -> {
+          if (Double.parseDouble(value1) < Double.parseDouble(value2)) {
+            return value1;
+          } else {
+            return value2;
+          }
+        })
+        .toStream()
+        .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
+    String id = UUID.randomUUID().toString();
+    String appId = UUID.randomUUID().toString();
+    Properties props = getProperties(id, appId);
 
-// ex 9 - DONE (takes a while to run) - maybe change filter to after the reduce ig
+    KafkaStreams streams = new KafkaStreams(builder.build(), props);
+    streams.start();
+    Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
+  }
 
- builder = new StreamsBuilder();
- textLines = builder.stream(alerts, Consumed.with(Serdes.String(), Serdes.String()));
- textLines2 = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
- 
-  textLines = textLines
-  .map((k, v) -> {
-    String[] vals = v.split("\\*");
-    return new KeyValue<>(k, vals); // (station, type)
-  })
-  .filter((k, v) -> v[1].equals("red"))
-  .map((k,v) -> new KeyValue<>(k, v[2]))
- .groupByKey()
-  .reduce((value1, value2) -> {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-    LocalDateTime dateTime = LocalDateTime.parse(value1, formatter);
-    LocalDateTime lasthour = LocalDateTime.parse(value2, formatter);
+  public static void ex4Max() {
 
-    if (lasthour.isBefore(dateTime)) {
-        return value1;
-    } else {
-      return value2;
-    }
-  })
-  .toStream();
- 
- 
- right = textLines2
- .map((k, v) -> {
-   String[] vals = v.split("\\*");
-   return new KeyValue<>(k, vals[1]); // (station, temp)
- }).toTable();
- 
- 
- valueJoiner = (l, r) -> l + "*" + r;
- Joined.keySerde(Serdes.String());
- joined = textLines.join(right,valueJoiner,
-     Joined.valueSerde(Serdes.String()));
-  
- joined
- .map((k, v) -> {
-   String[] vals = v.split("\\*");
-   return new KeyValue<>(k, vals[1]); // (station, temp)
- })
- .groupByKey()
- .reduce((value1, value2) -> {
-   if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
-       return value1;
-   } else {
-       return value2;
-   }
- })
- .toStream()
- .to("results", Produced.with(Serdes.String(), Serdes.String()));
- 
- id = UUID.randomUUID().toString();
- appId = UUID.randomUUID().toString();
- props = getProperties(id, appId);
+    final DecimalFormat df = new DecimalFormat("0.00");
 
- streams = new KafkaStreams(builder.build(), props);
- streams.start();
- Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+    StreamsBuilder builder = new StreamsBuilder();
+    KStream<String, String> textLines = builder.stream("stweather", Consumed.with(Serdes.String(), Serdes.String()));
 
+    textLines
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          double temperature = Double.parseDouble(vals[1]);
+          temperature = temperature * 1.8;
+          temperature += 32;
+          String tVal = df.format(temperature).replace(",", ".");
+          return new KeyValue<>(vals[0], tVal);
+        })
+        .selectKey((key, value) -> key)
+        .groupByKey()
+        .reduce((value1, value2) -> {
+          if (Double.parseDouble(value1) > Double.parseDouble(value2)) {
+            return value1;
+          } else {
+            return value2;
+          }
+        })
+        .toStream()
+        .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
-// ex 10 - DONE (takes a while to run)
+    String id = UUID.randomUUID().toString();
+    String appId = UUID.randomUUID().toString();
+    Properties props = getProperties(id, appId);
 
+    KafkaStreams streams = new KafkaStreams(builder.build(), props);
+    streams.start();
+    Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+  }
 
-  builder = new StreamsBuilder();
-  textLines = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
+  public static void ex5() {
+    StreamsBuilder builder = new StreamsBuilder();
+    KStream<String, String> textLines = builder.stream("alerts", Consumed.with(Serdes.String(), Serdes.String()));
 
-  textLines
-  .map((k, v) -> {
-    String[] vals = v.split("\\*");
-    return new KeyValue<>(k, vals[1]); // (station, temp)
-  })
-  .groupByKey()
-  .aggregate(() -> new int[] {0, 0}, (aggKey, newValue, aggValue) -> {
-    aggValue[0] += 1;
-    aggValue[1] += Integer.parseInt(newValue);
+    textLines
+        .map((k, v) -> new KeyValue<>(k, v))
+        .groupByKey()
+        .count()
+        .mapValues(c -> c.toString())
+        .toStream()
+        .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
-    return aggValue;
-  }, Materialized.with(Serdes.String(), new IntArraySerde()))
-  .mapValues(v -> {
-    if (v[0] != 0) { return "" + v[1] / v[0];}
-    else {return "Divided by zero"; }
-  })
-  .toStream()
-  .to("results", Produced.with(Serdes.String(), Serdes.String()));
+    String id = UUID.randomUUID().toString();
+    String appId = UUID.randomUUID().toString();
+    Properties props = getProperties(id, appId);
 
-  id = UUID.randomUUID().toString();
-  appId = UUID.randomUUID().toString();
-  props = getProperties(id, appId);
+    KafkaStreams streams = new KafkaStreams(builder.build(), props);
+    streams.start();
+    Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+  }
 
-  streams = new KafkaStreams(builder.build(), props);
-  streams.start();
-  Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+  public static void ex6() {
+    StreamsBuilder builder = new StreamsBuilder();
+    KStream<String, String> textLines = builder.stream("alerts", Consumed.with(Serdes.String(), Serdes.String()));
 
+    textLines
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(vals[1], k);
+        })
+        .groupByKey()
+        .count()
+        .mapValues(c -> c.toString())
+        .toStream()
+        .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
+    String id = UUID.randomUUID().toString();
+    String appId = UUID.randomUUID().toString();
+    Properties props = getProperties(id, appId);
 
-// ex 11 - DONE (takes a while to run)
+    KafkaStreams streams = new KafkaStreams(builder.build(), props);
+    streams.start();
+    Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+  }
 
-builder = new StreamsBuilder();
-textLines = builder.stream(alerts, Consumed.with(Serdes.String(), Serdes.String()));
-textLines2 = builder.stream(stweather, Consumed.with(Serdes.String(), Serdes.String()));
+  public static void ex7() {
+    StreamsBuilder builder = new StreamsBuilder();
+    KStream<String, String> textLines = builder.stream("alerts", Consumed.with(Serdes.String(), Serdes.String()));
+    KStream<String, String> textLines2 = builder.stream("stweather", Consumed.with(Serdes.String(), Serdes.String()));
+    textLines = textLines
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(k, vals[1]); // (station, type)
+        });
 
-textLines = textLines
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(k, vals); // (station, String[])
-})
-.filter((k, v) -> {
-  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-  LocalDateTime dateTime = LocalDateTime.parse(v[2], formatter);
-  LocalDateTime lasthour = LocalDateTime.now().minusHours(12);
-  
-  return (lasthour.isBefore(dateTime) && v[1].equals("orange"));
-})
-.map((k,v) -> new KeyValue<>(k, v[0])) // (station, location)
-.groupByKey()
-.reduce((value1, value2) -> {
-  return value1 + "*" + value2;
-})
-.toStream();
+    KTable<String, String> right = textLines2
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(k, vals[1]); // (station, temp)
+        }).toTable();
 
+    ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
+    Joined.keySerde(Serdes.String());
+    KStream<String, String> joined = textLines.join(right, valueJoiner,
+        Joined.valueSerde(Serdes.String()));
 
+    String alert = "red";
 
+    joined
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(k, vals); // (type, temp)
+        })
+        .filter((k, v) -> v[0].equals(alert))
+        .map((k, v) -> new KeyValue<>(k, v[1]))
+        .groupByKey()
+        .reduce((value1, value2) -> {
+          if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
+            return value1;
+          } else {
+            return value2;
+          }
+        })
+        .toStream()
+        .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
-right = textLines2
-.map((k, v) -> {
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(k, vals[1]); // (station, temp)
-})
-.groupByKey()
-.aggregate(() -> new int[] {0, 0}, (aggKey, newValue, aggValue) -> {
-  aggValue[0] += 1;
-  aggValue[1] += Integer.parseInt(newValue);
-   return aggValue;
-}, Materialized.with(Serdes.String(), new IntArraySerde()))
-.mapValues(v -> {
-  if (v[0] != 0) { return "" + v[1] / v[0];}
-  else {return "Divided by zero"; }
-});
+    String id = UUID.randomUUID().toString();
+    String appId = UUID.randomUUID().toString();
+    Properties props = getProperties(id, appId);
 
+    KafkaStreams streams = new KafkaStreams(builder.build(), props);
+    streams.start();
+    Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+  }
 
-valueJoiner = (l, r) -> l + "*" + r;
-Joined.keySerde(Serdes.String());
-joined = textLines.join(right,valueJoiner, Joined.valueSerde(Serdes.String()));
+  public static void ex8() {
 
+    StreamsBuilder builder = new StreamsBuilder();
+    KStream<String, String> textLines = builder.stream("alerts", Consumed.with(Serdes.String(), Serdes.String()));
+    KStream<String, String> textLines2 = builder.stream("stweather", Consumed.with(Serdes.String(), Serdes.String()));
 
-joined
-.map((k, v) -> {  // station -> location*temp
-  String[] vals = v.split("\\*");
-  return new KeyValue<>(k, vals[vals.length-1]); // (station, temp)
-})
-.to("results", Produced.with(Serdes.String(), Serdes.String()));
+    textLines = textLines
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(vals[0], vals[2]);
+        })
+        .filter((k, v) -> {
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+          LocalDateTime dateTime = LocalDateTime.parse(v, formatter);
+          LocalDateTime lasthour = LocalDateTime.now().minusHours(4);
+          return lasthour.isBefore(dateTime);
+        })
+        .groupByKey()
+        .reduce((v1, v2) -> {
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+          LocalDateTime d1 = LocalDateTime.parse(v1, formatter);
+          LocalDateTime d2 = LocalDateTime.parse(v2, formatter);
+          if (d1.isBefore(d2)) {
+            return v1;
+          } else
+            return v2;
+        }).toStream();
 
+    KTable<String, String> right = textLines2
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(vals[0], vals[1]); // (location, temp)
+        })
+        .groupByKey()
+        .reduce((value1, value2) -> {
+          if (Integer.parseInt(value1) > Integer.parseInt(value2)) {
+            return value1;
+          } else {
+            return value2;
+          }
+        });
 
-streams = new KafkaStreams(builder.build(), props);
-streams.start();
-Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+    ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
+    Joined.keySerde(Serdes.String());
+    KStream<String, String> joined = textLines.join(right, valueJoiner, Joined.valueSerde(Serdes.String()));
 
-}
+    joined
+        .map((k, v) -> { // location -> station*temp
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(k, vals[1]); // (location, temp)
+        })
+        .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
+    String id = UUID.randomUUID().toString();
+    String appId = UUID.randomUUID().toString();
+    Properties props = getProperties(id, appId);
 
- public static Properties getProperties(String id, String appId){
+    KafkaStreams streams = new KafkaStreams(builder.build(), props);
+    streams.start();
+    Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+  }
 
-    
+  public static void ex9() {
+
+    StreamsBuilder builder = new StreamsBuilder();
+    KStream<String, String> textLines = builder.stream("alerts", Consumed.with(Serdes.String(), Serdes.String()));
+    KStream<String, String> textLines2 = builder.stream("stweather", Consumed.with(Serdes.String(), Serdes.String()));
+
+    textLines = textLines
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(k, vals); // (station, type)
+        })
+        .filter((k, v) -> v[1].equals("red"))
+        .map((k, v) -> new KeyValue<>(k, v[2]))
+        .groupByKey()
+        .reduce((value1, value2) -> {
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+          LocalDateTime dateTime = LocalDateTime.parse(value1, formatter);
+          LocalDateTime lasthour = LocalDateTime.parse(value2, formatter);
+
+          if (lasthour.isBefore(dateTime)) {
+            return value1;
+          } else {
+            return value2;
+          }
+        })
+        .toStream();
+
+    KTable<String, String> right = textLines2
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(k, vals[1]); // (station, temp)
+        }).toTable();
+
+    ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
+    Joined.keySerde(Serdes.String());
+    KStream<String, String> joined = textLines.join(right, valueJoiner, Joined.valueSerde(Serdes.String()));
+
+    joined
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(k, vals[1]); // (station, temp)
+        })
+        .groupByKey()
+        .reduce((value1, value2) -> {
+          if (Integer.parseInt(value1) < Integer.parseInt(value2)) {
+            return value1;
+          } else {
+            return value2;
+          }
+        })
+        .toStream()
+        .to("results", Produced.with(Serdes.String(), Serdes.String()));
+
+    String id = UUID.randomUUID().toString();
+    String appId = UUID.randomUUID().toString();
+    Properties props = getProperties(id, appId);
+
+    KafkaStreams streams = new KafkaStreams(builder.build(), props);
+    streams.start();
+    Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+
+  }
+
+  public static void ex10() {
+    StreamsBuilder builder = new StreamsBuilder();
+    KStream<String, String> textLines = builder.stream("stweather", Consumed.with(Serdes.String(), Serdes.String()));
+
+    textLines
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(k, vals[1]); // (station, temp)
+        })
+        .groupByKey()
+        .aggregate(() -> new int[] { 0, 0 }, (aggKey, newValue, aggValue) -> {
+          aggValue[0] += 1;
+          aggValue[1] += Integer.parseInt(newValue);
+
+          return aggValue;
+        }, Materialized.with(Serdes.String(), new IntArraySerde()))
+        .mapValues(v -> {
+          if (v[0] != 0) {
+            return "" + v[1] / v[0];
+          } else {
+            return "Divided by zero";
+          }
+        })
+        .toStream()
+        .to("results", Produced.with(Serdes.String(), Serdes.String()));
+
+    String id = UUID.randomUUID().toString();
+    String appId = UUID.randomUUID().toString();
+    Properties props = getProperties(id, appId);
+
+    KafkaStreams streams = new KafkaStreams(builder.build(), props);
+    streams.start();
+    Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+
+  }
+
+  public static void ex11() {
+
+    StreamsBuilder builder = new StreamsBuilder();
+    KStream<String, String> textLines = builder.stream("alerts", Consumed.with(Serdes.String(), Serdes.String()));
+    KStream<String, String> textLines2 = builder.stream("stweather", Consumed.with(Serdes.String(), Serdes.String()));
+    textLines = textLines
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(k, vals); // (station, String[])
+        })
+        .filter((k, v) -> {
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+          LocalDateTime dateTime = LocalDateTime.parse(v[2], formatter);
+          LocalDateTime lasthour = LocalDateTime.now().minusHours(12);
+
+          return (lasthour.isBefore(dateTime) && v[1].equals("orange"));
+        })
+        .map((k, v) -> new KeyValue<>(k, v[0])) // (station, location)
+        .groupByKey()
+        .reduce((value1, value2) -> {
+          return value1 + "*" + value2;
+        })
+        .toStream();
+
+    KTable<String, String> right = textLines2
+        .map((k, v) -> {
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(k, vals[1]); // (station, temp)
+        })
+        .groupByKey()
+        .aggregate(() -> new int[] { 0, 0 }, (aggKey, newValue, aggValue) -> {
+          aggValue[0] += 1;
+          aggValue[1] += Integer.parseInt(newValue);
+          return aggValue;
+        }, Materialized.with(Serdes.String(), new IntArraySerde()))
+        .mapValues(v -> {
+          if (v[0] != 0) {
+            return "" + v[1] / v[0];
+          } else {
+            return "Divided by zero";
+          }
+        });
+
+    ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
+    Joined.keySerde(Serdes.String());
+    KStream<String, String> joined = textLines.join(right, valueJoiner, Joined.valueSerde(Serdes.String()));
+
+    joined
+        .map((k, v) -> { // station -> location*temp
+          String[] vals = v.split("\\*");
+          return new KeyValue<>(k, vals[vals.length - 1]); // (station, temp)
+        })
+        .to("results", Produced.with(Serdes.String(), Serdes.String()));
+
+    String id = UUID.randomUUID().toString();
+    String appId = UUID.randomUUID().toString();
+    Properties props = getProperties(id, appId);
+
+    KafkaStreams streams = new KafkaStreams(builder.build(), props);
+    streams.start();
+    Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+
+  }
+
+  public static Properties getProperties(String id, String appId) {
+
     Properties props = new Properties();
-    //Assign localhost id
-    
+    // Assign localhost id
+
     props.put(StreamsConfig.APPLICATION_ID_CONFIG, appId);
     props.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
     props.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
     props.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-    //props.put(JsonDeserializer.VALUE_CLASS_NAME_CONFIG, Station.class);
+    // props.put(JsonDeserializer.VALUE_CLASS_NAME_CONFIG, Station.class);
     props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, id);
     props.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
     props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
@@ -607,6 +606,6 @@ Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
     return props;
- }
+  }
 
 }
