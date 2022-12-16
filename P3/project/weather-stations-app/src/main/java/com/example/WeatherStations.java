@@ -34,9 +34,7 @@ public class WeatherStations {
 
 			// ex 0 - DONE
 			
-			// PRODUCE INFO TO STWEATHER
-			// StreamsBuilder builder = new StreamsBuilder();
-			// KStream<String, String> textLines = builder.stream(dbinfo, Consumed.with(Serdes.String(), Serdes.String()));
+			// PRODUCE INFO TO STWEATHER AND ALERTS
 			
 			switch (counter) {
 				case 0:
@@ -50,8 +48,6 @@ public class WeatherStations {
 					KStream<String, String> stweatherTextLines = stweatherBuilder.stream(dbinfo, Consumed.with(Serdes.String(), Serdes.String()));
 					stweatherTextLines
 					.map((k, v) -> {
-						// System.out.println("\n\n\nCASE 0!!!!\n\n\n");
-						// System.out.println(v);
 						JsonElement jsonElement = gson.fromJson(v, JsonElement.class);
 						String name = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("name").getAsString();
 						String location = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("location").getAsString();
@@ -81,8 +77,6 @@ public class WeatherStations {
 					String [] type = new String[]{"red", "orange", "yellow", "green"};
 					alertsTextLines
 					.map((k, v) -> {
-						// System.out.println("\n\n\nDEFAULT!!!!\n\n\n");
-						// System.out.println(v);
 						JsonElement jsonElement = gson.fromJson(v, JsonElement.class);
 						String name = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("name").getAsString();
 						String location = jsonElement.getAsJsonObject().get("payload").getAsJsonObject().get("location").getAsString();
@@ -101,29 +95,12 @@ public class WeatherStations {
 					counter = 0;
 					break;
 			}
-
-			// KafkaStreams streams = new KafkaStreams(builder.build(), props);
-			// streams.start();
-			// Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 			System.out.println("\n\n\nSLEEPING!!!!\n\n\n");
 			Thread.sleep(3000);
-
-			// PRODUCE INFO TO ALERTS
-
-			// builder = new StreamsBuilder();
-			// textLines = builder.stream(dbinfo, Consumed.with(Serdes.String(), Serdes.String()));
-
-
-			// streams = new KafkaStreams(builder.build(), props);
-			// streams.start();
-			// Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 		}
-
 	}
 
-
 	public static Properties getProperties(String id, String appId){
-
 
 		Properties props = new Properties();
 		props.put(StreamsConfig.APPLICATION_ID_CONFIG, appId);
@@ -139,5 +116,4 @@ public class WeatherStations {
 
 		return props;
 	}
-
 }
