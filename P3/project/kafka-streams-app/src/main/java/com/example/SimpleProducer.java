@@ -44,7 +44,7 @@ public class SimpleProducer {
   public static void main(String[] args) throws Exception {
 
     // ex1();
-    ex2();
+    // ex2();
     // ex3();
     // ex4();
     // ex5();
@@ -308,25 +308,23 @@ public class SimpleProducer {
           return new KeyValue<>(k, vals[1]); // -> (station, alert)
         });
 
-    KTable<String, String> right = textLines2
+    KStream<String, String> right = textLines2
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[1]);  // -> (station, temp)
-        }).toTable();
+          return new KeyValue<>(k, vals[1]); // -> (station, temp)
+        });
 
     ValueJoiner<String, String, String> valueJoiner = (l, r) -> l + "*" + r;
     Joined.keySerde(Serdes.String());
-    KStream<String, String> joined = textLines.join(right, valueJoiner,
-        Joined.valueSerde(Serdes.String()));
-
-    String alert = "red";
+    KStream<String, String> joined = textLines.leftJoin(right, valueJoiner,
+        JoinWindows.ofTimeDifferenceWithNoGrace(Duration.ofSeconds(30)));
 
     joined
         .map((k, v) -> {
           String[] vals = v.split("\\*");
           return new KeyValue<>(k, vals); // -> (station, [alert, temp])
         })
-        .filter((k, v) -> v[0].equals(alert))
+        .filter((k, v) -> v[0].equals("red"))
         .map((k, v) -> new KeyValue<>(k, v[1])) // -> (station, temp)
         .groupByKey()
         .reduce((value1, value2) -> {
@@ -357,7 +355,7 @@ public class SimpleProducer {
     textLines = textLines
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(vals[0], vals[2]);  // -> (location, alert)
+          return new KeyValue<>(vals[0], vals[2]); // -> (location, alert)
         })
         .filter((k, v) -> {
           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -379,7 +377,7 @@ public class SimpleProducer {
     KTable<String, String> right = textLines2
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(vals[0], vals[1]);  // -> (location, temp)
+          return new KeyValue<>(vals[0], vals[1]); // -> (location, temp)
         })
         .groupByKey()
         .reduce((value1, value2) -> {
@@ -476,7 +474,7 @@ public class SimpleProducer {
     textLines
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[1]);  // -> (station, temp)
+          return new KeyValue<>(k, vals[1]); // -> (station, temp)
         })
         .groupByKey()
         .aggregate(() -> new int[] { 0, 0 }, (aggKey, newValue, aggValue) -> {
@@ -532,7 +530,7 @@ public class SimpleProducer {
     KTable<String, String> right = textLines2
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[1]);  // -> (station, temp)
+          return new KeyValue<>(k, vals[1]); // -> (station, temp)
         })
         .groupByKey()
         .aggregate(() -> new int[] { 0, 0 }, (aggKey, newValue, aggValue) -> {
@@ -555,7 +553,7 @@ public class SimpleProducer {
     joined
         .map((k, v) -> {
           String[] vals = v.split("\\*");
-          return new KeyValue<>(k, vals[vals.length - 1]);  // -> (station, avg. temp)
+          return new KeyValue<>(k, vals[vals.length - 1]); // -> (station, avg. temp)
         })
         .to("results", Produced.with(Serdes.String(), Serdes.String()));
 
