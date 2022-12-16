@@ -53,7 +53,7 @@ public class SimpleProducer {
     // ex8();
     // ex9();
     // ex10();
-    // ex11();
+    ex11();
 
   }
 
@@ -174,8 +174,8 @@ public class SimpleProducer {
   }
 
   public static void ex4() {
-    ex4Max();
     ex4Min();
+    ex4Max();
   }
 
   public static void ex4Min() {
